@@ -15,19 +15,7 @@ use nom::{
 #[allow(unused_imports)]
 use std::borrow::Cow;
 
-#[doc = "Specifies what environment variables sent by the client"]
-#[doc = "will be copied into the session's environ(7).  See SendEnv"]
-#[doc = "and SetEnv in ssh_config(5) for how to configure the"]
-#[doc = "client.  The TERM environment variable is always accepted"]
-#[doc = "whenever the client requests a pseudo-terminal as it is"]
-#[doc = "required by the protocol.  Variables are specified by name,"]
-#[doc = "which may contain the wildcard characters ‘*’ and ‘?’."]
-#[doc = "Multiple environment variables may be separated by"]
-#[doc = "whitespace or spread across multiple AcceptEnv directives."]
-#[doc = "Be warned that some environment variables could be used to"]
-#[doc = "bypass restricted user environments.  For this reason, care"]
-#[doc = "should be taken in the use of this directive.  The default"]
-#[doc = "is not to accept any environment variables."]
+#[doc = "Specifies what environment variables sent by the client will be copied into the session's environ(7). See SendEnv and SetEnv in ssh_config(5) for how to configure the client. The TERM environment variable is always accepted whenever the client requests a pseudo-terminal as it is required by the protocol. Variables are specified by name, which may contain the wildcard characters ‘*’ and ‘?’. Multiple environment variables may be separated by whitespace or spread across multiple AcceptEnv directives. Be warned that some environment variables could be used to bypass restricted user environments. For this reason, care should be taken in the use of this directive. The default is not to accept any environment variables."]
 #[doc = "See also: [AcceptEnv](https://man.openbsd.org/sshd_config#AcceptEnv)"]
 #[derive(Debug, Clone, PartialEq, Eq, PartialOrd, Ord)]
 pub struct AcceptEnv<'a>(Cow<'a, str>);

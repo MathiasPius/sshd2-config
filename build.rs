@@ -60,7 +60,7 @@ impl TypedValue {
     }
 
     pub fn as_ident(&self) -> Ident {
-        let value = self.replace(['@', '.'], "-");
+        let value = self.replace(|c: char| c.is_ascii_punctuation(), "-");
 
         // If the value starts with a number (such as 3des)
         // preface the ident with an x

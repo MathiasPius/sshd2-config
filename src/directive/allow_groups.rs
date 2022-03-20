@@ -15,19 +15,7 @@ use nom::{
 #[allow(unused_imports)]
 use std::borrow::Cow;
 
-#[doc = "Specifies what environment variables sent by the client"]
-#[doc = "will be copied into the session's environ(7). See SendEnv"]
-#[doc = "and SetEnv in ssh_config(5) for how to configure the client."]
-#[doc = "The TERM environment variable is always accepted whenever"]
-#[doc = "the client requests a pseudo-terminal as it is required by"]
-#[doc = "the protocol. Variables are specified by name, which may "]
-#[doc = "contain the wildcard characters ‘*’ and ‘?’. Multiple"]
-#[doc = "environment variables may be separated by whitespace or"]
-#[doc = "spread across multiple AcceptEnv directives. Be warned"]
-#[doc = "that some environment variables could be used to bypass"]
-#[doc = "restricted user environments. For this reason, care should"]
-#[doc = "be taken in the use of this directive. The default is not "]
-#[doc = "to accept any environment variables."]
+#[doc = "This keyword can be followed by a list of group name patterns, separated by spaces. If specified, login is allowed only for users whose primary group or supplementary group list matches one of the patterns. Only group names are valid; a numerical group ID is not recognized. By default, login is allowed for all groups. The allow/deny groups directives are processed in the following order: DenyGroups, AllowGroups."]
 #[doc = "See also: [AllowGroups](https://man.openbsd.org/sshd_config#AllowGroups)"]
 #[derive(Debug, Clone, PartialEq, Eq, PartialOrd, Ord)]
 pub struct AllowGroups<'a>(Cow<'a, str>);

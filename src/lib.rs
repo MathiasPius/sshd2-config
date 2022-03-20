@@ -99,4 +99,12 @@ mod tests {
             ])
         );
     }
+
+    #[test]
+    fn test_authentication_methods() {
+        Directive::parse("AuthenticationMethods none").unwrap();
+        Directive::parse("AuthenticationMethods none,pubkey").unwrap();
+        Directive::parse("AuthenticationMethods pubkey,pubkey gssapi-with-mic,hostbased").unwrap();
+        Directive::parse("AuthenticationMethods keyboard-interactive,pubkey keyboard-interactive:bsdauth,password").unwrap();
+    }
 }

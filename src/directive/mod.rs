@@ -4,8 +4,11 @@ mod accept_env;
 mod address_family;
 mod allow_agent_forwarding;
 mod allow_groups;
+mod allow_stream_local_forwarding;
 mod allow_tcp_forwarding;
+mod allow_users;
 mod authentication_methods;
+mod authorized_keys_command;
 mod ciphers;
 mod kex_algorithms;
 
@@ -14,8 +17,11 @@ pub use accept_env::*;
 pub use address_family::*;
 pub use allow_agent_forwarding::*;
 pub use allow_groups::*;
+pub use allow_stream_local_forwarding::*;
 pub use allow_tcp_forwarding::*;
+pub use allow_users::*;
 pub use authentication_methods::*;
+pub use authorized_keys_command::*;
 pub use ciphers::*;
 pub use kex_algorithms::*;
 use nom::IResult;
@@ -28,14 +34,17 @@ use nom::{
 
 #[derive(Debug, PartialEq, Eq, PartialOrd, Ord)]
 pub enum Directive<'a> {
-    Ciphers(Modifier<Vec<Ciphers>>),
-    AllowGroups(Vec<AllowGroups<'a>>),
-    KexAlgorithms(Modifier<Vec<KexAlgorithms>>),
-    AddressFamily(AddressFamily),
-    AllowAgentForwarding(AllowAgentForwarding),
     AllowTcpForwarding(AllowTcpForwarding),
-    AuthenticationMethods(Vec<Vec<AuthenticationMethods>>),
+    AddressFamily(AddressFamily),
     AcceptEnv(Vec<AcceptEnv<'a>>),
+    AllowStreamLocalForwarding(AllowStreamLocalForwarding),
+    AuthenticationMethods(Vec<Vec<AuthenticationMethods>>),
+    AllowUsers(Vec<AllowUsers<'a>>),
+    AuthorizedKeysCommand(AuthorizedKeysCommand<'a>),
+    KexAlgorithms(Modifier<Vec<KexAlgorithms>>),
+    AllowGroups(Vec<AllowGroups<'a>>),
+    Ciphers(Modifier<Vec<Ciphers>>),
+    AllowAgentForwarding(AllowAgentForwarding),
 }
 
 fn directive<'a, T: Parse<'a>>(input: &'a str) -> IResult<&'a str, Directive>
@@ -48,14 +57,17 @@ impl<'a> Parse<'a> for Directive<'a> {
     type Output = Self;
     fn parse(input: &'a str) -> IResult<&'a str, Self::Output> {
         alt((
-            directive::<Ciphers>,
-            directive::<AllowGroups>,
-            directive::<KexAlgorithms>,
-            directive::<AddressFamily>,
-            directive::<AllowAgentForwarding>,
             directive::<AllowTcpForwarding>,
-            directive::<AuthenticationMethods>,
+            directive::<AddressFamily>,
             directive::<AcceptEnv>,
+            directive::<AllowStreamLocalForwarding>,
+            directive::<AuthenticationMethods>,
+            directive::<AllowUsers>,
+            directive::<AuthorizedKeysCommand>,
+            directive::<KexAlgorithms>,
+            directive::<AllowGroups>,
+            directive::<Ciphers>,
+            directive::<AllowAgentForwarding>,
         ))(input)
     }
 }

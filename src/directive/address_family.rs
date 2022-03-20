@@ -15,9 +15,7 @@ use nom::{
 #[allow(unused_imports)]
 use std::borrow::Cow;
 
-#[doc = "Specifies which address family should be used by sshd(8)."]
-#[doc = "Valid arguments are any (the default), inet (use IPv4"]
-#[doc = "only), or inet6 (use IPv6 only)."]
+#[doc = "Specifies which address family should be used by sshd(8). Valid arguments are any (the default), inet (use IPv4 only), or inet6 (use IPv6 only)."]
 #[doc = "See also: [AddressFamily](https://man.openbsd.org/sshd_config#AddressFamily)"]
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord)]
 pub enum AddressFamily {
