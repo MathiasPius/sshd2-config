@@ -28,14 +28,14 @@ use nom::{
 
 #[derive(Debug, PartialEq, Eq, PartialOrd, Ord)]
 pub enum Directive<'a> {
-    AllowAgentForwarding(AllowAgentForwarding),
-    AllowGroups(Vec<AllowGroups<'a>>),
-    AllowTcpForwarding(AllowTcpForwarding),
-    AddressFamily(AddressFamily),
+    Ciphers(Modifier<Vec<Ciphers>>),
     KexAlgorithms(Modifier<Vec<KexAlgorithms>>),
     AcceptEnv(Vec<AcceptEnv<'a>>),
-    Ciphers(Modifier<Vec<Ciphers>>),
     AuthenticationMethods(Vec<Vec<AuthenticationMethods>>),
+    AllowAgentForwarding(AllowAgentForwarding),
+    AddressFamily(AddressFamily),
+    AllowTcpForwarding(AllowTcpForwarding),
+    AllowGroups(Vec<AllowGroups<'a>>),
 }
 
 fn directive<'a, T: Parse<'a>>(input: &'a str) -> IResult<&'a str, Directive>
@@ -48,14 +48,14 @@ impl<'a> Parse<'a> for Directive<'a> {
     type Output = Self;
     fn parse(input: &'a str) -> IResult<&'a str, Self::Output> {
         alt((
-            directive::<AllowAgentForwarding>,
-            directive::<AllowGroups>,
-            directive::<AllowTcpForwarding>,
-            directive::<AddressFamily>,
+            directive::<Ciphers>,
             directive::<KexAlgorithms>,
             directive::<AcceptEnv>,
-            directive::<Ciphers>,
             directive::<AuthenticationMethods>,
+            directive::<AllowAgentForwarding>,
+            directive::<AddressFamily>,
+            directive::<AllowTcpForwarding>,
+            directive::<AllowGroups>,
         ))(input)
     }
 }

@@ -97,7 +97,7 @@ impl ValueFormat {
                 }
             }
             ValueFormat::Typed(values) => {
-                let value_idents: Vec<Ident> = values.iter().map(value_to_ident).collect();
+                let value_idents: Vec<Ident> = values_to_idents(values);
                 quote! {
                     #(#[doc = #comments])*
                     #[doc = #reference]
@@ -131,7 +131,7 @@ impl ValueFormat {
                     map(preceded(space0, take_while1(|c: char| !c.is_whitespace())), #name_ident::from)
             },
             ValueFormat::Typed(values) => {
-                let value_idents: Vec<Ident> = values.iter().map(value_to_ident).collect();
+                let value_idents: Vec<Ident> = values_to_idents(values);
 
                 let mapping = values
                     .iter()
@@ -228,18 +228,23 @@ fn reformat(text: impl std::fmt::Display) -> std::io::Result<String> {
 }
 
 /// Sanitizes possible values so they can be used as enum variants
-fn value_to_ident(value: &&'static str) -> Ident {
-    let value = value.replace(['@', '.'], "-");
+fn values_to_idents(values: &[&'static str]) -> Vec<Ident> {
+    values
+        .iter()
+        .map(|value| {
+            let value = value.replace(['@', '.'], "-");
 
-    // If the value starts with a number (such as 3des)
-    // preface the ident with an x
-    let value = if value.starts_with(|c: char| c.is_digit(10)) {
-        format!("x{}", value)
-    } else {
-        value
-    };
+            // If the value starts with a number (such as 3des)
+            // preface the ident with an x
+            let value = if value.starts_with(|c: char| c.is_digit(10)) {
+                format!("x{}", value)
+            } else {
+                value
+            };
 
-    Ident::new(&value.to_case(Case::Pascal), Span::call_site())
+            Ident::new(&value.to_case(Case::Pascal), Span::call_site())
+        })
+        .collect()
 }
 
 fn main() {
