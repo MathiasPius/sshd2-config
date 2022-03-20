@@ -18,9 +18,13 @@ use std::borrow::Cow;
 #[doc = "See also: [AuthenticationMethods](https://man.openbsd.org/sshd_config#AuthenticationMethods)"]
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord)]
 pub enum AuthenticationMethods {
+    #[doc = "Public Key Authentication"]
     Pubkey,
+    #[doc = "Challenge Response"]
     ChallengeResponse,
+    #[doc = "Password Authentication"]
     Password,
+    #[doc = "Keyboard Interactive"]
     KeyboardInteractive,
 }
 

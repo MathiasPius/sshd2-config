@@ -71,6 +71,21 @@ impl TypedValue {
         };
         Ident::new(&value.to_case(Case::Pascal), Span::call_site())
     }
+
+    pub fn as_enum_entry(&self) -> TokenStream {
+        let value = self.as_ident();
+
+        if let Some(comment) = self.comment() {
+            quote! {
+                #[doc = #comment]
+                #value
+            }
+        } else {
+            quote! {
+                #value
+            }
+        }
+    }
 }
 
 #[derive(Debug, Deserialize)]
@@ -148,7 +163,8 @@ impl ValueFormat {
                 }
             }
             ValueFormat::Typed(values) => {
-                let value_idents: Vec<Ident> = values.iter().map(TypedValue::as_ident).collect();
+                let value_idents: Vec<TokenStream> =
+                    values.iter().map(TypedValue::as_enum_entry).collect();
                 quote! {
                     #(#[doc = #comments])*
                     #[doc = #reference]

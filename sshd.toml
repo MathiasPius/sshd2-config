@@ -125,7 +125,7 @@
 [directives.AuthenticationMethods]
   values = { space_separated = { comma_separated = { typed = [
     { value = "pubkey", comment = "Public Key Authentication" },
-    "challenge-response",
-    "password",
-    "keyboard-interactive",
+    { value = "challenge-response", comment = "Challenge Response" },
+    { value = "password", comment = "Password Authentication" },
+    { value = "keyboard-interactive", comment = "Keyboard Interactive" }
   ] } } }
