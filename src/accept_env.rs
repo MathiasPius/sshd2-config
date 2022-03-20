@@ -15,12 +15,12 @@ use nom::{
 #[allow(unused_imports)]
 use std::borrow::Cow;
 #[derive(Debug, Clone, PartialEq, Eq, PartialOrd, Ord)]
-pub struct AcceptEnvDirective<'a>(AcceptEnv<'a>);
+pub struct AcceptEnvDirective<'a>(Vec<AcceptEnv<'a>>);
 impl<'a> crate::Parse<'a> for AcceptEnvDirective<'a> {
     type Output = AcceptEnvDirective<'a>;
     fn parse(input: &'a str) -> IResult<&'a str, Self::Output> {
         map(
-            preceded(tag_no_case("AcceptEnv"), AcceptEnv::parse),
+            preceded(tag_no_case("AcceptEnv"), many1(AcceptEnv::parse)),
             |value| AcceptEnvDirective(value),
         )(input)
     }

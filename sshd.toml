@@ -114,3 +114,4 @@
     "should be taken in the use of this directive.  The default",
     "is not to accept any environment variables.",
   ]
+  directive_type = "Multiple"

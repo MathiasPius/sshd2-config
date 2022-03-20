@@ -89,7 +89,8 @@ mod tests {
     #[test]
     fn test_acceptenv() {
         let config = Config::parse(indoc! {"
-            AcceptEnv LC_LANG
+            AcceptEnv LC_LANG LC_MONEY
+            AcceptEnv Second Line
         "});
 
         println!("{:#?}", config);

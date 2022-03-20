@@ -192,7 +192,26 @@ fn main() {
                     }
                 }
             },
-            DirectiveType::Multiple => todo!(),
+            DirectiveType::Multiple => quote! {
+                #[derive(Debug, Clone, PartialEq, Eq, PartialOrd, Ord)]
+                pub struct #directive_ident #lifetime(Vec<#name_ident #lifetime>);
+
+                impl<'a> crate::Parse<'a> for #directive_ident #lifetime {
+                    type Output = #directive_ident #lifetime;
+                    fn parse(input: &'a str) -> IResult<&'a str, Self::Output> {
+                        map(preceded(
+                            tag_no_case(#name),
+                            many1(#name_ident::parse)
+                        ), |value| #directive_ident(value))(input)
+                    }
+                }
+
+                impl<'a> From<#directive_ident #lifetime> for Directive<'a> {
+                    fn from(directive: #directive_ident #lifetime) -> Self {
+                        Directive::#name_ident(directive)
+                    }
+                }
+            },
             DirectiveType::SingleCommaSeparated => todo!(),
             DirectiveType::MultipleCommaSeparated => todo!(),
         };
