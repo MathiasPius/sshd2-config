@@ -19,26 +19,47 @@ use std::borrow::Cow;
 #[doc = "See also: [CASignatureAlgorithms](https://man.openbsd.org/sshd_config#CASignatureAlgorithms)"]
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord)]
 pub enum CASignatureAlgorithms {
+    #[doc = "ssh-ed25519"]
     SshEd25519,
+    #[doc = "ssh-ed25519-cert-v01@openssh.com"]
     SshEd25519CertV01OpensshCom,
+    #[doc = "sk-ssh-ed25519@openssh.com"]
     SkSshEd25519OpensshCom,
+    #[doc = "sk-ssh-ed25519-cert-v01@openssh.com"]
     SkSshEd25519CertV01OpensshCom,
+    #[doc = "ssh-rsa"]
     SshRsa,
+    #[doc = "rsa-sha2-256"]
     RsaSha2256,
+    #[doc = "rsa-sha2-512"]
     RsaSha2512,
+    #[doc = "ssh-dss"]
     SshDss,
+    #[doc = "ecdsa-sha2-nistp256"]
     EcdsaSha2Nistp256,
+    #[doc = "ecdsa-sha2-nistp384"]
     EcdsaSha2Nistp384,
+    #[doc = "ecdsa-sha2-nistp521"]
     EcdsaSha2Nistp521,
+    #[doc = "sk-ecdsa-sha2-nistp256@openssh.com"]
     SkEcdsaSha2Nistp256OpensshCom,
+    #[doc = "webauthn-sk-ecdsa-sha2-nistp256@openssh.com"]
     WebauthnSkEcdsaSha2Nistp256OpensshCom,
+    #[doc = "ssh-rsa-cert-v01@openssh.com"]
     SshRsaCertV01OpensshCom,
+    #[doc = "rsa-sha2-256-cert-v01@openssh.com"]
     RsaSha2256CertV01OpensshCom,
+    #[doc = "rsa-sha2-512-cert-v01@openssh.com"]
     RsaSha2512CertV01OpensshCom,
+    #[doc = "ssh-dss-cert-v01@openssh.com"]
     SshDssCertV01OpensshCom,
+    #[doc = "ecdsa-sha2-nistp256-cert-v01@openssh.com"]
     EcdsaSha2Nistp256CertV01OpensshCom,
+    #[doc = "ecdsa-sha2-nistp384-cert-v01@openssh.com"]
     EcdsaSha2Nistp384CertV01OpensshCom,
+    #[doc = "ecdsa-sha2-nistp521-cert-v01@openssh.com"]
     EcdsaSha2Nistp521CertV01OpensshCom,
+    #[doc = "sk-ecdsa-sha2-nistp256-cert-v01@openssh.com"]
     SkEcdsaSha2Nistp256CertV01OpensshCom,
 }
 

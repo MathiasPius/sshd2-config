@@ -52,10 +52,10 @@ impl Deref for TypedValue {
 }
 
 impl TypedValue {
-    pub fn comment(&self) -> Option<&'static str> {
+    pub fn comment(&self) -> &'static str {
         match self {
-            TypedValue::Plain(_) => None,
-            TypedValue::Commented { comment, .. } => *comment,
+            TypedValue::Plain(inner) => inner,
+            TypedValue::Commented { comment, value } => comment.unwrap_or(value),
         }
     }
 
@@ -74,16 +74,10 @@ impl TypedValue {
 
     pub fn as_enum_entry(&self) -> TokenStream {
         let value = self.as_ident();
-
-        if let Some(comment) = self.comment() {
-            quote! {
-                #[doc = #comment]
-                #value
-            }
-        } else {
-            quote! {
-                #value
-            }
+        let comment = self.comment();
+        quote! {
+            #[doc = #comment]
+            #value
         }
     }
 }

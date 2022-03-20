@@ -19,15 +19,25 @@ use std::borrow::Cow;
 #[doc = "See also: [Ciphers](https://man.openbsd.org/sshd_config#Ciphers)"]
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord)]
 pub enum Ciphers {
+    #[doc = "3des-cbc"]
     X3DesCbc,
+    #[doc = "aes128-cbc"]
     Aes128Cbc,
+    #[doc = "aes192-cbc"]
     Aes192Cbc,
+    #[doc = "aes256-cbc"]
     Aes256Cbc,
+    #[doc = "aes128-ctr"]
     Aes128Ctr,
+    #[doc = "aes192-ctr"]
     Aes192Ctr,
+    #[doc = "aes256-ctr"]
     Aes256Ctr,
+    #[doc = "aes128-gcm@openssh.com"]
     Aes128GcmOpensshCom,
+    #[doc = "aes256-gcm@openssh.com"]
     Aes256GcmOpensshCom,
+    #[doc = "chacha20-poly1305@openssh.com"]
     Chacha20Poly1305OpensshCom,
 }
 

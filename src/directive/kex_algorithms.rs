@@ -28,18 +28,31 @@ use std::borrow::Cow;
 #[doc = "See also: [KexAlgorithms](https://man.openbsd.org/sshd_config#KexAlgorithms)"]
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord)]
 pub enum KexAlgorithms {
+    #[doc = "curve25519-sha256"]
     Curve25519Sha256,
+    #[doc = "curve25519-sha256@libssh.org"]
     Curve25519Sha256LibsshOrg,
+    #[doc = "diffie-hellman-group1-sha1"]
     DiffieHellmanGroup1Sha1,
+    #[doc = "diffie-hellman-group14-sha12"]
     DiffieHellmanGroup14Sha12,
+    #[doc = "diffie-hellman-group14-sha256"]
     DiffieHellmanGroup14Sha256,
+    #[doc = "diffie-hellman-group16-sha512"]
     DiffieHellmanGroup16Sha512,
+    #[doc = "diffie-hellman-group18-sha512"]
     DiffieHellmanGroup18Sha512,
+    #[doc = "diffie-hellman-group-exchange-sha1"]
     DiffieHellmanGroupExchangeSha1,
+    #[doc = "diffie-hellman-group-exchange-sha256"]
     DiffieHellmanGroupExchangeSha256,
+    #[doc = "ecdh-sha2-nistp256"]
     EcdhSha2Nistp256,
+    #[doc = "ecdh-sha2-nistp384"]
     EcdhSha2Nistp384,
+    #[doc = "ecdh-sha2-nistp521"]
     EcdhSha2Nistp521,
+    #[doc = "sntrup761x25519-sha512@openssh.com"]
     Sntrup761X25519Sha512OpensshCom,
 }
 

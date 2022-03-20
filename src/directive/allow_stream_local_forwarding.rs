@@ -19,10 +19,15 @@ use std::borrow::Cow;
 #[doc = "See also: [AllowStreamLocalForwarding](https://man.openbsd.org/sshd_config#AllowStreamLocalForwarding)"]
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord)]
 pub enum AllowStreamLocalForwarding {
+    #[doc = "yes"]
     Yes,
+    #[doc = "no"]
     No,
+    #[doc = "all"]
     All,
+    #[doc = "local"]
     Local,
+    #[doc = "remote"]
     Remote,
 }
 

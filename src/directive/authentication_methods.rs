@@ -35,8 +35,11 @@ pub enum AuthenticationMethods {
     KeyboardInteractivePam,
     #[doc = "Keyboard Interactive"]
     KeyboardInteractive,
+    #[doc = "gssapi-with-mic"]
     GssapiWithMic,
+    #[doc = "hostbased"]
     Hostbased,
+    #[doc = "none"]
     None,
 }
 

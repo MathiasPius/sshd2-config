@@ -19,8 +19,11 @@ use std::borrow::Cow;
 #[doc = "See also: [AddressFamily](https://man.openbsd.org/sshd_config#AddressFamily)"]
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord)]
 pub enum AddressFamily {
+    #[doc = "any"]
     Any,
+    #[doc = "inet"]
     Inet,
+    #[doc = "inet6"]
     Inet6,
 }
 

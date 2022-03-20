@@ -19,7 +19,9 @@ use std::borrow::Cow;
 #[doc = "See also: [AllowAgentForwarding](https://man.openbsd.org/sshd_config#AllowAgentForwarding)"]
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord)]
 pub enum AllowAgentForwarding {
+    #[doc = "yes"]
     Yes,
+    #[doc = "no"]
     No,
 }
 
