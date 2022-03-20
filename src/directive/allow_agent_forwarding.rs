@@ -1,14 +1,15 @@
 //! Generated file, do not edit by hand
 
-
+#[allow(unused_imports)]
+use crate::Modifier;
 #[allow(unused_imports)]
 use nom::{
     branch::alt,
     bytes::complete::{tag, tag_no_case, take_until, take_while1},
-    character::complete::{alphanumeric1, space0, space1},
-    combinator::{map, not, value},
+    character::complete::{alphanumeric1, one_of, space0, space1},
+    combinator::{into, map, not, opt, value},
     multi::{many1, separated_list1},
-    sequence::preceded,
+    sequence::{preceded, tuple},
     IResult,
 };
 #[allow(unused_imports)]
@@ -47,6 +48,6 @@ impl<'a> crate::Parse<'a> for AllowAgentForwarding {
 
 impl<'a> From<AllowAgentForwarding> for crate::Directive<'a> {
     fn from(directive: AllowAgentForwarding) -> Self {
-        crate::Directive::AllowAgentForwarding(directive)
+        crate::directive::Directive::AllowAgentForwarding(directive)
     }
 }

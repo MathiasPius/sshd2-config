@@ -1,6 +1,5 @@
 //! Generated file, do not edit by hand
 
-
 mod accept_env;
 mod address_family;
 mod allow_agent_forwarding;
@@ -9,7 +8,7 @@ mod authentication_methods;
 mod ciphers;
 mod kex_algorithms;
 
-use crate::Parse;
+use crate::{Modifier, Parse};
 pub use accept_env::*;
 pub use address_family::*;
 pub use allow_agent_forwarding::*;
@@ -27,11 +26,11 @@ use nom::{
 
 #[derive(Debug, PartialEq, Eq, PartialOrd, Ord)]
 pub enum Directive<'a> {
+    AcceptEnv(Vec<AcceptEnv<'a>>),
+    KexAlgorithms(Modifier<Vec<KexAlgorithms>>),
+    AllowAgentForwarding(AllowAgentForwarding),
     Ciphers(Vec<Ciphers>),
     AddressFamily(AddressFamily),
-    AcceptEnv(Vec<AcceptEnv<'a>>),
-    AllowAgentForwarding(AllowAgentForwarding),
-    KexAlgorithms(Vec<KexAlgorithms>),
     AuthenticationMethods(Vec<Vec<AuthenticationMethods>>),
     AllowTcpForwarding(AllowTcpForwarding),
 }
@@ -46,11 +45,11 @@ impl<'a> Parse<'a> for Directive<'a> {
     type Output = Self;
     fn parse(input: &'a str) -> IResult<&'a str, Self::Output> {
         alt((
+            directive::<AcceptEnv>,
+            directive::<KexAlgorithms>,
+            directive::<AllowAgentForwarding>,
             directive::<Ciphers>,
             directive::<AddressFamily>,
-            directive::<AcceptEnv>,
-            directive::<AllowAgentForwarding>,
-            directive::<KexAlgorithms>,
             directive::<AuthenticationMethods>,
             directive::<AllowTcpForwarding>,
         ))(input)

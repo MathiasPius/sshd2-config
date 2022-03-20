@@ -50,9 +50,11 @@ impl ValueFormat {
             ValueFormat::Typed(_) => quote! {
                 #name_ident
             },
-            ValueFormat::Modifier(inner)
-            | ValueFormat::CommaSeparated(inner)
-            | ValueFormat::SpaceSeparated(inner) => {
+            ValueFormat::Modifier(inner) => {
+                let inner_type = inner.output_type(name_ident);
+                quote! { Modifier<#inner_type> }
+            }
+            ValueFormat::CommaSeparated(inner) | ValueFormat::SpaceSeparated(inner) => {
                 let inner_type = inner.output_type(name_ident);
                 quote! { Vec<#inner_type> }
             }
@@ -76,11 +78,7 @@ impl ValueFormat {
         match self {
             ValueFormat::Wildcard => {
                 quote! {
-                    #(
-                        #[doc = #comments]
-                        #[doc = ""]
-                        #[doc = ""]
-                    )*
+                    #(#[doc = #comments])*
                     #[doc = #reference]
                     #[derive(Debug, Clone, PartialEq, Eq, PartialOrd, Ord)]
                     pub struct #name_ident<'a>(Cow<'a, str>);
@@ -115,7 +113,7 @@ impl ValueFormat {
         quote! {
             impl<'a> From<#output_type> for crate::Directive<'a> {
                 fn from(directive: #output_type) -> Self {
-                    crate::Directive::#name_ident(directive)
+                    crate::directive::Directive::#name_ident(directive)
                 }
             }
         }
@@ -158,7 +156,7 @@ impl ValueFormat {
             ValueFormat::Modifier(inner) => {
                 let inner_pattern = inner.parse_impl_inner(name_ident);
                 quote! {
-                    tuple(opt(one_of("+-")), #inner_pattern)
+                    map(tuple((opt(one_of("+-")), #inner_pattern)), Modifier::from)
                 }
             }
         }
@@ -243,15 +241,17 @@ fn main() {
 
     let includes = quote! {
         #[allow(unused_imports)]
+        use crate::Modifier;
+        #[allow(unused_imports)]
         use std::borrow::Cow;
         #[allow(unused_imports)]
         use nom::{
-            character::complete::{space0, space1, alphanumeric1},
-            sequence::preceded,
+            character::complete::{space0, space1, alphanumeric1, one_of},
+            sequence::{tuple, preceded},
             multi::{separated_list1, many1},
             branch::alt,
             bytes::complete::{tag, take_until, take_while1, tag_no_case},
-            combinator::{map, value, not},
+            combinator::{map, value, not, opt, into},
             IResult
         };
     };
@@ -314,7 +314,7 @@ fn main() {
 
     let uses = quote! {
         use nom::IResult;
-        use crate::Parse;
+        use crate::{Modifier, Parse};
 
         use nom::{
             branch::alt,
