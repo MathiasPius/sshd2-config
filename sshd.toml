@@ -274,3 +274,111 @@ The default value is 3. If [`ClientAliveInterval`] is set to 15, and [`ClientAli
 
 See PATTERNS in [ssh_config(5)](https://man.openbsd.org/ssh_config.5#PATTERNS) for more information on patterns.""",
   ]
+  values = "wildcard"
+
+[directives.DenyUsers]
+  comment = [
+    """This keyword can be followed by a list of user name patterns, separated by spaces. Login is disallowed for user names that match one of the patterns. Only user names are valid; a numerical user ID is not recognized. By default, login is allowed for all users. If the pattern takes the form USER@HOST then USER and HOST are separately checked, restricting logins to particular users from particular hosts. HOST criteria may additionally contain addresses to match in CIDR address/masklen format. The allow/deny users directives are processed in the following order: [`DenyUsers`], [`AllowUsers`].
+
+See PATTERNS in [ssh_config(5)](https://man.openbsd.org/ssh_config.5#PATTERNS) for more information on patterns.""",
+  ]
+  values = "wildcard"
+
+[directives.DisableForwarding]
+  comment = [
+    """Disables all forwarding features, including X11, [ssh-agent(1)](https://man.openbsd.org/ssh-agent.1), TCP and StreamLocal. This option overrides all other forwarding-related options and may simplify restricted configurations.""",
+  ]
+  values = { typed = ["yes", "no"] }
+
+[directives.ExposeAuthInfo]
+  comment = [
+    """Writes a temporary file containing a list of authentication methods and public credentials (e.g. keys) used to authenticate the user. The location of the file is exposed to the user session through the `SSH_USER_AUTH` environment variable. The default is **no**.""",
+  ]
+  values = { typed = ["yes", "no"] }
+
+[directives.FingerprintHash]
+  comment = [
+    """Specifies the hash algorithm used when logging key fingerprints. Valid options are: **md5** and **sha256**. The default is **sha256**.""",
+  ]
+  values = { typed = ["md5", "sha256"] }
+
+[directives.ForceCommand]
+  comment = [
+    """Forces the execution of the command specified by [`ForceCommand`], ignoring any command supplied by the client and `~/.ssh/rc` if present. The command is invoked by using the user's login shell with the -c option. This applies to shell, command, or subsystem execution. It is most useful inside a [`Match`] block. The command originally supplied by the client is available in the `SSH_ORIGINAL_COMMAND` environment variable. Specifying a command of **internal-sftp** will force the use of an in-process SFTP server that requires no support files when used with [`ChrootDirectory`]. The default is **none**.""",
+  ]
+  values = "wildcard"
+
+[directives.GatewayPorts]
+  comment = [
+    """Specifies whether remote hosts are allowed to connect to ports forwarded for the client. By default, [sshd(8)](https://man.openbsd.org/sshd.8) binds remote port forwardings to the loopback address. This prevents other remote hosts from connecting to forwarded ports. GatewayPorts can be used to specify that sshd should allow remote port forwardings to bind to non-loopback addresses, thus allowing other hosts to connect. The argument may be **no** to force remote port forwardings to be available to the local host only, **yes** to force remote port forwardings to bind to the wildcard address, or **clientspecified** to allow the client to select the address to which the forwarding is bound. The default is **no**.""",
+  ]
+  values = { typed = ["no", "yes", "clientspecified"] }
+
+
+[directives.GSSAPIAuthentication]
+  comment = [
+    """Specifies whether user authentication based on GSSAPI is allowed. The default is **no**.""",
+  ]
+  values = { typed = ["yes", "no"] }
+
+[directives.GSSAPICleanupCredentials]
+  comment = [
+    """Specifies whether to automatically destroy the user's credentials cache on logout. The default is **yes**.""",
+  ]
+  values = { typed = ["yes", "no"] }
+
+[directives.GSSAPIStrictAcceptorCheck]
+  comment = [
+    """Determines whether to be strict about the identity of the GSSAPI acceptor a client authenticates against. If set to **yes** then the client must authenticate against the host service on the current hostname. If set to **no** then the client may authenticate against any service key stored in the machine's default store. This facility is provided to assist with operation on multi homed machines. The default is **yes**.""",
+  ]
+  values = { typed = ["yes", "no"] }
+
+[directives.HostbasedAcceptedAlgorithms]
+  comment = [
+    """Specifies the signature algorithms that will be accepted for hostbased authentication as a list of comma-separated patterns. Alternately if the specified list begins with a ‘+’ character, then the specified signature algorithms will be appended to the default set instead of replacing them. If the specified list begins with a ‘-’ character, then the specified signature algorithms (including wildcards) will be removed from the default set instead of replacing them. If the specified list begins with a ‘^’ character, then the specified signature algorithms will be placed at the head of the default set. The default for this option is:
+
+* ssh-ed25519-cert-v01@openssh.com
+* ecdsa-sha2-nistp256-cert-v01@openssh.com
+* ecdsa-sha2-nistp384-cert-v01@openssh.com
+* ecdsa-sha2-nistp521-cert-v01@openssh.com
+* sk-ssh-ed25519-cert-v01@openssh.com
+* sk-ecdsa-sha2-nistp256-cert-v01@openssh.com
+* rsa-sha2-512-cert-v01@openssh.com
+* rsa-sha2-256-cert-v01@openssh.com
+* ssh-ed25519
+* ecdsa-sha2-nistp256,ecdsa-sha2-nistp384,ecdsa-sha2-nistp521
+* sk-ssh-ed25519@openssh.com
+* sk-ecdsa-sha2-nistp256@openssh.com
+* rsa-sha2-512,rsa-sha2-256
+
+The list of available signature algorithms may also be obtained using `ssh -Q HostbasedAcceptedAlgorithms`. This was formerly named **HostbasedAcceptedKeyTypes**.""",
+  ]
+  values = { modifier = { comma_separated = { typed = [
+    "ssh-ed25519",
+    "ssh-ed25519-cert-v01@openssh.com",
+    "sk-ssh-ed25519@openssh.com",
+    "sk-ssh-ed25519-cert-v01@openssh.com",
+    "ssh-rsa",
+    "rsa-sha2-256",
+    "rsa-sha2-512",
+    "ssh-dss",
+    "ecdsa-sha2-nistp256",
+    "ecdsa-sha2-nistp384",
+    "ecdsa-sha2-nistp521",
+    "sk-ecdsa-sha2-nistp256@openssh.com",
+    "webauthn-sk-ecdsa-sha2-nistp256@openssh.com",
+    "ssh-rsa-cert-v01@openssh.com",
+    "rsa-sha2-256-cert-v01@openssh.com",
+    "rsa-sha2-512-cert-v01@openssh.com",
+    "ssh-dss-cert-v01@openssh.com",
+    "ecdsa-sha2-nistp256-cert-v01@openssh.com",
+    "ecdsa-sha2-nistp384-cert-v01@openssh.com",
+    "ecdsa-sha2-nistp521-cert-v01@openssh.com",
+    "sk-ecdsa-sha2-nistp256-cert-v01@openssh.com",
+  ] } } }
+
+[directives.HostbasedAuthentication]
+  comment = [
+    """Specifies whether rhosts or `/etc/hosts.equiv` authentication together with successful public key client host authentication is allowed (host-based authentication). The default is **no**.""",
+  ]
+  values = { typed = ["yes", "no"] }

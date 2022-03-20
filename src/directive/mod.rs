@@ -23,6 +23,17 @@ mod client_alive_count_max;
 mod client_alive_interval;
 mod compression;
 mod deny_groups;
+mod deny_users;
+mod disable_forwarding;
+mod expose_auth_info;
+mod fingerprint_hash;
+mod force_command;
+mod gateway_ports;
+mod gssapi_authentication;
+mod gssapi_cleanup_credentials;
+mod gssapi_strict_acceptor_check;
+mod hostbased_accepted_algorithms;
+mod hostbased_authentication;
 mod kex_algorithms;
 
 use crate::{Modifier, Parse};
@@ -48,6 +59,17 @@ pub use client_alive_count_max::*;
 pub use client_alive_interval::*;
 pub use compression::*;
 pub use deny_groups::*;
+pub use deny_users::*;
+pub use disable_forwarding::*;
+pub use expose_auth_info::*;
+pub use fingerprint_hash::*;
+pub use force_command::*;
+pub use gateway_ports::*;
+pub use gssapi_authentication::*;
+pub use gssapi_cleanup_credentials::*;
+pub use gssapi_strict_acceptor_check::*;
+pub use hostbased_accepted_algorithms::*;
+pub use hostbased_authentication::*;
 pub use kex_algorithms::*;
 use nom::IResult;
 use nom::{
@@ -59,29 +81,40 @@ use nom::{
 
 #[derive(Debug, PartialEq, Eq, PartialOrd, Ord)]
 pub enum Directive<'a> {
-    ClientAliveCountMax(ClientAliveCountMax),
-    AllowUsers(Vec<AllowUsers<'a>>),
-    AllowGroups(Vec<AllowGroups<'a>>),
-    AuthorizedPrincipalsFile(AuthorizedPrincipalsFile<'a>),
     AcceptEnv(Vec<AcceptEnv<'a>>),
-    AllowAgentForwarding(AllowAgentForwarding),
-    AuthenticationMethods(Vec<Vec<AuthenticationMethods>>),
-    AddressFamily(AddressFamily),
     Banner(Banner<'a>),
-    KexAlgorithms(Modifier<Vec<KexAlgorithms>>),
-    AuthorizedKeysCommandUser(AuthorizedKeysCommandUser<'a>),
-    Compression(Compression),
-    AuthorizedKeysFile(AuthorizedKeysFile<'a>),
-    AuthorizedPrincipalsCommandUser(AuthorizedPrincipalsCommandUser<'a>),
-    Ciphers(Modifier<Vec<Ciphers>>),
-    ChrootDirectory(ChrootDirectory<'a>),
-    ClientAliveInterval(ClientAliveInterval),
-    AuthorizedKeysCommand(AuthorizedKeysCommand<'a>),
-    CASignatureAlgorithms(Modifier<Vec<CASignatureAlgorithms>>),
-    AuthorizedPrincipalsCommand(AuthorizedPrincipalsCommand<'a>),
-    DenyGroups(DenyGroups<'a>),
     AllowTcpForwarding(AllowTcpForwarding),
+    GatewayPorts(GatewayPorts),
+    ChrootDirectory(ChrootDirectory<'a>),
+    Ciphers(Modifier<Vec<Ciphers>>),
+    DisableForwarding(DisableForwarding),
+    KexAlgorithms(Modifier<Vec<KexAlgorithms>>),
+    CASignatureAlgorithms(Modifier<Vec<CASignatureAlgorithms>>),
+    AuthorizedKeysFile(AuthorizedKeysFile<'a>),
+    ClientAliveInterval(ClientAliveInterval),
+    Compression(Compression),
+    ExposeAuthInfo(ExposeAuthInfo),
+    HostbasedAuthentication(HostbasedAuthentication),
+    GSSAPIAuthentication(GSSAPIAuthentication),
+    AddressFamily(AddressFamily),
+    AuthorizedPrincipalsCommandUser(AuthorizedPrincipalsCommandUser<'a>),
+    ForceCommand(ForceCommand<'a>),
+    ClientAliveCountMax(ClientAliveCountMax),
+    AuthorizedPrincipalsCommand(AuthorizedPrincipalsCommand<'a>),
+    AllowAgentForwarding(AllowAgentForwarding),
+    DenyGroups(DenyGroups<'a>),
+    AuthorizedKeysCommandUser(AuthorizedKeysCommandUser<'a>),
     AllowStreamLocalForwarding(AllowStreamLocalForwarding),
+    AuthorizedKeysCommand(AuthorizedKeysCommand<'a>),
+    AuthorizedPrincipalsFile(AuthorizedPrincipalsFile<'a>),
+    DenyUsers(DenyUsers<'a>),
+    AuthenticationMethods(Vec<Vec<AuthenticationMethods>>),
+    FingerprintHash(FingerprintHash),
+    GSSAPIStrictAcceptorCheck(GSSAPIStrictAcceptorCheck),
+    AllowGroups(Vec<AllowGroups<'a>>),
+    AllowUsers(Vec<AllowUsers<'a>>),
+    HostbasedAcceptedAlgorithms(Modifier<Vec<HostbasedAcceptedAlgorithms>>),
+    GSSAPICleanupCredentials(GSSAPICleanupCredentials),
 }
 
 fn directive<'a, T: Parse<'a>>(input: &'a str) -> IResult<&'a str, Directive>
@@ -95,31 +128,42 @@ impl<'a> Parse<'a> for Directive<'a> {
     fn parse(input: &'a str) -> IResult<&'a str, Self::Output> {
         alt((
             alt((
-                directive::<ClientAliveCountMax>,
-                directive::<AllowUsers>,
-                directive::<AllowGroups>,
-                directive::<AuthorizedPrincipalsFile>,
                 directive::<AcceptEnv>,
-                directive::<AllowAgentForwarding>,
-                directive::<AuthenticationMethods>,
-                directive::<AddressFamily>,
                 directive::<Banner>,
-                directive::<KexAlgorithms>,
-                directive::<AuthorizedKeysCommandUser>,
-                directive::<Compression>,
-                directive::<AuthorizedKeysFile>,
-                directive::<AuthorizedPrincipalsCommandUser>,
-                directive::<Ciphers>,
+                directive::<AllowTcpForwarding>,
+                directive::<GatewayPorts>,
                 directive::<ChrootDirectory>,
-                directive::<ClientAliveInterval>,
-                directive::<AuthorizedKeysCommand>,
+                directive::<Ciphers>,
+                directive::<DisableForwarding>,
+                directive::<KexAlgorithms>,
                 directive::<CASignatureAlgorithms>,
+                directive::<AuthorizedKeysFile>,
+                directive::<ClientAliveInterval>,
+                directive::<Compression>,
+                directive::<ExposeAuthInfo>,
+                directive::<HostbasedAuthentication>,
+                directive::<GSSAPIAuthentication>,
+                directive::<AddressFamily>,
+                directive::<AuthorizedPrincipalsCommandUser>,
+                directive::<ForceCommand>,
+                directive::<ClientAliveCountMax>,
                 directive::<AuthorizedPrincipalsCommand>,
             )),
             alt((
+                directive::<AllowAgentForwarding>,
                 directive::<DenyGroups>,
-                directive::<AllowTcpForwarding>,
+                directive::<AuthorizedKeysCommandUser>,
                 directive::<AllowStreamLocalForwarding>,
+                directive::<AuthorizedKeysCommand>,
+                directive::<AuthorizedPrincipalsFile>,
+                directive::<DenyUsers>,
+                directive::<AuthenticationMethods>,
+                directive::<FingerprintHash>,
+                directive::<GSSAPIStrictAcceptorCheck>,
+                directive::<AllowGroups>,
+                directive::<AllowUsers>,
+                directive::<HostbasedAcceptedAlgorithms>,
+                directive::<GSSAPICleanupCredentials>,
             )),
         ))(input)
     }
