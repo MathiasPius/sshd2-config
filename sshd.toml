@@ -1,53 +1,62 @@
 [directives.AcceptEnv]
   comment = [
-    "Specifies what environment variables sent by the client will be copied into the session's environ(7). See SendEnv and SetEnv in ssh_config(5) for how to configure the client. The TERM environment variable is always accepted whenever the client requests a pseudo-terminal as it is required by the protocol. Variables are specified by name, which may contain the wildcard characters ‘*’ and ‘?’. Multiple environment variables may be separated by whitespace or spread across multiple AcceptEnv directives. Be warned that some environment variables could be used to bypass restricted user environments. For this reason, care should be taken in the use of this directive. The default is not to accept any environment variables.",
+    """Specifies what environment variables sent by the client will be copied into the session's environ(7). See **SendEnv** and **SetEnv** in [ssh_config(5)](https://man.openbsd.org/ssh_config.5#SendEnv) for how to configure the client. The TERM environment variable is always accepted whenever the client requests a pseudo-terminal as it is required by the protocol. Variables are specified by name, which may contain the wildcard characters ‘**’ and ‘?’. Multiple environment variables may be separated by whitespace or spread across multiple AcceptEnv directives. Be warned that some environment variables could be used to bypass restricted user environments. For this reason, care should be taken in the use of this directive. The default is not to accept any environment variables.""",
   ]
   values = { space_separated = "wildcard" }
 
 [directives.AddressFamily]
   comment = [
-    "Specifies which address family should be used by sshd(8). Valid arguments are any (the default), inet (use IPv4 only), or inet6 (use IPv6 only).",
+    """Specifies which address family should be used by [sshd(8)](https://man.openbsd.org/sshd.8). Valid arguments are **any** (the default), **inet** (use IPv4 only), or **inet6** (use IPv6 only).""",
   ]
   values = { typed = ["any", "inet", "inet6"] }
 
 [directives.AllowAgentForwarding]
   comment = [
-    "Specifies whether ssh-agent(1) forwarding is permitted. The default is yes. Note that disabling agent forwarding does not improve security unless users are also denied shell access, as they can always install their own forwarders.",
+    """Specifies whether [ssh-agent(1)](https://man.openbsd.org/ssh-agent.1) forwarding is permitted. The default is **yes**. Note that disabling agent forwarding does not improve security unless users are also denied shell access, as they can always install their own forwarders.""",
   ]
   values = { typed = ["yes", "no"] }
 
 [directives.AllowGroups]
   comment = [
-    "This keyword can be followed by a list of group name patterns, separated by spaces. If specified, login is allowed only for users whose primary group or supplementary group list matches one of the patterns. Only group names are valid; a numerical group ID is not recognized. By default, login is allowed for all groups. The allow/deny groups directives are processed in the following order: DenyGroups, AllowGroups.",
+    """This keyword can be followed by a list of group name patterns, separated by spaces. If specified, login is allowed only for users whose primary group or supplementary group list matches one of the patterns. Only group names are valid; a numerical group ID is not recognized. By default, login is allowed for all groups. The allow/deny groups directives are processed in the following order: [`DenyGroups`], [`AllowGroups`].
+
+See PATTERNS in [ssh_config(5)](https://man.openbsd.org/ssh_config.5#PATTERNS) for more information on patterns.""",
   ]
   values = { space_separated = "wildcard" }
 
 [directives.AllowStreamLocalForwarding]
   comment = [
-    "Specifies whether StreamLocal (Unix-domain socket) forwarding is permitted. The available options are yes (the default) or all to allow StreamLocal forwarding, no to prevent all StreamLocal forwarding, local to allow local (from the perspective of ssh(1)) forwarding only or remote to allow remote forwarding only. Note that disabling StreamLocal forwarding does not improve security unless users are also denied shell access, as they can always install their own forwarders.",
+    """Specifies whether StreamLocal (Unix-domain socket) forwarding is permitted. The available options are **yes** (the default) or **all** to allow StreamLocal forwarding, **no** to prevent all StreamLocal forwarding, **local** to allow local (from the perspective of [ssh(1)](https://man.openbsd.org/ssh.1)) forwarding only or **remote** to allow remote forwarding only. Note that disabling StreamLocal forwarding does not improve security unless users are also denied shell access, as they can always install their own forwarders.""",
   ]
   values = { typed = ["yes", "no", "all", "local", "remote"] }
 
 [directives.AllowTcpForwarding]
   comment = [
-    "Specifies whether TCP forwarding is permitted. The available options are yes (the default) or all to allow TCP forwarding, no to prevent all TCP forwarding, local to allow local (from the perspective of ssh(1)) forwarding only or remote to allow remote forwarding only. Note that disabling TCP forwarding does not improve security unless users are also denied shell access, as they can always install their own forwarders.",
+    """Specifies whether TCP forwarding is permitted. The available options are **yes** (the default) or **all** to allow TCP forwarding, **no** to prevent all TCP forwarding, **local** to allow local (from the perspective of [ssh(1)](https://man.openbsd.org/ssh.1)) forwarding only or **remote** to allow remote forwarding only. Note that disabling TCP forwarding does not improve security unless users are also denied shell access, as they can always install their own forwarders.""",
   ]
   values = { typed = ["yes", "no", "all", "local", "remote"] }
 
 [directives.AllowUsers]
   comment = [
-    "This keyword can be followed by a list of user name patterns, separated by spaces. If specified, login is allowed only for user names that match one of the patterns. Only user names are valid; a numerical user ID is not recognized. By default, login is allowed for all users. If the pattern takes the form USER@HOST then USER and HOST are separately checked, restricting logins to particular users from particular hosts. HOST criteria may additionally contain addresses to match in CIDR address/masklen format. The allow/deny users directives are processed in the following order: DenyUsers, AllowUsers.",
+    """This keyword can be followed by a list of user name patterns, separated by spaces. If specified, login is allowed only for user names that match one of the patterns. Only user names are valid; a numerical user ID is not recognized. By default, login is allowed for all users. If the pattern takes the form USER@HOST then USER and HOST are separately checked, restricting logins to particular users from particular hosts. HOST criteria may additionally contain addresses to match in CIDR address/masklen format. The allow/deny users directives are processed in the following order: [`DenyUsers`], [`AllowUsers`].
+
+See PATTERNS in [ssh_config(5)](https://man.openbsd.org/ssh_config.5#PATTERNS) for more information on patterns.""",
   ]
   values = { space_separated = "wildcard" }
 
 [directives.AuthenticationMethods]
   comment = [
-    "Specifies the authentication methods that must be successfully completed for a user to be granted access. This option must be followed by one or more lists of comma-separated authentication method names, or by the single string any to indicate the default behaviour of accepting any single authentication method. If the default is overridden, then successful authentication requires completion of every method in at least one of these lists.",
-    "For example, 'publickey,password publickey,keyboard-interactive' would require the user to complete public key authentication, followed by either password or keyboard interactive authentication. Only methods that are next in one or more lists are offered at each stage, so for this example it would not be possible to attempt password or keyboard-interactive authentication before public key.",
-    "For keyboard interactive authentication it is also possible to restrict authentication to a specific device by appending a colon followed by the device identifier bsdauth, pam, or skey, depending on the server configuration. For example, 'keyboard-interactive:bsdauth' would restrict keyboard interactive authentication to the bsdauth device.",
-    "If the publickey method is listed more than once, sshd(8) verifies that keys that have been used successfully are not reused for subsequent authentications. For example, 'publickey,publickey' requires successful authentication using two different public keys.",
-    "Note that each authentication method listed should also be explicitly enabled in the configuration.",
-    "The available authentication methods are: 'gssapi-with-mic', 'hostbased', 'keyboard-interactive', 'none' (used for access to password-less accounts when PermitEmptyPasswords is enabled), 'password' and 'publickey'.",
+    """Specifies the authentication methods that must be successfully completed for a user to be granted access. This option must be followed by one or more lists of comma-separated authentication method names, or by the single string any to indicate the default behaviour of accepting any single authentication method. If the default is overridden, then successful authentication requires completion of every method in at least one of these lists.
+
+For example, "publickey,password publickey,keyboard-interactive" would require the user to complete public key authentication, followed by either password or keyboard interactive authentication. Only methods that are next in one or more lists are offered at each stage, so for this example it would not be possible to attempt password or keyboard-interactive authentication before public key.
+
+For keyboard interactive authentication it is also possible to restrict authentication to a specific device by appending a colon followed by the device identifier **bsdauth**, **pam**, or **skey**, depending on the server configuration. For example, "keyboard-interactive:bsdauth" would restrict keyboard interactive authentication to the bsdauth device.
+
+If the publickey method is listed more than once, [sshd(8)](https://man.openbsd.org/sshd.8) verifies that keys that have been used successfully are not reused for subsequent authentications. For example, "publickey,publickey" requires successful authentication using two different public keys.
+
+Note that each authentication method listed should also be explicitly enabled in the configuration.
+
+The available authentication methods are: **gssapi-with-mic**, **hostbased**, **keyboard-interactive**, **none** (used for access to password-less accounts when PermitEmptyPasswords is enabled), **password** and **publickey**.""",
   ]
   values = { space_separated = { comma_separated = { typed = [
     { value = "any", comment = "Allow authentication by any method." },
@@ -59,29 +68,139 @@
     { value = "keyboard-interactive:pam", comment = "Keyboard Interactive via PAM device" },
     { value = "keyboard-interactive", comment = "Keyboard Interactive" },
     { value = "gssapi-with-mic" },
-    { value = "hostbased"},
-    { value = "none"}
+    { value = "hostbased" },
+    { value = "none" },
   ] } } }
 
 [directives.AuthorizedKeysCommand]
-  comment = ["Specifies a program to be used to look up the user's public keys. The program must be owned by root, not writable by group or others and specified by an absolute path. Arguments to AuthorizedKeysCommand accept the tokens described in the TOKENS section. If no arguments are specified then the username of the target user is used.",
-  "The program should produce on standard output zero or more lines of authorized_keys output (see AUTHORIZED_KEYS in sshd(8)). AuthorizedKeysCommand is tried after the usual AuthorizedKeysFile files and will not be executed if a matching key is found there. By default, no AuthorizedKeysCommand is run."
+  comment = [
+    """Specifies a program to be used to look up the user's public keys. The program must be owned by root, not writable by group or others and specified by an absolute path. Arguments to [`AuthorizedKeysCommand`] accept the tokens described in the [TOKENS](https://man.openbsd.org/sshd_config#TOKENS) section. If no arguments are specified then the username of the target user is used.
+
+The program should produce on standard output zero or more lines of authorized_keys output (see [AUTHORIZED_KEYS](https://man.openbsd.org/sshd_config#AUTHORIZED_KEYS) in [sshd(8)](https://man.openbsd.org/sshd.8)). [`AuthorizedKeysCommand`] is tried after the usual [`AuthorizedKeysFile`] files and will not be executed if a matching key is found there. By default, no [`AuthorizedKeysCommand`] is run.""",
   ]
   values = "wildcard"
 
+[directives.AuthorizedKeysCommandUser]
+  comment = [
+    """Specifies the user under whose account the [`AuthorizedKeysCommand`] is run. It is recommended to use a dedicated user that has no other role on the host than running authorized keys commands. If [`AuthorizedKeysCommand`] is specified but [`AuthorizedKeysCommandUser`] is not, then [sshd(8)](https://man.openbsd.org/sshd.8) will refuse to start.""",
+  ]
+  values = "wildcard"
+
+[directives.AuthorizedKeysFile]
+  comment = [
+    """Specifies the file that contains the public keys used for user authentication. The format is described in the [AUTHORIZED_KEYS FILE FORMAT](https://man.openbsd.org/sshd.8#AUTHORIZED_KEYS_FILE_FORMAT) section of [sshd(8)](https://man.openbsd.org/sshd.8). Arguments to [`AuthorizedKeysFile`] accept the tokens described in the TOKENS section. After expansion, [`AuthorizedKeysFile`] is taken to be an absolute path or one relative to the user's home directory. Multiple files may be listed, separated by whitespace. Alternately this option may be set to none to skip checking for user keys in files. The default is `.ssh/authorized_keys .ssh/authorized_keys2`.""",
+  ]
+  values = "wildcard"
+
+[directives.AuthorizedPrincipalsCommand]
+  comment = [
+    """Specifies a program to be used to generate the list of allowed certificate principals as per [`AuthorizedPrincipalsFile`]. The program must be owned by root, not writable by group or others and specified by an absolute path. Arguments to [`AuthorizedPrincipalsCommand`] accept the tokens described in the [TOKENS](https://man.openbsd.org/sshd_config#TOKENS) section. If no arguments are specified then the username of the target user is used.
+
+The program should produce on standard output zero or more lines of [`AuthorizedPrincipalsFile`] output. If either [`AuthorizedPrincipalsCommand`] or [`AuthorizedPrincipalsFile`] is specified, then certificates offered by the client for authentication must contain a principal that is listed. By default, no [`AuthorizedPrincipalsCommand`] is run.""",
+  ]
+  values = "wildcard"
+
+[directives.AuthorizedPrincipalsCommandUser]
+  comment = [
+    """Specifies the user under whose account the [`AuthorizedPrincipalsCommand`] is run. It is recommended to use a dedicated user that has no other role on the host than running authorized principals commands. If [`AuthorizedPrincipalsCommand`] is specified but [`AuthorizedPrincipalsCommandUser`] is not, then [sshd(8)](https://man.openbsd.org/sshd.8) will refuse to start.""",
+  ]
+  values = "wildcard"
+
+[directives.AuthorizedPrincipalsFile]
+  comment = [
+    """Specifies a file that lists principal names that are accepted for certificate authentication. When using certificates signed by a key listed in TrustedUserCAKeys, this file lists names, one of which must appear in the certificate for it to be accepted for authentication. Names are listed one per line preceded by key options (as described in [AUTHORIZED_KEYS FILE FORMAT](https://man.openbsd.org/sshd.8#AUTHORIZED_KEYS_FILE_FORMAT) section of [sshd(8)](https://man.openbsd.org/sshd.8)). Empty lines and comments starting with ‘#’ are ignored.
+
+Arguments to [`AuthorizedPrincipalsFile`] accept the tokens described in the [TOKENS](https://man.openbsd.org/sshd_config#TOKENS) section. After expansion, [`AuthorizedPrincipalsFile`] is taken to be an absolute path or one relative to the user's home directory. The default is **none**, i.e. not to use a principals file – in this case, the username of the user must appear in a certificate's principals list for it to be accepted.
+
+Note that [`AuthorizedPrincipalsFile`] is only used when authentication proceeds using a CA listed in [`TrustedUserCAKeys`] and is not consulted for certification authorities trusted via `~/.ssh/authorized_keys`, though the `principals=` key option offers a similar facility (see [sshd(8)](https://man.openbsd.org/sshd.8) for details).""",
+  ]
+  values = "wildcard"
+
+[directives.Banner]
+  comment = [
+    """The contents of the specified file are sent to the remote user before authentication is allowed. If the argument is none then no banner is displayed. By default, no banner is displayed.""",
+  ]
+  values = "wildcard"
+
+[directives.CASignatureAlgorithms]
+  comment = [
+    """Specifies the signature algorithms that will be accepted for hostbased authentication as a list of comma-separated patterns. Alternately if the specified list begins with a ‘+’ character, then the specified signature algorithms will be appended to the default set instead of replacing them. If the specified list begins with a ‘-’ character, then the specified signature algorithms (including wildcards) will be removed from the default set instead of replacing them. If the specified list begins with a ‘^’ character, then the specified signature algorithms will be placed at the head of the default set. The default for this option is:
+    
+* ssh-ed25519-cert-v01@openssh.com
+* ecdsa-sha2-nistp384-cert-v01@openssh.com
+* ecdsa-sha2-nistp256-cert-v01@openssh.com
+* ecdsa-sha2-nistp521-cert-v01@openssh.com
+* sk-ssh-ed25519-cert-v01@openssh.com
+* sk-ecdsa-sha2-nistp256-cert-v01@openssh.com
+* rsa-sha2-512-cert-v01@openssh.com
+* rsa-sha2-256-cert-v01@openssh.com
+* ssh-ed25519
+* ecdsa-sha2-nistp256,ecdsa-sha2-nistp384,ecdsa-sha2-nistp521
+* sk-ssh-ed25519@openssh.com
+* sk-ecdsa-sha2-nistp256@openssh.com
+* rsa-sha2-512,rsa-sha2-256
+
+The list of available signature algorithms may also be obtained using "ssh -Q HostbasedAcceptedAlgorithms". This was formerly named HostbasedAcceptedKeyTypes.""",
+  ]
+  values = { modifier = { comma_separated = { typed = [
+    "ssh-ed25519",
+    "ssh-ed25519-cert-v01@openssh.com",
+    "sk-ssh-ed25519@openssh.com",
+    "sk-ssh-ed25519-cert-v01@openssh.com",
+    "ssh-rsa",
+    "rsa-sha2-256",
+    "rsa-sha2-512",
+    "ssh-dss",
+    "ecdsa-sha2-nistp256",
+    "ecdsa-sha2-nistp384",
+    "ecdsa-sha2-nistp521",
+    "sk-ecdsa-sha2-nistp256@openssh.com",
+    "webauthn-sk-ecdsa-sha2-nistp256@openssh.com",
+    "ssh-rsa-cert-v01@openssh.com",
+    "rsa-sha2-256-cert-v01@openssh.com",
+    "rsa-sha2-512-cert-v01@openssh.com",
+    "ssh-dss-cert-v01@openssh.com",
+    "ecdsa-sha2-nistp256-cert-v01@openssh.com",
+    "ecdsa-sha2-nistp384-cert-v01@openssh.com",
+    "ecdsa-sha2-nistp521-cert-v01@openssh.com",
+    "sk-ecdsa-sha2-nistp256-cert-v01@openssh.com",
+  ] } } }
+
+[directives.ChrootDirectory]
+  comment = ["""Specifies the pathname of a directory to [chroot(2)](https://man.openbsd.org/chroot.2) to after authentication. At session startup [sshd(8)](https://man.openbsd.org/sshd.8) checks that all components of the pathname are root-owned directories which are not writable by any other user or group. After the chroot, [sshd(8)](https://man.openbsd.org/sshd.8) changes the working directory to the user's home directory. Arguments to [`ChrootDirectory`] accept the tokens described in the [TOKENS](https://man.openbsd.org/sshd_config#TOKENS) section.
+
+The [`ChrootDirectory`] must contain the necessary files and directories to support the user's session. For an interactive session this requires at least a shell, typically [sh(1)](https://man.openbsd.org/sh.1), and basic `/dev` nodes such as [null(4)](https://man.openbsd.org/null.4), [zero(4)](https://man.openbsd.org/zero.4), [stdin(4)](https://man.openbsd.org/stdin.4), [stdout(4)](https://man.openbsd.org/stdout.4), [stderr(4)](https://man.openbsd.org/stderr.4), and [tty(4)](https://man.openbsd.org/tty.4) devices. For file transfer sessions using SFTP no additional configuration of the environment is necessary if the in-process sftp-server is used, though sessions which use logging may require `/dev/log` inside the chroot directory on some operating systems (see [sftp-server(8)](https://man.openbsd.org/sftp-server.8) for details).
+
+For safety, it is very important that the directory hierarchy be prevented from modification by other processes on the system (especially those outside the jail). Misconfiguration can lead to unsafe environments which [sshd(8)](https://man.openbsd.org/sshd.8) cannot detect.
+
+The default is **none**, indicating not to [chroot(2)](https://man.openbsd.org/chroot.2)."""]
 
 [directives.Ciphers]
-  comment = [
-    "Specifies the ciphers allowed.  Multiple ciphers must be",
-    "comma-separated.  If the specified list begins with a ‘+’",
-    "character, then the specified ciphers will be appended to",
-    "the default set instead of replacing them.  If the",
-    "specified list begins with a ‘-’ character, then the",
-    "specified ciphers (including wildcards) will be removed",
-    "from the default set instead of replacing them.  If the",
-    "specified list begins with a ‘^’ character, then the",
-    "specified ciphers will be placed at the head of the default",
-    "set.",
+  comment = ["""Specifies the ciphers allowed. Multiple ciphers must be comma-separated. If the specified list begins with a ‘+’ character, then the specified ciphers will be appended to the default set instead of replacing them. If the specified list begins with a ‘-’ character, then the specified ciphers (including wildcards) will be removed from the default set instead of replacing them. If the specified list begins with a ‘^’ character, then the specified ciphers will be placed at the head of the default set.
+
+The supported ciphers are:
+
+* 3des-cbc
+* aes128-cbc
+* aes192-cbc
+* aes256-cbc
+* aes128-ctr
+* aes192-ctr
+* aes256-ctr
+* aes128-gcm@openssh.com
+* aes256-gcm@openssh.com
+* chacha20-poly1305@openssh.com
+
+The default is:
+
+* chacha20-poly1305@openssh.com
+* aes128-ctr
+* aes192-ctr
+* aes256-ctr,
+* aes128-gcm@openssh.com
+* aes256-gcm@openssh.com
+
+The list of available ciphers may also be obtained using `ssh -Q cipher`.""",
   ]
 
   values = { modifier = { comma_separated = { typed = [

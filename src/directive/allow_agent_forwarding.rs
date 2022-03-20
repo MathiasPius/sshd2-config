@@ -15,7 +15,7 @@ use nom::{
 #[allow(unused_imports)]
 use std::borrow::Cow;
 
-#[doc = "Specifies whether ssh-agent(1) forwarding is permitted. The default is yes. Note that disabling agent forwarding does not improve security unless users are also denied shell access, as they can always install their own forwarders."]
+#[doc = "Specifies whether [ssh-agent(1)](https://man.openbsd.org/ssh-agent.1) forwarding is permitted. The default is **yes**. Note that disabling agent forwarding does not improve security unless users are also denied shell access, as they can always install their own forwarders."]
 #[doc = "See also: [AllowAgentForwarding](https://man.openbsd.org/sshd_config#AllowAgentForwarding)"]
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord)]
 pub enum AllowAgentForwarding {

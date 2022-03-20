@@ -15,7 +15,7 @@ use nom::{
 #[allow(unused_imports)]
 use std::borrow::Cow;
 
-#[doc = "Specifies whether StreamLocal (Unix-domain socket) forwarding is permitted. The available options are yes (the default) or all to allow StreamLocal forwarding, no to prevent all StreamLocal forwarding, local to allow local (from the perspective of ssh(1)) forwarding only or remote to allow remote forwarding only. Note that disabling StreamLocal forwarding does not improve security unless users are also denied shell access, as they can always install their own forwarders."]
+#[doc = "Specifies whether StreamLocal (Unix-domain socket) forwarding is permitted. The available options are **yes** (the default) or **all** to allow StreamLocal forwarding, **no** to prevent all StreamLocal forwarding, **local** to allow local (from the perspective of [ssh(1)](https://man.openbsd.org/ssh.1)) forwarding only or **remote** to allow remote forwarding only. Note that disabling StreamLocal forwarding does not improve security unless users are also denied shell access, as they can always install their own forwarders."]
 #[doc = "See also: [AllowStreamLocalForwarding](https://man.openbsd.org/sshd_config#AllowStreamLocalForwarding)"]
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord)]
 pub enum AllowStreamLocalForwarding {

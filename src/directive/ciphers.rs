@@ -15,16 +15,7 @@ use nom::{
 #[allow(unused_imports)]
 use std::borrow::Cow;
 
-#[doc = "Specifies the ciphers allowed.  Multiple ciphers must be"]
-#[doc = "comma-separated.  If the specified list begins with a ‘+’"]
-#[doc = "character, then the specified ciphers will be appended to"]
-#[doc = "the default set instead of replacing them.  If the"]
-#[doc = "specified list begins with a ‘-’ character, then the"]
-#[doc = "specified ciphers (including wildcards) will be removed"]
-#[doc = "from the default set instead of replacing them.  If the"]
-#[doc = "specified list begins with a ‘^’ character, then the"]
-#[doc = "specified ciphers will be placed at the head of the default"]
-#[doc = "set."]
+#[doc = "Specifies the ciphers allowed. Multiple ciphers must be comma-separated. If the specified list begins with a ‘+’ character, then the specified ciphers will be appended to the default set instead of replacing them. If the specified list begins with a ‘-’ character, then the specified ciphers (including wildcards) will be removed from the default set instead of replacing them. If the specified list begins with a ‘^’ character, then the specified ciphers will be placed at the head of the default set.\n\nThe supported ciphers are:\n\n* 3des-cbc\n* aes128-cbc\n* aes192-cbc\n* aes256-cbc\n* aes128-ctr\n* aes192-ctr\n* aes256-ctr\n* aes128-gcm@openssh.com\n* aes256-gcm@openssh.com\n* chacha20-poly1305@openssh.com\n\nThe default is:\n\n* chacha20-poly1305@openssh.com\n* aes128-ctr\n* aes192-ctr\n* aes256-ctr,\n* aes128-gcm@openssh.com\n* aes256-gcm@openssh.com\n\nThe list of available ciphers may also be obtained using `ssh -Q cipher`."]
 #[doc = "See also: [Ciphers](https://man.openbsd.org/sshd_config#Ciphers)"]
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord)]
 pub enum Ciphers {

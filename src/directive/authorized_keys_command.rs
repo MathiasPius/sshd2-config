@@ -15,8 +15,7 @@ use nom::{
 #[allow(unused_imports)]
 use std::borrow::Cow;
 
-#[doc = "Specifies a program to be used to look up the user's public keys. The program must be owned by root, not writable by group or others and specified by an absolute path. Arguments to AuthorizedKeysCommand accept the tokens described in the TOKENS section. If no arguments are specified then the username of the target user is used."]
-#[doc = "The program should produce on standard output zero or more lines of authorized_keys output (see AUTHORIZED_KEYS in sshd(8)). AuthorizedKeysCommand is tried after the usual AuthorizedKeysFile files and will not be executed if a matching key is found there. By default, no AuthorizedKeysCommand is run."]
+#[doc = "Specifies a program to be used to look up the user's public keys. The program must be owned by root, not writable by group or others and specified by an absolute path. Arguments to [`AuthorizedKeysCommand`] accept the tokens described in the [TOKENS](https://man.openbsd.org/sshd_config#TOKENS) section. If no arguments are specified then the username of the target user is used.\n\nThe program should produce on standard output zero or more lines of authorized_keys output (see [AUTHORIZED_KEYS](https://man.openbsd.org/sshd_config#AUTHORIZED_KEYS) in [sshd(8)](https://man.openbsd.org/sshd.8)). [`AuthorizedKeysCommand`] is tried after the usual [`AuthorizedKeysFile`] files and will not be executed if a matching key is found there. By default, no [`AuthorizedKeysCommand`] is run."]
 #[doc = "See also: [AuthorizedKeysCommand](https://man.openbsd.org/sshd_config#AuthorizedKeysCommand)"]
 #[derive(Debug, Clone, PartialEq, Eq, PartialOrd, Ord)]
 pub struct AuthorizedKeysCommand<'a>(Cow<'a, str>);
