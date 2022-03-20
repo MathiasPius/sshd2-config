@@ -1,4 +1,3 @@
-[enums]
 [enums.Ciphers]
   comment = [
     "Specifies the ciphers allowed.  Multiple ciphers must be",
@@ -76,14 +75,16 @@
     "install their own forwarders.",
   ]
   values = ["yes", "no", "all", "local", "remote"]
-[enum.AddressFamily]
+
+[enums.AddressFamily]
   comment = [
     "Specifies which address family should be used by sshd(8).",
     "Valid arguments are any (the default), inet (use IPv4",
     "only), or inet6 (use IPv6 only).",
   ]
   values = ["any", "inet", "inet6"]
-[enum.AllowStreamLocalForwarding]
+
+[enums.AllowStreamLocalForwarding]
   comment = [
     "Specifies whether StreamLocal (Unix-domain socket)",
     "forwarding is permitted.  The available options are yes",

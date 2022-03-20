@@ -15,11 +15,27 @@ struct Config {
 }
 
 #[derive(Debug, Deserialize)]
+pub enum DirectiveType {
+    Single,
+    Multiple,
+    SingleCommaSeparated,
+    MultipleCommaSeparated,
+}
+
+impl Default for DirectiveType {
+    fn default() -> Self {
+        DirectiveType::Single
+    }
+}
+
+#[derive(Debug, Deserialize)]
 struct Enum {
     #[serde(borrow)]
     pub values: Vec<&'static str>,
     #[serde(borrow, default)]
     pub comment: Vec<&'static str>,
+    #[serde(default)]
+    pub directive_type: DirectiveType,
 }
 
 /// From rust-analyzer
@@ -61,11 +77,11 @@ fn value_to_ident(value: &&'static str) -> Ident {
 fn main() {
     let config: Config = toml::from_str(include_str!("sshd.toml")).unwrap();
 
-    println!("{:#?}", config);
-
     let includes = quote! {
         use crate::Directive;
         use nom::{
+            character::complete::space1,
+            sequence::preceded,
             branch::alt,
             bytes::complete::tag_no_case,
             combinator::value,
@@ -92,30 +108,30 @@ fn main() {
             })
             .collect();
 
-        let parse_impl = quote! {
-            impl crate::Parse for #enum_ident {
-                fn parse(input: &str) -> IResult<&str, Self> {
-                    alt((
-                        #(#parse_idents),*
-                    ))(input)
+        let parse_impl = match definition.directive_type {
+            DirectiveType::Single => quote! {
+                impl crate::Parse for #enum_ident {
+                    type Output = Self;
+                    fn parse(input: &str) -> IResult<&str, Self> {
+                        preceded(
+                            tag_no_case(#name),
+                            preceded(space1,
+                        alt((
+                            #(#parse_idents),*
+                        ))))(input)
+                    }
                 }
-            }
+            },
+            DirectiveType::Multiple => todo!(),
+            DirectiveType::SingleCommaSeparated => todo!(),
+            DirectiveType::MultipleCommaSeparated => todo!(),
         };
 
-        let comment: Vec<_> = definition
-            .comment
-            .iter()
-            .map(|comment| {
-                quote! {
-                    #[doc = #comment]
-                }
-            })
-            .collect();
-
+        let comments = definition.comment;
         let tokens = quote! {
             #includes
 
-            #(#comment)*
+            #(#[doc = #comments])*
             #[doc = "See also: [sshd_config(5)](https://man7.org/linux/man-pages/man5/sshd_config.5.html)"]
             #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord)]
             pub enum #enum_ident {
@@ -129,13 +145,9 @@ fn main() {
                     Directive::#enum_ident(self)
                 }
             }
-
-            impl crate::Named for #enum_ident {
-                const OPTION_NAME: &'static str = #name;
-            }
         };
 
-        std::fs::write(destination, reformat(tokens).unwrap()).unwrap();
+        std::fs::write(&destination, reformat(tokens).unwrap()).unwrap();
     }
 
     println!("cargo:rerun-if-changed=sshd.toml");

@@ -1,33 +1,30 @@
+pub mod allow_agent_forwarding;
+pub mod allow_tcp_forwarding;
+pub mod kex_algorithms;
+
 use allow_agent_forwarding::AllowAgentForwarding;
 use allow_tcp_forwarding::AllowTcpForwarding;
 use kex_algorithms::KexAlgorithms;
 use nom::{
     branch::alt,
-    bytes::complete::tag_no_case,
-    character::complete::{line_ending, space1},
+    character::complete::line_ending,
     combinator::{eof, into},
     multi::many0,
-    sequence::{preceded, terminated},
+    sequence::terminated,
     IResult,
 };
 
-pub mod allow_agent_forwarding;
-pub mod allow_tcp_forwarding;
-pub mod kex_algorithms;
-
-trait Named {
-    const OPTION_NAME: &'static str;
-}
-
 trait Parse: Sized {
-    fn parse(input: &str) -> IResult<&str, Self>;
+    type Output;
+    fn parse(input: &str) -> IResult<&str, Self::Output>;
 }
 
 #[derive(Debug, Clone, PartialEq, Eq, PartialOrd, Ord)]
 pub struct Config(Vec<Directive>);
 
 impl Parse for Config {
-    fn parse(input: &str) -> IResult<&str, Self> {
+    type Output = Self;
+    fn parse(input: &str) -> IResult<&str, Self::Output> {
         into(many0(Directive::parse))(input)
     }
 }
@@ -42,25 +39,20 @@ impl Into<Config> for Vec<Directive> {
 pub enum Directive {
     AllowAgentForwarding(AllowAgentForwarding),
     AllowTcpForwarding(AllowTcpForwarding),
-
     KexAlgorithms(KexAlgorithms),
 }
 
 /// Matches a single directive "{NAME} {Parse Result of T}"
-fn directive<T: Parse + Named + Into<Directive>>() -> impl FnMut(&str) -> IResult<&str, Directive> {
-    move |input| {
-        terminated(
-            preceded(
-                tag_no_case(T::OPTION_NAME),
-                preceded(space1, into(T::parse)),
-            ),
-            alt((line_ending, eof)),
-        )(input)
-    }
+fn directive<T: Parse>() -> impl FnMut(&str) -> IResult<&str, Directive>
+where
+    <T as Parse>::Output: Into<Directive>,
+{
+    move |input| terminated(into(T::parse), alt((line_ending, eof)))(input)
 }
 
 impl Parse for Directive {
-    fn parse(input: &str) -> IResult<&str, Self> {
+    type Output = Self;
+    fn parse(input: &str) -> IResult<&str, Self::Output> {
         let dir = alt((
             directive::<AllowAgentForwarding>(),
             directive::<AllowTcpForwarding>(),

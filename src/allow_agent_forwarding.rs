@@ -1,7 +1,10 @@
 //! Generated file, do not edit by hand
 
 use crate::Directive;
-use nom::{branch::alt, bytes::complete::tag_no_case, combinator::value, IResult};
+use nom::{
+    branch::alt, bytes::complete::tag_no_case, character::complete::space1, combinator::value,
+    sequence::preceded, IResult,
+};
 #[doc = "Specifies whether ssh-agent(1) forwarding is permitted."]
 #[doc = "The default is yes.  Note that disabling agent forwarding"]
 #[doc = "does not improve security unless users are also denied"]
@@ -14,18 +17,22 @@ pub enum AllowAgentForwarding {
     No,
 }
 impl crate::Parse for AllowAgentForwarding {
+    type Output = Self;
     fn parse(input: &str) -> IResult<&str, Self> {
-        alt((
-            value(AllowAgentForwarding::Yes, tag_no_case("yes")),
-            value(AllowAgentForwarding::No, tag_no_case("no")),
-        ))(input)
+        preceded(
+            tag_no_case("AllowAgentForwarding"),
+            preceded(
+                space1,
+                alt((
+                    value(AllowAgentForwarding::Yes, tag_no_case("yes")),
+                    value(AllowAgentForwarding::No, tag_no_case("no")),
+                )),
+            ),
+        )(input)
     }
 }
 impl Into<Directive> for AllowAgentForwarding {
     fn into(self) -> Directive {
         Directive::AllowAgentForwarding(self)
     }
-}
-impl crate::Named for AllowAgentForwarding {
-    const OPTION_NAME: &'static str = "AllowAgentForwarding";
 }
