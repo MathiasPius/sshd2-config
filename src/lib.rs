@@ -1,18 +1,25 @@
+use allow_agent_forwarding::AllowAgentForwarding;
+use allow_tcp_forwarding::AllowTcpForwarding;
+use kex_algorithms::KexAlgorithms;
 use nom::{
     branch::alt,
     bytes::complete::tag_no_case,
     character::complete::{line_ending, space1},
-    combinator::{eof, into, value},
+    combinator::{eof, into},
     multi::many0,
     sequence::{preceded, terminated},
     IResult,
 };
 
-pub trait Named {
-    const NAME: &'static str;
+pub mod allow_agent_forwarding;
+pub mod allow_tcp_forwarding;
+pub mod kex_algorithms;
+
+trait Named {
+    const OPTION_NAME: &'static str;
 }
 
-pub trait Parse: Sized {
+trait Parse: Sized {
     fn parse(input: &str) -> IResult<&str, Self>;
 }
 
@@ -35,13 +42,18 @@ impl Into<Config> for Vec<Directive> {
 pub enum Directive {
     AllowAgentForwarding(AllowAgentForwarding),
     AllowTcpForwarding(AllowTcpForwarding),
+
+    KexAlgorithms(KexAlgorithms),
 }
 
 /// Matches a single directive "{NAME} {Parse Result of T}"
 fn directive<T: Parse + Named + Into<Directive>>() -> impl FnMut(&str) -> IResult<&str, Directive> {
     move |input| {
         terminated(
-            preceded(tag_no_case(T::NAME), preceded(space1, into(T::parse))),
+            preceded(
+                tag_no_case(T::OPTION_NAME),
+                preceded(space1, into(T::parse)),
+            ),
             alt((line_ending, eof)),
         )(input)
     }
@@ -55,62 +67,6 @@ impl Parse for Directive {
         ))(input)?;
 
         Ok(dir)
-    }
-}
-
-#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord)]
-pub enum AllowAgentForwarding {
-    Yes,
-    No,
-}
-
-impl Into<Directive> for AllowAgentForwarding {
-    fn into(self) -> Directive {
-        Directive::AllowAgentForwarding(self)
-    }
-}
-
-impl Named for AllowAgentForwarding {
-    const NAME: &'static str = "AllowAgentForwarding";
-}
-
-impl Parse for AllowAgentForwarding {
-    fn parse(input: &str) -> IResult<&str, Self> {
-        alt((
-            value(AllowAgentForwarding::Yes, tag_no_case("yes")),
-            value(AllowAgentForwarding::No, tag_no_case("no")),
-        ))(input)
-    }
-}
-
-#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord)]
-pub enum AllowTcpForwarding {
-    Yes,
-    No,
-    All,
-    Local,
-    Remote,
-}
-
-impl Into<Directive> for AllowTcpForwarding {
-    fn into(self) -> Directive {
-        Directive::AllowTcpForwarding(self)
-    }
-}
-
-impl Named for AllowTcpForwarding {
-    const NAME: &'static str = "AllowTcpForwarding";
-}
-
-impl Parse for AllowTcpForwarding {
-    fn parse(input: &str) -> IResult<&str, Self> {
-        alt((
-            value(AllowTcpForwarding::Yes, tag_no_case("yes")),
-            value(AllowTcpForwarding::No, tag_no_case("no")),
-            value(AllowTcpForwarding::All, tag_no_case("all")),
-            value(AllowTcpForwarding::Local, tag_no_case("local")),
-            value(AllowTcpForwarding::Remote, tag_no_case("remote")),
-        ))(input)
     }
 }
 

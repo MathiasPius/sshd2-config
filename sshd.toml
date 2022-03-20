@@ -1,0 +1,98 @@
+[enums]
+[enums.Ciphers]
+  comment = [
+    "Specifies the ciphers allowed.  Multiple ciphers must be",
+    "comma-separated.  If the specified list begins with a ‘+’",
+    "character, then the specified ciphers will be appended to",
+    "the default set instead of replacing them.  If the",
+    "specified list begins with a ‘-’ character, then the",
+    "specified ciphers (including wildcards) will be removed",
+    "from the default set instead of replacing them.  If the",
+    "specified list begins with a ‘^’ character, then the",
+    "specified ciphers will be placed at the head of the default",
+    "set.",
+  ]
+  values = [
+    "3des-cbc",
+    "aes128-cbc",
+    "aes192-cbc",
+    "aes256-cbc",
+    "aes128-ctr",
+    "aes192-ctr",
+    "aes256-ctr",
+    "aes128-gcm@openssh.com",
+    "aes256-gcm@openssh.com",
+    "chacha20-poly1305@openssh.com",
+  ]
+
+[enums.KexAlgorithms]
+  comment = [
+    "Specifies the available KEX (Key Exchange) algorithms.",
+    "Multiple algorithms must be comma-separated.  Alternately",
+    "if the specified list begins with a ‘+’ character, then the",
+    "specified methods will be appended to the default set",
+    "instead of replacing them.  If the specified list begins",
+    "with a ‘-’ character, then the specified methods (including",
+    "wildcards) will be removed from the default set instead of",
+    "replacing them.  If the specified list begins with a ‘^’",
+    "character, then the specified methods will be placed at the",
+    "head of the default set.",
+  ]
+  values = [
+    "curve25519-sha256",
+    "curve25519-sha256@libssh.org",
+    "diffie-hellman-group1-sha1",
+    "diffie-hellman-group14-sha12",
+    "diffie-hellman-group14-sha256",
+    "diffie-hellman-group16-sha512",
+    "diffie-hellman-group18-sha512",
+    "diffie-hellman-group-exchange-sha1",
+    "diffie-hellman-group-exchange-sha256",
+    "ecdh-sha2-nistp256",
+    "ecdh-sha2-nistp384",
+    "ecdh-sha2-nistp521",
+    "sntrup761x25519-sha512@openssh.com",
+  ]
+
+[enums.AllowAgentForwarding]
+  comment = [
+    "Specifies whether ssh-agent(1) forwarding is permitted.",
+    "The default is yes.  Note that disabling agent forwarding",
+    "does not improve security unless users are also denied",
+    "shell access, as they can always install their own",
+    "forwarders.",
+  ]
+  values = ["yes", "no"]
+
+[enums.AllowTcpForwarding]
+  comment = [
+    "Specifies whether TCP forwarding is permitted.  The",
+    "available options are yes (the default) or all to allow TCP",
+    "forwarding, no to prevent all TCP forwarding, local to",
+    "allow local (from the perspective of ssh(1)) forwarding",
+    "only or remote to allow remote forwarding only.  Note that",
+    "disabling TCP forwarding does not improve security unless",
+    "users are also denied shell access, as they can always",
+    "install their own forwarders.",
+  ]
+  values = ["yes", "no", "all", "local", "remote"]
+[enum.AddressFamily]
+  comment = [
+    "Specifies which address family should be used by sshd(8).",
+    "Valid arguments are any (the default), inet (use IPv4",
+    "only), or inet6 (use IPv6 only).",
+  ]
+  values = ["any", "inet", "inet6"]
+[enum.AllowStreamLocalForwarding]
+  comment = [
+    "Specifies whether StreamLocal (Unix-domain socket)",
+    "forwarding is permitted.  The available options are yes",
+    "(the default) or all to allow StreamLocal forwarding, no to",
+    "prevent all StreamLocal forwarding, local to allow local",
+    "(from the perspective of ssh(1)) forwarding only or remote",
+    "to allow remote forwarding only.  Note that disabling",
+    "StreamLocal forwarding does not improve security unless",
+    "users are also denied shell access, as they can always",
+    "install their own forwarders.",
+  ]
+  values = ["yes", "no", "all", "local", "remote"]
