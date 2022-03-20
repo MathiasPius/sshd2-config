@@ -1,4 +1,4 @@
-[enums.Ciphers]
+[directives.Ciphers]
   comment = [
     "Specifies the ciphers allowed.  Multiple ciphers must be",
     "comma-separated.  If the specified list begins with a ‘+’",
@@ -11,7 +11,8 @@
     "specified ciphers will be placed at the head of the default",
     "set.",
   ]
-  values = [
+
+  values = { comma_separated = { typed = [
     "3des-cbc",
     "aes128-cbc",
     "aes192-cbc",
@@ -22,9 +23,9 @@
     "aes128-gcm@openssh.com",
     "aes256-gcm@openssh.com",
     "chacha20-poly1305@openssh.com",
-  ]
+  ] } }
 
-[enums.KexAlgorithms]
+[directives.KexAlgorithms]
   comment = [
     "Specifies the available KEX (Key Exchange) algorithms.",
     "Multiple algorithms must be comma-separated.  Alternately",
@@ -37,7 +38,7 @@
     "character, then the specified methods will be placed at the",
     "head of the default set.",
   ]
-  values = [
+  values = { comma_separated = { typed = [
     "curve25519-sha256",
     "curve25519-sha256@libssh.org",
     "diffie-hellman-group1-sha1",
@@ -51,9 +52,9 @@
     "ecdh-sha2-nistp384",
     "ecdh-sha2-nistp521",
     "sntrup761x25519-sha512@openssh.com",
-  ]
+  ] } }
 
-[enums.AllowAgentForwarding]
+[directives.AllowAgentForwarding]
   comment = [
     "Specifies whether ssh-agent(1) forwarding is permitted.",
     "The default is yes.  Note that disabling agent forwarding",
@@ -61,9 +62,9 @@
     "shell access, as they can always install their own",
     "forwarders.",
   ]
-  values = ["yes", "no"]
+  values = { typed = ["yes", "no"] }
 
-[enums.AllowTcpForwarding]
+[directives.AllowTcpForwarding]
   comment = [
     "Specifies whether TCP forwarding is permitted.  The",
     "available options are yes (the default) or all to allow TCP",
@@ -74,31 +75,17 @@
     "users are also denied shell access, as they can always",
     "install their own forwarders.",
   ]
-  values = ["yes", "no", "all", "local", "remote"]
+  values = { typed = ["yes", "no", "all", "local", "remote"] }
 
-[enums.AddressFamily]
+[directives.AddressFamily]
   comment = [
     "Specifies which address family should be used by sshd(8).",
     "Valid arguments are any (the default), inet (use IPv4",
     "only), or inet6 (use IPv6 only).",
   ]
-  values = ["any", "inet", "inet6"]
+  values = { typed = ["any", "inet", "inet6"] }
 
-[enums.AllowStreamLocalForwarding]
-  comment = [
-    "Specifies whether StreamLocal (Unix-domain socket)",
-    "forwarding is permitted.  The available options are yes",
-    "(the default) or all to allow StreamLocal forwarding, no to",
-    "prevent all StreamLocal forwarding, local to allow local",
-    "(from the perspective of ssh(1)) forwarding only or remote",
-    "to allow remote forwarding only.  Note that disabling",
-    "StreamLocal forwarding does not improve security unless",
-    "users are also denied shell access, as they can always",
-    "install their own forwarders.",
-  ]
-  values = ["yes", "no", "all", "local", "remote"]
-
-[enums.AcceptEnv]
+[directives.AcceptEnv]
   comment = [
     "Specifies what environment variables sent by the client",
     "will be copied into the session's environ(7).  See SendEnv",
@@ -114,4 +101,12 @@
     "should be taken in the use of this directive.  The default",
     "is not to accept any environment variables.",
   ]
-  directive_type = "Multiple"
+  values = { space_separated = "wildcard" }
+
+[directives.AuthenticationMethods]
+  values = { space_separated = { comma_separated = { typed = [
+    "pubkey",
+    "challenge-response",
+    "password",
+    "keyboard-interactive",
+  ]}}}

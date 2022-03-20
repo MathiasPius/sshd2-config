@@ -1,5 +1,5 @@
 use convert_case::{Case, Casing};
-use proc_macro2::{Ident, Span};
+use proc_macro2::{Ident, Span, TokenStream};
 use quote::quote;
 use serde::Deserialize;
 use std::collections::HashMap;
@@ -11,31 +11,190 @@ use std::process::{Command, Stdio};
 #[derive(Debug, Deserialize)]
 struct Config {
     #[serde(borrow)]
-    pub enums: HashMap<&'static str, ConfigOption>,
-}
-
-#[derive(Debug, Deserialize)]
-pub enum DirectiveType {
-    Single,
-    Multiple,
-    SingleCommaSeparated,
-    MultipleCommaSeparated,
-}
-
-impl Default for DirectiveType {
-    fn default() -> Self {
-        DirectiveType::Single
-    }
+    pub directives: HashMap<&'static str, ConfigOption>,
 }
 
 #[derive(Debug, Deserialize)]
 struct ConfigOption {
-    #[serde(borrow, default)]
-    pub values: Vec<&'static str>,
+    #[serde(default)]
+    pub values: ValueFormat,
     #[serde(borrow, default)]
     pub comment: Vec<&'static str>,
-    #[serde(default)]
-    pub directive_type: DirectiveType,
+}
+
+#[derive(Debug, Deserialize)]
+#[serde(rename_all = "snake_case")]
+pub enum ValueFormat {
+    Wildcard,
+    #[serde(borrow)]
+    Typed(Vec<&'static str>),
+    CommaSeparated(Box<ValueFormat>),
+    SpaceSeparated(Box<ValueFormat>),
+    Modifier(Box<ValueFormat>),
+}
+
+impl Default for ValueFormat {
+    fn default() -> Self {
+        Self::Wildcard
+    }
+}
+
+impl ValueFormat {
+    pub fn output_type(&self, name_ident: &Ident) -> TokenStream {
+        let lifetime = self.lifetime();
+
+        match self {
+            ValueFormat::Wildcard => quote! {
+                #name_ident #lifetime
+            },
+            ValueFormat::Typed(_) => quote! {
+                #name_ident
+            },
+            ValueFormat::Modifier(inner)
+            | ValueFormat::CommaSeparated(inner)
+            | ValueFormat::SpaceSeparated(inner) => {
+                let inner_type = inner.output_type(name_ident);
+                quote! { Vec<#inner_type> }
+            }
+        }
+    }
+
+    fn lifetime(&self) -> TokenStream {
+        if self.is_wildcard() {
+            quote! { <'a> }
+        } else {
+            quote! {}
+        }
+    }
+
+    fn impl_struct(&self, name_ident: &Ident, comments: &Vec<&str>) -> TokenStream {
+        let reference = format!(
+            "See also: [{name}](https://man.openbsd.org/sshd_config#{name})",
+            name = name_ident.to_string()
+        );
+
+        match self {
+            ValueFormat::Wildcard => {
+                quote! {
+                    #(
+                        #[doc = #comments]
+                        #[doc = ""]
+                        #[doc = ""]
+                    )*
+                    #[doc = #reference]
+                    #[derive(Debug, Clone, PartialEq, Eq, PartialOrd, Ord)]
+                    pub struct #name_ident<'a>(Cow<'a, str>);
+
+                    impl<'a> From<&'a str> for #name_ident<'a> {
+                        fn from(value: &'a str) -> Self {
+                            #name_ident(value.into())
+                        }
+                    }
+                }
+            }
+            ValueFormat::Typed(values) => {
+                let value_idents: Vec<Ident> = values.iter().map(value_to_ident).collect();
+                quote! {
+                    #(#[doc = #comments])*
+                    #[doc = #reference]
+                    #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord)]
+                    pub enum #name_ident {
+                        #(#value_idents),*
+                    }
+                }
+            }
+            ValueFormat::Modifier(inner)
+            | ValueFormat::CommaSeparated(inner)
+            | ValueFormat::SpaceSeparated(inner) => inner.impl_struct(name_ident, comments),
+        }
+    }
+
+    fn into_directive(&self, name_ident: &Ident) -> TokenStream {
+        let output_type = self.output_type(name_ident);
+
+        quote! {
+            impl<'a> From<#output_type> for crate::Directive<'a> {
+                fn from(directive: #output_type) -> Self {
+                    crate::Directive::#name_ident(directive)
+                }
+            }
+        }
+    }
+
+    fn parse_impl_inner(&self, name_ident: &Ident) -> TokenStream {
+        match self {
+            ValueFormat::Wildcard => quote! {
+                    map(preceded(space0, take_while1(|c: char| !c.is_whitespace())), #name_ident::from)
+            },
+            ValueFormat::Typed(values) => {
+                let value_idents: Vec<Ident> = values.iter().map(value_to_ident).collect();
+
+                let mapping = values
+                    .iter()
+                    .zip(value_idents.iter())
+                    .map(|(value, ident)| {
+                        quote! {
+                            value(#name_ident::#ident, tag_no_case(#value))
+                        }
+                    })
+                    .collect::<Vec<_>>();
+
+                quote! {
+                    preceded(space0, alt((#(#mapping),*)))
+                }
+            }
+            ValueFormat::CommaSeparated(inner) => {
+                let inner_pattern = inner.parse_impl_inner(name_ident);
+                quote! {
+                    separated_list1(tag(","), #inner_pattern)
+                }
+            }
+            ValueFormat::SpaceSeparated(inner) => {
+                let inner_pattern = inner.parse_impl_inner(name_ident);
+                quote! {
+                    separated_list1(tag(" "), #inner_pattern)
+                }
+            }
+            ValueFormat::Modifier(inner) => {
+                let inner_pattern = inner.parse_impl_inner(name_ident);
+                quote! {
+                    tuple(opt(one_of("+-")), #inner_pattern)
+                }
+            }
+        }
+    }
+
+    pub fn parse_impl(&self, name_ident: &Ident) -> TokenStream {
+        let inner_pattern = self.parse_impl_inner(name_ident);
+        let output_type = self.output_type(name_ident);
+        let lifetime = self.lifetime();
+        let name = name_ident.to_string();
+
+        quote! {
+            impl<'a> crate::Parse<'a> for #name_ident #lifetime {
+                type Output = #output_type;
+                    fn parse(input: &'a str) -> IResult<&'a str, Self::Output> {
+                        preceded(
+                            tag(#name),
+                            preceded(
+                                space1,
+                                #inner_pattern
+                            )
+                        )(input)
+                    }
+                }
+        }
+    }
+
+    pub fn is_wildcard(&self) -> bool {
+        match self {
+            ValueFormat::Wildcard => true,
+            ValueFormat::Typed(_) => false,
+            ValueFormat::Modifier(inner)
+            | ValueFormat::CommaSeparated(inner)
+            | ValueFormat::SpaceSeparated(inner) => inner.is_wildcard(),
+        }
+    }
 }
 
 /// From rust-analyzer
@@ -56,6 +215,10 @@ fn reformat(text: impl std::fmt::Display) -> std::io::Result<String> {
     write!(rustfmt.stdin.take().unwrap(), "{}", text)?;
     let output = rustfmt.wait_with_output()?;
     let stdout = String::from_utf8(output.stdout).unwrap();
+
+    if stdout.is_empty() {
+        panic!("{}", text);
+    }
     let preamble = "Generated file, do not edit by hand";
     Ok(format!("//! {}\n\n{}", preamble, stdout))
 }
@@ -80,160 +243,136 @@ fn main() {
 
     let includes = quote! {
         #[allow(unused_imports)]
-        use crate::Directive;
-
-        #[allow(unused_imports)]
         use std::borrow::Cow;
         #[allow(unused_imports)]
         use nom::{
             character::complete::{space0, space1, alphanumeric1},
             sequence::preceded,
-            multi::many1,
+            multi::{separated_list1, many1},
             branch::alt,
-            bytes::complete::{take_until, take_while1, tag_no_case},
+            bytes::complete::{tag, take_until, take_while1, tag_no_case},
             combinator::{map, value, not},
             IResult
         };
     };
 
-    for (
-        name,
-        ConfigOption {
-            values,
-            directive_type,
-            comment,
-        },
-    ) in config.enums
-    {
-        let name_ident = Ident::new(name, Span::call_site());
+    let directive_types: Vec<_> = config
+        .directives
+        .iter()
+        .map(|(name, ConfigOption { values, comment })| {
+            let name_ident = Ident::new(name, Span::call_site());
+            let parse_impl = values.parse_impl(&name_ident);
+            let structure = values.impl_struct(&name_ident, comment);
+            let into_directive = values.into_directive(&name_ident);
 
-        // Sanitize the possible values so they can be used for Idents
-        // i.e: aes128-gcm@openssh.com --> Aes128GcmOpensshCom
-        let value_idents: Vec<Ident> = values.iter().map(value_to_ident).collect();
+            let tokens = format!(
+                r#"
+                {includes}
 
-        let selector = if !values.is_empty() {
-            // For options with known set of possible values, match strictly on these.
-            let mapping = values
-                .iter()
-                .zip(value_idents.iter())
-                .map(|(value, ident)| {
-                    quote! {
-                        value(#name_ident::#ident, tag_no_case(#value))
-                    }
-                })
-                .collect::<Vec<_>>();
+                {structure}
 
-            quote! {
-                #(#[doc = #comment])*
-                #[doc = "See also: [sshd_config(5)](https://man7.org/linux/man-pages/man5/sshd_config.5.html)"]
-                #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord)]
-                pub enum #name_ident {
-                    #(#value_idents),*
-                }
+                {parse_impl}
 
-                impl<'a> crate::Parse<'a> for #name_ident {
-                    type Output = Self;
-                    fn parse(input: &'a str) -> IResult<&'a str, Self::Output> {
-                        preceded(
-                            space1,
-                            alt((
-                                #(#mapping),*
-                            ))
-                        )(input)
-                    }
-                }
+                {into_directive}
+            "#
+            );
+
+            std::fs::write(
+                &project_root().join(format!(
+                    "src/directive/{filename}.rs",
+                    filename = name.to_case(Case::Snake)
+                )),
+                reformat(tokens).unwrap(),
+                //tokens.to_string(),
+            )
+            .unwrap();
+
+            let output_type = values.output_type(&name_ident);
+            (name_ident, output_type)
+        })
+        .collect();
+
+    let enum_members = directive_types.iter().map(|(name_ident, output_type)| {
+        quote! {
+            #name_ident(#output_type)
+        }
+    });
+
+    let filenames: Vec<_> = directive_types
+        .iter()
+        .map(|(name_ident, _)| {
+            Ident::new(
+                &name_ident.to_string().to_case(Case::Snake),
+                Span::call_site(),
+            )
+        })
+        .collect();
+
+    let includes = quote! {
+        #(mod #filenames;)*
+    };
+
+    let uses = quote! {
+        use nom::IResult;
+        use crate::Parse;
+
+        use nom::{
+            branch::alt,
+            combinator::{eof, into},
+            character::complete::line_ending,
+            sequence::terminated
+        };
+
+        #(pub use #filenames::*;)*
+    };
+
+    let name_idents: Vec<_> = directive_types
+        .iter()
+        .map(|(directive_ident, _)| quote! { #directive_ident })
+        .collect();
+
+    let structure = quote! {
+        #[derive(Debug, PartialEq, Eq, PartialOrd, Ord)]
+        pub enum Directive<'a> {
+            #(#enum_members),*
+        }
+    };
+
+    let parse_impl = quote! {
+        fn directive<'a, T: Parse<'a>>(input: &'a str) -> IResult<&'a str, Directive>
+        where
+            <T as Parse<'a>>::Output: Into<Directive<'a>>,
+        {
+            terminated(into(<T as Parse<'a>>::parse), alt((line_ending, eof)))(input)
+        }
+
+        impl<'a> Parse<'a> for Directive<'a> {
+            type Output = Self;
+            fn parse(input: &'a str) -> IResult<&'a str, Self::Output> {
+                alt((
+                    #(directive::<#name_idents>),*
+                ))(input)
             }
-        } else {
-            quote! {
-                #(#[doc = #comment])*
-                #[doc = "See also: [sshd_config(5)](https://man7.org/linux/man-pages/man5/sshd_config.5.html)"]
-                #[derive(Debug, Clone, PartialEq, Eq, PartialOrd, Ord)]
-                pub struct #name_ident<'a>(Cow<'a, str>);
+        }
+    };
 
-                impl<'a> crate::Parse<'a> for #name_ident<'a> {
-                    type Output = Self;
-                    fn parse(input: &'a str) -> IResult<&'a str, Self::Output> {
-                        map(preceded(
-                            space1,
-                            take_while1(|c: char| !c.is_whitespace())
-                        ), |value: &'a str| #name_ident(value.into()))(input)
-                    }
-                }
-            }
-        };
+    let directive = format!(
+        r#"
+        {includes}
 
-        let directive_name = format!("{}Directive", name);
-        let directive_ident = Ident::new(&directive_name, Span::call_site());
+        {uses}
 
-        let lifetime = if values.is_empty() {
-            quote! { <'a> }
-        } else {
-            quote! {}
-        };
+        {structure}
 
-        let directive = match directive_type {
-            DirectiveType::Single => quote! {
-                #[derive(Debug, Clone, PartialEq, Eq, PartialOrd, Ord)]
-                pub struct #directive_ident #lifetime(#name_ident #lifetime);
+        {parse_impl}
+    "#
+    );
 
-                impl<'a> crate::Parse<'a> for #directive_ident #lifetime {
-                    type Output = #directive_ident #lifetime;
-                    fn parse(input: &'a str) -> IResult<&'a str, Self::Output> {
-                        map(preceded(
-                            tag_no_case(#name),
-                            #name_ident::parse
-                        ), |value| #directive_ident(value))(input)
-                    }
-                }
-
-                impl<'a> From<#directive_ident #lifetime> for Directive<'a> {
-                    fn from(directive: #directive_ident #lifetime) -> Self {
-                        Directive::#name_ident(directive)
-                    }
-                }
-            },
-            DirectiveType::Multiple => quote! {
-                #[derive(Debug, Clone, PartialEq, Eq, PartialOrd, Ord)]
-                pub struct #directive_ident #lifetime(Vec<#name_ident #lifetime>);
-
-                impl<'a> crate::Parse<'a> for #directive_ident #lifetime {
-                    type Output = #directive_ident #lifetime;
-                    fn parse(input: &'a str) -> IResult<&'a str, Self::Output> {
-                        map(preceded(
-                            tag_no_case(#name),
-                            many1(#name_ident::parse)
-                        ), |value| #directive_ident(value))(input)
-                    }
-                }
-
-                impl<'a> From<#directive_ident #lifetime> for Directive<'a> {
-                    fn from(directive: #directive_ident #lifetime) -> Self {
-                        Directive::#name_ident(directive)
-                    }
-                }
-            },
-            DirectiveType::SingleCommaSeparated => todo!(),
-            DirectiveType::MultipleCommaSeparated => todo!(),
-        };
-
-        let tokens = quote! {
-            #includes
-
-            #directive
-
-            #selector
-        };
-
-        std::fs::write(
-            &project_root().join(format!(
-                "src/{filename}.rs",
-                filename = name.to_case(Case::Snake)
-            )),
-            reformat(tokens).unwrap(),
-            //tokens.to_string(),
-        )
-        .unwrap();
-    }
+    std::fs::write(
+        &project_root().join(format!("src/directive/mod.rs")),
+        reformat(directive).unwrap(),
+    )
+    .unwrap();
 
     println!("cargo:rerun-if-changed=sshd.toml");
     println!("cargo:rerun-if-changed=build.rs");

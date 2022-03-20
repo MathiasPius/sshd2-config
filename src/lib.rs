@@ -1,98 +1,51 @@
-pub mod accept_env;
-pub mod allow_agent_forwarding;
-pub mod allow_tcp_forwarding;
-pub mod kex_algorithms;
+use nom::IResult;
 
-use accept_env::AcceptEnvDirective;
-use allow_agent_forwarding::AllowAgentForwardingDirective;
-use allow_tcp_forwarding::AllowTcpForwardingDirective;
-use kex_algorithms::KexAlgorithmsDirective;
-use nom::{
-    branch::alt,
-    character::complete::line_ending,
-    combinator::{eof, into},
-    multi::many0,
-    sequence::terminated,
-    IResult,
-};
+mod directive;
 
-trait Parse<'a>: Sized {
+pub use directive::*;
+
+pub trait Parse<'a>: Sized {
     type Output;
     fn parse(input: &'a str) -> IResult<&'a str, Self::Output>;
 }
 
-#[derive(Debug, Clone, PartialEq, Eq, PartialOrd, Ord)]
-pub struct Config<'a>(Vec<Directive<'a>>);
-
-impl<'a> Parse<'a> for Config<'a> {
-    type Output = Self;
-    fn parse(input: &'a str) -> IResult<&'a str, Self::Output> {
-        into(many0(Directive::parse))(input)
-    }
-}
-
-impl<'a> Into<Config<'a>> for Vec<Directive<'a>> {
-    fn into(self) -> Config<'a> {
-        Config(self)
-    }
-}
-
-#[derive(Debug, Clone, PartialEq, Eq, PartialOrd, Ord)]
-pub enum Directive<'a> {
-    AllowAgentForwarding(AllowAgentForwardingDirective),
-    AllowTcpForwarding(AllowTcpForwardingDirective),
-    KexAlgorithms(KexAlgorithmsDirective),
-    AcceptEnv(AcceptEnvDirective<'a>),
-}
-
-/// Matches a single directive "{NAME} {Parse Result of T}"
-fn directive<'a, T: Parse<'a>>() -> impl FnMut(&'a str) -> IResult<&'a str, Directive>
-where
-    <T as Parse<'a>>::Output: Into<Directive<'a>>,
-{
-    move |input| terminated(into(<T as Parse<'a>>::parse), alt((line_ending, eof)))(input)
-}
-
-impl<'a> Parse<'a> for Directive<'a> {
-    type Output = Self;
-    fn parse(input: &'a str) -> IResult<&'a str, Self::Output> {
-        let dir = alt((
-            directive::<AllowAgentForwardingDirective>(),
-            directive::<AllowTcpForwardingDirective>(),
-            directive::<AcceptEnvDirective>(),
-        ))(input)?;
-
-        Ok(dir)
-    }
-}
-
 #[cfg(test)]
 mod tests {
-    use crate::{Config, Directive, Parse};
-    use indoc::indoc;
+    use crate::{Ciphers, Directive, Parse};
 
     #[test]
-    fn test_tcp_forwarding() {
-        println!("{:#?}", Directive::parse("AllowTcpForwarding remote"));
+    fn test_comma_separated() {
+        assert_eq!(
+            Directive::parse("Ciphers 3des-cbc,aes128-gcm@openssh.com")
+                .unwrap()
+                .1,
+            Directive::Ciphers(vec![Ciphers::X3DesCbc, Ciphers::Aes128GcmOpensshCom])
+        );
     }
 
     #[test]
-    fn test_simple_config() {
-        let config = Config::parse(indoc! {"
-            AllowTcpForwarding remote
-            AllowAgentForwarding no
-        "});
-
-        println!("{:#?}", config);
+    fn test_space_separator_in_comma_separated() {
+        assert!(Directive::parse("Ciphers 3des-cbc aes128-gcm@openssh.com").is_err());
     }
+    /*
+       #[test]
+       fn test_simple_config() {
+           let config = Config::parse(indoc! {"
+               AllowTcpForwarding remote
+               AllowAgentForwarding no
+           "});
 
-    #[test]
-    fn test_acceptenv() {
-        let config = Config::parse(indoc! {"
-            AcceptEnv LC_LANG LC_MONEY
-            AcceptEnv Second Line
-        "});
+           println!("{:#?}", config);
+       }
 
-        println!("{:#?}", config);
-    }
+       #[test]
+       fn test_acceptenv() {
+           let config = Config::parse(indoc! {"
+               AcceptEnv LC_LANG LC_MONEY
+               AcceptEnv Second Line
+           "});
+
+           println!("{:#?}", config);
+       }
+    */
 }
