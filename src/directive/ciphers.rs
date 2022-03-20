@@ -1,5 +1,6 @@
 //! Generated file, do not edit by hand
 
+
 #[allow(unused_imports)]
 use crate::Modifier;
 #[allow(unused_imports)]
@@ -41,46 +42,52 @@ pub enum Ciphers {
 }
 
 impl<'a> crate::Parse<'a> for Ciphers {
-    type Output = Vec<Ciphers>;
+    type Output = Modifier<Vec<Ciphers>>;
     fn parse(input: &'a str) -> IResult<&'a str, Self::Output> {
         preceded(
             tag("Ciphers"),
             preceded(
                 space1,
-                separated_list1(
-                    tag(","),
-                    preceded(
-                        space0,
-                        alt((
-                            value(Ciphers::X3DesCbc, tag_no_case("3des-cbc")),
-                            value(Ciphers::Aes128Cbc, tag_no_case("aes128-cbc")),
-                            value(Ciphers::Aes192Cbc, tag_no_case("aes192-cbc")),
-                            value(Ciphers::Aes256Cbc, tag_no_case("aes256-cbc")),
-                            value(Ciphers::Aes128Ctr, tag_no_case("aes128-ctr")),
-                            value(Ciphers::Aes192Ctr, tag_no_case("aes192-ctr")),
-                            value(Ciphers::Aes256Ctr, tag_no_case("aes256-ctr")),
-                            value(
-                                Ciphers::Aes128GcmOpensshCom,
-                                tag_no_case("aes128-gcm@openssh.com"),
+                map(
+                    tuple((
+                        opt(one_of("+-")),
+                        separated_list1(
+                            tag(","),
+                            preceded(
+                                space0,
+                                alt((
+                                    value(Ciphers::X3DesCbc, tag_no_case("3des-cbc")),
+                                    value(Ciphers::Aes128Cbc, tag_no_case("aes128-cbc")),
+                                    value(Ciphers::Aes192Cbc, tag_no_case("aes192-cbc")),
+                                    value(Ciphers::Aes256Cbc, tag_no_case("aes256-cbc")),
+                                    value(Ciphers::Aes128Ctr, tag_no_case("aes128-ctr")),
+                                    value(Ciphers::Aes192Ctr, tag_no_case("aes192-ctr")),
+                                    value(Ciphers::Aes256Ctr, tag_no_case("aes256-ctr")),
+                                    value(
+                                        Ciphers::Aes128GcmOpensshCom,
+                                        tag_no_case("aes128-gcm@openssh.com"),
+                                    ),
+                                    value(
+                                        Ciphers::Aes256GcmOpensshCom,
+                                        tag_no_case("aes256-gcm@openssh.com"),
+                                    ),
+                                    value(
+                                        Ciphers::Chacha20Poly1305OpensshCom,
+                                        tag_no_case("chacha20-poly1305@openssh.com"),
+                                    ),
+                                )),
                             ),
-                            value(
-                                Ciphers::Aes256GcmOpensshCom,
-                                tag_no_case("aes256-gcm@openssh.com"),
-                            ),
-                            value(
-                                Ciphers::Chacha20Poly1305OpensshCom,
-                                tag_no_case("chacha20-poly1305@openssh.com"),
-                            ),
-                        )),
-                    ),
+                        ),
+                    )),
+                    Modifier::from,
                 ),
             ),
         )(input)
     }
 }
 
-impl<'a> From<Vec<Ciphers>> for crate::Directive<'a> {
-    fn from(directive: Vec<Ciphers>) -> Self {
+impl<'a> From<Modifier<Vec<Ciphers>>> for crate::Directive<'a> {
+    fn from(directive: Modifier<Vec<Ciphers>>) -> Self {
         crate::directive::Directive::Ciphers(directive)
     }
 }

@@ -69,7 +69,7 @@ impl ValueFormat {
         }
     }
 
-    fn impl_struct(&self, name_ident: &Ident, comments: &Vec<&str>) -> TokenStream {
+    fn impl_struct(&self, name_ident: &Ident, comments: &[&str]) -> TokenStream {
         let reference = format!(
             "See also: [{name}](https://man.openbsd.org/sshd_config#{name})",
             name = name_ident.to_string()
@@ -107,7 +107,7 @@ impl ValueFormat {
         }
     }
 
-    fn into_directive(&self, name_ident: &Ident) -> TokenStream {
+    fn impl_into_directive(&self, name_ident: &Ident) -> TokenStream {
         let output_type = self.output_type(name_ident);
 
         quote! {
@@ -263,7 +263,7 @@ fn main() {
             let name_ident = Ident::new(name, Span::call_site());
             let parse_impl = values.parse_impl(&name_ident);
             let structure = values.impl_struct(&name_ident, comment);
-            let into_directive = values.into_directive(&name_ident);
+            let into_directive = values.impl_into_directive(&name_ident);
 
             let tokens = format!(
                 r#"
@@ -369,7 +369,7 @@ fn main() {
     );
 
     std::fs::write(
-        &project_root().join(format!("src/directive/mod.rs")),
+        &project_root().join("src/directive/mod.rs"),
         reformat(directive).unwrap(),
     )
     .unwrap();

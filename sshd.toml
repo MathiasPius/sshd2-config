@@ -12,7 +12,7 @@
     "set.",
   ]
 
-  values = { comma_separated = { typed = [
+  values = {  modifier = { comma_separated = { typed = [
     "3des-cbc",
     "aes128-cbc",
     "aes192-cbc",
@@ -23,7 +23,7 @@
     "aes128-gcm@openssh.com",
     "aes256-gcm@openssh.com",
     "chacha20-poly1305@openssh.com",
-  ] } }
+  ] } } }
 
 [directives.KexAlgorithms]
   comment = [

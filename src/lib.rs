@@ -37,7 +37,10 @@ mod tests {
             Directive::parse("Ciphers 3des-cbc,aes128-gcm@openssh.com")
                 .unwrap()
                 .1,
-            Directive::Ciphers(vec![Ciphers::X3DesCbc, Ciphers::Aes128GcmOpensshCom])
+            Directive::Ciphers(Modifier::Set(vec![
+                Ciphers::X3DesCbc,
+                Ciphers::Aes128GcmOpensshCom
+            ]))
         );
     }
 
