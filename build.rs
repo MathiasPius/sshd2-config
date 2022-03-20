@@ -5,6 +5,7 @@ use serde::Deserialize;
 use std::collections::HashMap;
 use std::env;
 use std::io::Write;
+use std::ops::Deref;
 use std::path::{Path, PathBuf};
 use std::process::{Command, Stdio};
 
@@ -23,11 +24,61 @@ struct ConfigOption {
 }
 
 #[derive(Debug, Deserialize)]
+#[serde(untagged)]
+pub enum TypedValue {
+    Plain(&'static str),
+    Commented {
+        #[serde(borrow)]
+        value: &'static str,
+        #[serde(borrow, default)]
+        comment: Option<&'static str>,
+    },
+}
+
+impl From<TypedValue> for &'static str {
+    fn from(value: TypedValue) -> Self {
+        value.deref()
+    }
+}
+
+impl Deref for TypedValue {
+    type Target = &'static str;
+
+    fn deref(&self) -> &Self::Target {
+        match self {
+            TypedValue::Plain(value) | TypedValue::Commented { value, .. } => value,
+        }
+    }
+}
+
+impl TypedValue {
+    pub fn comment(&self) -> Option<&'static str> {
+        match self {
+            TypedValue::Plain(_) => None,
+            TypedValue::Commented { comment, .. } => *comment,
+        }
+    }
+
+    pub fn as_ident(&self) -> Ident {
+        let value = self.replace(['@', '.'], "-");
+
+        // If the value starts with a number (such as 3des)
+        // preface the ident with an x
+        let value = if value.starts_with(|c: char| c.is_digit(10)) {
+            format!("x{}", value)
+        } else {
+            value
+        };
+        Ident::new(&value.to_case(Case::Pascal), Span::call_site())
+    }
+}
+
+#[derive(Debug, Deserialize)]
+#[serde(bound(deserialize = "'de: 'static"))]
 #[serde(rename_all = "snake_case")]
 pub enum ValueFormat {
     Wildcard,
-    #[serde(borrow)]
-    Typed(Vec<&'static str>),
+    Typed(Vec<TypedValue>),
     CommaSeparated(Box<ValueFormat>),
     SpaceSeparated(Box<ValueFormat>),
     Modifier(Box<ValueFormat>),
@@ -97,7 +148,7 @@ impl ValueFormat {
                 }
             }
             ValueFormat::Typed(values) => {
-                let value_idents: Vec<Ident> = values_to_idents(values);
+                let value_idents: Vec<Ident> = values.iter().map(TypedValue::as_ident).collect();
                 quote! {
                     #(#[doc = #comments])*
                     #[doc = #reference]
@@ -131,10 +182,11 @@ impl ValueFormat {
                     map(preceded(space0, take_while1(|c: char| !c.is_whitespace())), #name_ident::from)
             },
             ValueFormat::Typed(values) => {
-                let value_idents: Vec<Ident> = values_to_idents(values);
+                let value_idents: Vec<Ident> = values.iter().map(TypedValue::as_ident).collect();
 
                 let mapping = values
                     .iter()
+                    .map(|value| **value)
                     .zip(value_idents.iter())
                     .map(|(value, ident)| {
                         quote! {
@@ -225,26 +277,6 @@ fn reformat(text: impl std::fmt::Display) -> std::io::Result<String> {
     }
     let preamble = "Generated file, do not edit by hand";
     Ok(format!("//! {}\n\n{}", preamble, stdout))
-}
-
-/// Sanitizes possible values so they can be used as enum variants
-fn values_to_idents(values: &[&'static str]) -> Vec<Ident> {
-    values
-        .iter()
-        .map(|value| {
-            let value = value.replace(['@', '.'], "-");
-
-            // If the value starts with a number (such as 3des)
-            // preface the ident with an x
-            let value = if value.starts_with(|c: char| c.is_digit(10)) {
-                format!("x{}", value)
-            } else {
-                value
-            };
-
-            Ident::new(&value.to_case(Case::Pascal), Span::call_site())
-        })
-        .collect()
 }
 
 fn main() {
