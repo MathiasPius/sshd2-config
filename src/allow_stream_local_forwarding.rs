@@ -1,10 +1,19 @@
 //! Generated file, do not edit by hand
 
+#[allow(unused_imports)]
 use crate::Directive;
+#[allow(unused_imports)]
 use nom::{
-    branch::alt, bytes::complete::tag_no_case, character::complete::space1, combinator::value,
-    sequence::preceded, IResult,
+    branch::alt,
+    bytes::complete::tag_no_case,
+    character::complete::{alphanumeric1, space0, space1},
+    combinator::{map, value},
+    multi::many1,
+    sequence::preceded,
+    IResult,
 };
+#[allow(unused_imports)]
+use std::borrow::Cow;
 #[doc = "Specifies whether StreamLocal (Unix-domain socket)"]
 #[doc = "forwarding is permitted.  The available options are yes"]
 #[doc = "(the default) or all to allow StreamLocal forwarding, no to"]
@@ -23,26 +32,18 @@ pub enum AllowStreamLocalForwarding {
     Local,
     Remote,
 }
-impl crate::Parse for AllowStreamLocalForwarding {
+impl<'a> crate::Parse<'a> for AllowStreamLocalForwarding {
     type Output = Self;
-    fn parse(input: &str) -> IResult<&str, Self> {
+    fn parse(input: &'a str) -> IResult<&'a str, Self::Output> {
         preceded(
-            tag_no_case("AllowStreamLocalForwarding"),
-            preceded(
-                space1,
-                alt((
-                    value(AllowStreamLocalForwarding::Yes, tag_no_case("yes")),
-                    value(AllowStreamLocalForwarding::No, tag_no_case("no")),
-                    value(AllowStreamLocalForwarding::All, tag_no_case("all")),
-                    value(AllowStreamLocalForwarding::Local, tag_no_case("local")),
-                    value(AllowStreamLocalForwarding::Remote, tag_no_case("remote")),
-                )),
-            ),
+            space1,
+            alt((
+                value(AllowStreamLocalForwarding::Yes, tag_no_case("yes")),
+                value(AllowStreamLocalForwarding::No, tag_no_case("no")),
+                value(AllowStreamLocalForwarding::All, tag_no_case("all")),
+                value(AllowStreamLocalForwarding::Local, tag_no_case("local")),
+                value(AllowStreamLocalForwarding::Remote, tag_no_case("remote")),
+            )),
         )(input)
-    }
-}
-impl Into<Directive> for AllowStreamLocalForwarding {
-    fn into(self) -> Directive {
-        Directive::AllowStreamLocalForwarding(self)
     }
 }

@@ -1,7 +1,9 @@
+pub mod accept_env;
 pub mod allow_agent_forwarding;
 pub mod allow_tcp_forwarding;
 pub mod kex_algorithms;
 
+use accept_env::AcceptEnv;
 use allow_agent_forwarding::AllowAgentForwarding;
 use allow_tcp_forwarding::AllowTcpForwarding;
 use kex_algorithms::KexAlgorithms;
@@ -14,43 +16,44 @@ use nom::{
     IResult,
 };
 
-trait Parse: Sized {
+trait Parse<'a>: Sized {
     type Output;
-    fn parse(input: &str) -> IResult<&str, Self::Output>;
+    fn parse(input: &'a str) -> IResult<&'a str, Self::Output>;
 }
 
 #[derive(Debug, Clone, PartialEq, Eq, PartialOrd, Ord)]
-pub struct Config(Vec<Directive>);
+pub struct Config<'a>(Vec<Directive<'a>>);
 
-impl Parse for Config {
+impl<'a> Parse<'a> for Config<'a> {
     type Output = Self;
-    fn parse(input: &str) -> IResult<&str, Self::Output> {
+    fn parse(input: &'a str) -> IResult<&'a str, Self::Output> {
         into(many0(Directive::parse))(input)
     }
 }
 
-impl Into<Config> for Vec<Directive> {
-    fn into(self) -> Config {
+impl<'a> Into<Config<'a>> for Vec<Directive<'a>> {
+    fn into(self) -> Config<'a> {
         Config(self)
     }
 }
 
-#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord)]
-pub enum Directive {
+#[derive(Debug, Clone, PartialEq, Eq, PartialOrd, Ord)]
+pub enum Directive<'a> {
     AllowAgentForwarding(AllowAgentForwarding),
     AllowTcpForwarding(AllowTcpForwarding),
     KexAlgorithms(KexAlgorithms),
+    AcceptEnv(AcceptEnv<'a>),
 }
 
 /// Matches a single directive "{NAME} {Parse Result of T}"
-fn directive<T: Parse>() -> impl FnMut(&str) -> IResult<&str, Directive>
+fn directive<'a, T: Parse<'a>>() -> impl FnMut(&'a str) -> IResult<&'a str, Directive>
 where
-    <T as Parse>::Output: Into<Directive>,
+    <T as Parse<'a>>::Output: Into<Directive<'a>>,
 {
-    move |input| terminated(into(T::parse), alt((line_ending, eof)))(input)
+    move |input| terminated(into(<T as Parse<'a>>::parse), alt((line_ending, eof)))(input)
 }
 
-impl Parse for Directive {
+impl<'a> Parse<'a> for Directive<'a> {
     type Output = Self;
     fn parse(input: &str) -> IResult<&str, Self::Output> {
         let dir = alt((
@@ -77,6 +80,15 @@ mod tests {
         let config = Config::parse(indoc! {"
             AllowTcpForwarding remote
             AllowAgentForwarding no
+        "});
+
+        println!("{:#?}", config);
+    }
+
+    #[test]
+    fn test_acceptenv() {
+        let config = Config::parse(indoc! {"
+            AcceptEnv LC_LANG LC_MONEY
         "});
 
         println!("{:#?}", config);
