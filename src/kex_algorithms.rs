@@ -5,15 +5,31 @@ use crate::Directive;
 #[allow(unused_imports)]
 use nom::{
     branch::alt,
-    bytes::complete::tag_no_case,
+    bytes::complete::{tag_no_case, take_until, take_while1},
     character::complete::{alphanumeric1, space0, space1},
-    combinator::{map, value},
+    combinator::{map, not, value},
     multi::many1,
     sequence::preceded,
     IResult,
 };
 #[allow(unused_imports)]
 use std::borrow::Cow;
+#[derive(Debug, Clone, PartialEq, Eq, PartialOrd, Ord)]
+pub struct KexAlgorithmsDirective(KexAlgorithms);
+impl<'a> crate::Parse<'a> for KexAlgorithmsDirective {
+    type Output = KexAlgorithmsDirective;
+    fn parse(input: &'a str) -> IResult<&'a str, Self::Output> {
+        map(
+            preceded(tag_no_case("KexAlgorithms"), KexAlgorithms::parse),
+            |value| KexAlgorithmsDirective(value),
+        )(input)
+    }
+}
+impl<'a> From<KexAlgorithmsDirective> for Directive<'a> {
+    fn from(directive: KexAlgorithmsDirective) -> Self {
+        Directive::KexAlgorithms(directive)
+    }
+}
 #[doc = "Specifies the available KEX (Key Exchange) algorithms."]
 #[doc = "Multiple algorithms must be comma-separated.  Alternately"]
 #[doc = "if the specified list begins with a ‘+’ character, then the"]

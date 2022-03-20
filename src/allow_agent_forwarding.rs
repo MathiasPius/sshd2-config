@@ -5,15 +5,34 @@ use crate::Directive;
 #[allow(unused_imports)]
 use nom::{
     branch::alt,
-    bytes::complete::tag_no_case,
+    bytes::complete::{tag_no_case, take_until, take_while1},
     character::complete::{alphanumeric1, space0, space1},
-    combinator::{map, value},
+    combinator::{map, not, value},
     multi::many1,
     sequence::preceded,
     IResult,
 };
 #[allow(unused_imports)]
 use std::borrow::Cow;
+#[derive(Debug, Clone, PartialEq, Eq, PartialOrd, Ord)]
+pub struct AllowAgentForwardingDirective(AllowAgentForwarding);
+impl<'a> crate::Parse<'a> for AllowAgentForwardingDirective {
+    type Output = AllowAgentForwardingDirective;
+    fn parse(input: &'a str) -> IResult<&'a str, Self::Output> {
+        map(
+            preceded(
+                tag_no_case("AllowAgentForwarding"),
+                AllowAgentForwarding::parse,
+            ),
+            |value| AllowAgentForwardingDirective(value),
+        )(input)
+    }
+}
+impl<'a> From<AllowAgentForwardingDirective> for Directive<'a> {
+    fn from(directive: AllowAgentForwardingDirective) -> Self {
+        Directive::AllowAgentForwarding(directive)
+    }
+}
 #[doc = "Specifies whether ssh-agent(1) forwarding is permitted."]
 #[doc = "The default is yes.  Note that disabling agent forwarding"]
 #[doc = "does not improve security unless users are also denied"]

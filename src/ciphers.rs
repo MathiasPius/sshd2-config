@@ -5,15 +5,30 @@ use crate::Directive;
 #[allow(unused_imports)]
 use nom::{
     branch::alt,
-    bytes::complete::tag_no_case,
+    bytes::complete::{tag_no_case, take_until, take_while1},
     character::complete::{alphanumeric1, space0, space1},
-    combinator::{map, value},
+    combinator::{map, not, value},
     multi::many1,
     sequence::preceded,
     IResult,
 };
 #[allow(unused_imports)]
 use std::borrow::Cow;
+#[derive(Debug, Clone, PartialEq, Eq, PartialOrd, Ord)]
+pub struct CiphersDirective(Ciphers);
+impl<'a> crate::Parse<'a> for CiphersDirective {
+    type Output = CiphersDirective;
+    fn parse(input: &'a str) -> IResult<&'a str, Self::Output> {
+        map(preceded(tag_no_case("Ciphers"), Ciphers::parse), |value| {
+            CiphersDirective(value)
+        })(input)
+    }
+}
+impl<'a> From<CiphersDirective> for Directive<'a> {
+    fn from(directive: CiphersDirective) -> Self {
+        Directive::Ciphers(directive)
+    }
+}
 #[doc = "Specifies the ciphers allowed.  Multiple ciphers must be"]
 #[doc = "comma-separated.  If the specified list begins with a ‘+’"]
 #[doc = "character, then the specified ciphers will be appended to"]

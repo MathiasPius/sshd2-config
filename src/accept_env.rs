@@ -5,15 +5,31 @@ use crate::Directive;
 #[allow(unused_imports)]
 use nom::{
     branch::alt,
-    bytes::complete::tag_no_case,
+    bytes::complete::{tag_no_case, take_until, take_while1},
     character::complete::{alphanumeric1, space0, space1},
-    combinator::{map, value},
+    combinator::{map, not, value},
     multi::many1,
     sequence::preceded,
     IResult,
 };
 #[allow(unused_imports)]
 use std::borrow::Cow;
+#[derive(Debug, Clone, PartialEq, Eq, PartialOrd, Ord)]
+pub struct AcceptEnvDirective<'a>(AcceptEnv<'a>);
+impl<'a> crate::Parse<'a> for AcceptEnvDirective<'a> {
+    type Output = AcceptEnvDirective<'a>;
+    fn parse(input: &'a str) -> IResult<&'a str, Self::Output> {
+        map(
+            preceded(tag_no_case("AcceptEnv"), AcceptEnv::parse),
+            |value| AcceptEnvDirective(value),
+        )(input)
+    }
+}
+impl<'a> From<AcceptEnvDirective<'a>> for Directive<'a> {
+    fn from(directive: AcceptEnvDirective<'a>) -> Self {
+        Directive::AcceptEnv(directive)
+    }
+}
 #[doc = "Specifies what environment variables sent by the client"]
 #[doc = "will be copied into the session's environ(7).  See SendEnv"]
 #[doc = "and SetEnv in ssh_config(5) for how to configure the"]
@@ -33,8 +49,9 @@ pub struct AcceptEnv<'a>(Cow<'a, str>);
 impl<'a> crate::Parse<'a> for AcceptEnv<'a> {
     type Output = Self;
     fn parse(input: &'a str) -> IResult<&'a str, Self::Output> {
-        map(preceded(space1, alphanumeric1), |value: &'a str| {
-            AcceptEnv(value.into())
-        })(input)
+        map(
+            preceded(space1, take_while1(|c: char| !c.is_whitespace())),
+            |value: &'a str| AcceptEnv(value.into()),
+        )(input)
     }
 }

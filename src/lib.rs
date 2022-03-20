@@ -3,10 +3,10 @@ pub mod allow_agent_forwarding;
 pub mod allow_tcp_forwarding;
 pub mod kex_algorithms;
 
-use accept_env::AcceptEnv;
-use allow_agent_forwarding::AllowAgentForwarding;
-use allow_tcp_forwarding::AllowTcpForwarding;
-use kex_algorithms::KexAlgorithms;
+use accept_env::AcceptEnvDirective;
+use allow_agent_forwarding::AllowAgentForwardingDirective;
+use allow_tcp_forwarding::AllowTcpForwardingDirective;
+use kex_algorithms::KexAlgorithmsDirective;
 use nom::{
     branch::alt,
     character::complete::line_ending,
@@ -39,10 +39,10 @@ impl<'a> Into<Config<'a>> for Vec<Directive<'a>> {
 
 #[derive(Debug, Clone, PartialEq, Eq, PartialOrd, Ord)]
 pub enum Directive<'a> {
-    AllowAgentForwarding(AllowAgentForwarding),
-    AllowTcpForwarding(AllowTcpForwarding),
-    KexAlgorithms(KexAlgorithms),
-    AcceptEnv(AcceptEnv<'a>),
+    AllowAgentForwarding(AllowAgentForwardingDirective),
+    AllowTcpForwarding(AllowTcpForwardingDirective),
+    KexAlgorithms(KexAlgorithmsDirective),
+    AcceptEnv(AcceptEnvDirective<'a>),
 }
 
 /// Matches a single directive "{NAME} {Parse Result of T}"
@@ -55,10 +55,11 @@ where
 
 impl<'a> Parse<'a> for Directive<'a> {
     type Output = Self;
-    fn parse(input: &str) -> IResult<&str, Self::Output> {
+    fn parse(input: &'a str) -> IResult<&'a str, Self::Output> {
         let dir = alt((
-            directive::<AllowAgentForwarding>(),
-            directive::<AllowTcpForwarding>(),
+            directive::<AllowAgentForwardingDirective>(),
+            directive::<AllowTcpForwardingDirective>(),
+            directive::<AcceptEnvDirective>(),
         ))(input)?;
 
         Ok(dir)
@@ -88,7 +89,7 @@ mod tests {
     #[test]
     fn test_acceptenv() {
         let config = Config::parse(indoc! {"
-            AcceptEnv LC_LANG LC_MONEY
+            AcceptEnv LC_LANG
         "});
 
         println!("{:#?}", config);

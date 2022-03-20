@@ -1,6 +1,6 @@
 use convert_case::{Case, Casing};
-use proc_macro2::{Ident, Span, TokenStream};
-use quote::{format_ident, quote};
+use proc_macro2::{Ident, Span};
+use quote::quote;
 use serde::Deserialize;
 use std::collections::HashMap;
 use std::env;
@@ -90,8 +90,8 @@ fn main() {
             sequence::preceded,
             multi::many1,
             branch::alt,
-            bytes::complete::tag_no_case,
-            combinator::{map, value},
+            bytes::complete::{take_until, take_while1, tag_no_case},
+            combinator::{map, value, not},
             IResult
         };
     };
@@ -155,17 +155,53 @@ fn main() {
                     fn parse(input: &'a str) -> IResult<&'a str, Self::Output> {
                         map(preceded(
                             space1,
-                            alphanumeric1
+                            take_while1(|c: char| !c.is_whitespace())
                         ), |value: &'a str| #name_ident(value.into()))(input)
                     }
                 }
             }
         };
 
-        let directive = format_ident!("{}Directive", name);
+        let directive_name = format!("{}Directive", name);
+        let directive_ident = Ident::new(&directive_name, Span::call_site());
+
+        let lifetime = if values.is_empty() {
+            quote! { <'a> }
+        } else {
+            quote! {}
+        };
+
+        let directive = match directive_type {
+            DirectiveType::Single => quote! {
+                #[derive(Debug, Clone, PartialEq, Eq, PartialOrd, Ord)]
+                pub struct #directive_ident #lifetime(#name_ident #lifetime);
+
+                impl<'a> crate::Parse<'a> for #directive_ident #lifetime {
+                    type Output = #directive_ident #lifetime;
+                    fn parse(input: &'a str) -> IResult<&'a str, Self::Output> {
+                        map(preceded(
+                            tag_no_case(#name),
+                            #name_ident::parse
+                        ), |value| #directive_ident(value))(input)
+                    }
+                }
+
+                impl<'a> From<#directive_ident #lifetime> for Directive<'a> {
+                    fn from(directive: #directive_ident #lifetime) -> Self {
+                        Directive::#name_ident(directive)
+                    }
+                }
+            },
+            DirectiveType::Multiple => todo!(),
+            DirectiveType::SingleCommaSeparated => todo!(),
+            DirectiveType::MultipleCommaSeparated => todo!(),
+        };
 
         let tokens = quote! {
             #includes
+
+            #directive
+
             #selector
         };
 

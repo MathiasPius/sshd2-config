@@ -5,15 +5,34 @@ use crate::Directive;
 #[allow(unused_imports)]
 use nom::{
     branch::alt,
-    bytes::complete::tag_no_case,
+    bytes::complete::{tag_no_case, take_until, take_while1},
     character::complete::{alphanumeric1, space0, space1},
-    combinator::{map, value},
+    combinator::{map, not, value},
     multi::many1,
     sequence::preceded,
     IResult,
 };
 #[allow(unused_imports)]
 use std::borrow::Cow;
+#[derive(Debug, Clone, PartialEq, Eq, PartialOrd, Ord)]
+pub struct AllowStreamLocalForwardingDirective(AllowStreamLocalForwarding);
+impl<'a> crate::Parse<'a> for AllowStreamLocalForwardingDirective {
+    type Output = AllowStreamLocalForwardingDirective;
+    fn parse(input: &'a str) -> IResult<&'a str, Self::Output> {
+        map(
+            preceded(
+                tag_no_case("AllowStreamLocalForwarding"),
+                AllowStreamLocalForwarding::parse,
+            ),
+            |value| AllowStreamLocalForwardingDirective(value),
+        )(input)
+    }
+}
+impl<'a> From<AllowStreamLocalForwardingDirective> for Directive<'a> {
+    fn from(directive: AllowStreamLocalForwardingDirective) -> Self {
+        Directive::AllowStreamLocalForwarding(directive)
+    }
+}
 #[doc = "Specifies whether StreamLocal (Unix-domain socket)"]
 #[doc = "forwarding is permitted.  The available options are yes"]
 #[doc = "(the default) or all to allow StreamLocal forwarding, no to"]
