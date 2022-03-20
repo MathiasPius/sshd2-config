@@ -87,6 +87,7 @@ impl TypedValue {
 #[serde(rename_all = "snake_case")]
 pub enum ValueFormat {
     Wildcard,
+    Integer,
     Typed(Vec<TypedValue>),
     CommaSeparated(Box<ValueFormat>),
     SpaceSeparated(Box<ValueFormat>),
@@ -107,6 +108,9 @@ impl ValueFormat {
             ValueFormat::Wildcard => quote! {
                 #name_ident #lifetime
             },
+            ValueFormat::Integer => quote! {
+                #name_ident
+            },
             ValueFormat::Typed(_) => quote! {
                 #name_ident
             },
@@ -122,7 +126,7 @@ impl ValueFormat {
     }
 
     fn lifetime(&self) -> TokenStream {
-        if self.is_wildcard() {
+        if self.is_borrowed() {
             quote! { <'a> }
         } else {
             quote! {}
@@ -152,6 +156,26 @@ impl ValueFormat {
                     impl<'a> From<&'a str> for #name_ident<'a> {
                         fn from(value: &'a str) -> Self {
                             #name_ident(value.into())
+                        }
+                    }
+                }
+            }
+            ValueFormat::Integer => {
+                quote! {
+                    #(#[doc = #comments])*
+                    #[doc = #reference]
+                    #[derive(Debug, Clone, PartialEq, Eq, PartialOrd, Ord)]
+                    pub struct #name_ident(u64);
+
+                    impl #name_ident {
+                        pub fn new(value: u64) -> Self {
+                            Self(value)
+                        }
+                    }
+
+                    impl From<u64> for #name_ident {
+                        fn from(value: u64) -> Self {
+                            #name_ident(value)
                         }
                     }
                 }
@@ -189,7 +213,10 @@ impl ValueFormat {
     fn parse_impl_inner(&self, name_ident: &Ident) -> TokenStream {
         match self {
             ValueFormat::Wildcard => quote! {
-                    map(preceded(space0, take_while1(|c: char| !c.is_whitespace())), #name_ident::from)
+                map(preceded(space0, take_while1(|c: char| !c.is_whitespace())), #name_ident::from)
+            },
+            ValueFormat::Integer => quote! {
+                map(preceded(space0, nom::character::complete::u64), #name_ident::from)
             },
             ValueFormat::Typed(values) => {
                 let value_idents: Vec<Ident> = values.iter().map(TypedValue::as_ident).collect();
@@ -252,13 +279,13 @@ impl ValueFormat {
         }
     }
 
-    pub fn is_wildcard(&self) -> bool {
+    pub fn is_borrowed(&self) -> bool {
         match self {
             ValueFormat::Wildcard => true,
-            ValueFormat::Typed(_) => false,
+            ValueFormat::Integer | ValueFormat::Typed(_) => false,
             ValueFormat::Modifier(inner)
             | ValueFormat::CommaSeparated(inner)
-            | ValueFormat::SpaceSeparated(inner) => inner.is_wildcard(),
+            | ValueFormat::SpaceSeparated(inner) => inner.is_borrowed(),
         }
     }
 }
@@ -390,6 +417,15 @@ fn main() {
         }
     };
 
+    // nom's alt() has a limti of 21 child parsers, so we have to chunk them to get around this
+    let chunked_idents = name_idents.as_slice().chunks(20).map(|chunk| {
+        quote! {
+            alt((
+                #(directive::<#chunk>),*
+            ))
+        }
+    });
+
     let parse_impl = quote! {
         fn directive<'a, T: Parse<'a>>(input: &'a str) -> IResult<&'a str, Directive>
         where
@@ -400,9 +436,10 @@ fn main() {
 
         impl<'a> Parse<'a> for Directive<'a> {
             type Output = Self;
+
             fn parse(input: &'a str) -> IResult<&'a str, Self::Output> {
                 alt((
-                    #(directive::<#name_idents>),*
+                    #(#chunked_idents),*
                 ))(input)
             }
         }
