@@ -83,6 +83,12 @@ impl ValueFormat {
                     #[derive(Debug, Clone, PartialEq, Eq, PartialOrd, Ord)]
                     pub struct #name_ident<'a>(Cow<'a, str>);
 
+                    impl<'a> #name_ident<'a> {
+                        pub fn new(value: &'a str) -> Self {
+                            Self(value.into())
+                        }
+                    }
+
                     impl<'a> From<&'a str> for #name_ident<'a> {
                         fn from(value: &'a str) -> Self {
                             #name_ident(value.into())

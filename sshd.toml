@@ -1,3 +1,58 @@
+[directives.AcceptEnv]
+  comment = [
+    "Specifies what environment variables sent by the client",
+    "will be copied into the session's environ(7).  See SendEnv",
+    "and SetEnv in ssh_config(5) for how to configure the",
+    "client.  The TERM environment variable is always accepted",
+    "whenever the client requests a pseudo-terminal as it is",
+    "required by the protocol.  Variables are specified by name,",
+    "which may contain the wildcard characters ‘*’ and ‘?’.",
+    "Multiple environment variables may be separated by",
+    "whitespace or spread across multiple AcceptEnv directives.",
+    "Be warned that some environment variables could be used to",
+    "bypass restricted user environments.  For this reason, care",
+    "should be taken in the use of this directive.  The default",
+    "is not to accept any environment variables.",
+  ]
+  values = { space_separated = "wildcard" }
+
+[directives.AddressFamily]
+  comment = [
+    "Specifies which address family should be used by sshd(8).",
+    "Valid arguments are any (the default), inet (use IPv4",
+    "only), or inet6 (use IPv6 only).",
+  ]
+  values = { typed = ["any", "inet", "inet6"] }
+
+[directives.AllowAgentForwarding]
+  comment = [
+    "Specifies whether ssh-agent(1) forwarding is permitted.",
+    "The default is yes.  Note that disabling agent forwarding",
+    "does not improve security unless users are also denied",
+    "shell access, as they can always install their own",
+    "forwarders.",
+  ]
+  values = { typed = ["yes", "no"] }
+
+[directives.AllowGroups]
+  comment = [
+    "Specifies what environment variables sent by the client",
+    "will be copied into the session's environ(7). See SendEnv",
+    "and SetEnv in ssh_config(5) for how to configure the client.",
+    "The TERM environment variable is always accepted whenever",
+    "the client requests a pseudo-terminal as it is required by",
+    "the protocol. Variables are specified by name, which may ",
+    "contain the wildcard characters ‘*’ and ‘?’. Multiple",
+    "environment variables may be separated by whitespace or",
+    "spread across multiple AcceptEnv directives. Be warned",
+    "that some environment variables could be used to bypass",
+    "restricted user environments. For this reason, care should",
+    "be taken in the use of this directive. The default is not ",
+    "to accept any environment variables."
+  ]
+  values = { space_separated = "wildcard" }
+
+
 [directives.Ciphers]
   comment = [
     "Specifies the ciphers allowed.  Multiple ciphers must be",
@@ -12,7 +67,7 @@
     "set.",
   ]
 
-  values = {  modifier = { comma_separated = { typed = [
+  values = { modifier = { comma_separated = { typed = [
     "3des-cbc",
     "aes128-cbc",
     "aes192-cbc",
@@ -54,16 +109,6 @@
     "sntrup761x25519-sha512@openssh.com",
   ] } } }
 
-[directives.AllowAgentForwarding]
-  comment = [
-    "Specifies whether ssh-agent(1) forwarding is permitted.",
-    "The default is yes.  Note that disabling agent forwarding",
-    "does not improve security unless users are also denied",
-    "shell access, as they can always install their own",
-    "forwarders.",
-  ]
-  values = { typed = ["yes", "no"] }
-
 [directives.AllowTcpForwarding]
   comment = [
     "Specifies whether TCP forwarding is permitted.  The",
@@ -76,32 +121,6 @@
     "install their own forwarders.",
   ]
   values = { typed = ["yes", "no", "all", "local", "remote"] }
-
-[directives.AddressFamily]
-  comment = [
-    "Specifies which address family should be used by sshd(8).",
-    "Valid arguments are any (the default), inet (use IPv4",
-    "only), or inet6 (use IPv6 only).",
-  ]
-  values = { typed = ["any", "inet", "inet6"] }
-
-[directives.AcceptEnv]
-  comment = [
-    "Specifies what environment variables sent by the client",
-    "will be copied into the session's environ(7).  See SendEnv",
-    "and SetEnv in ssh_config(5) for how to configure the",
-    "client.  The TERM environment variable is always accepted",
-    "whenever the client requests a pseudo-terminal as it is",
-    "required by the protocol.  Variables are specified by name,",
-    "which may contain the wildcard characters ‘*’ and ‘?’.",
-    "Multiple environment variables may be separated by",
-    "whitespace or spread across multiple AcceptEnv directives.",
-    "Be warned that some environment variables could be used to",
-    "bypass restricted user environments.  For this reason, care",
-    "should be taken in the use of this directive.  The default",
-    "is not to accept any environment variables.",
-  ]
-  values = { space_separated = "wildcard" }
 
 [directives.AuthenticationMethods]
   values = { space_separated = { comma_separated = { typed = [

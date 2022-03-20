@@ -1,6 +1,5 @@
 //! Generated file, do not edit by hand
 
-
 #[allow(unused_imports)]
 use crate::Modifier;
 #[allow(unused_imports)]

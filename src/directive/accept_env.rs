@@ -1,6 +1,5 @@
 //! Generated file, do not edit by hand
 
-
 #[allow(unused_imports)]
 use crate::Modifier;
 #[allow(unused_imports)]
@@ -32,6 +31,11 @@ use std::borrow::Cow;
 #[doc = "See also: [AcceptEnv](https://man.openbsd.org/sshd_config#AcceptEnv)"]
 #[derive(Debug, Clone, PartialEq, Eq, PartialOrd, Ord)]
 pub struct AcceptEnv<'a>(Cow<'a, str>);
+impl<'a> AcceptEnv<'a> {
+    pub fn new(value: &'a str) -> Self {
+        Self(value.into())
+    }
+}
 impl<'a> From<&'a str> for AcceptEnv<'a> {
     fn from(value: &'a str) -> Self {
         AcceptEnv(value.into())

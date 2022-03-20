@@ -29,7 +29,7 @@ impl<T> From<(Option<char>, T)> for Modifier<T> {
 
 #[cfg(test)]
 mod tests {
-    use crate::{Ciphers, Directive, KexAlgorithms, Modifier, Parse};
+    use crate::*;
 
     #[test]
     fn test_comma_separated() {
@@ -87,25 +87,16 @@ mod tests {
             ]))
         );
     }
-    /*
-       #[test]
-       fn test_simple_config() {
-           let config = Config::parse(indoc! {"
-               AllowTcpForwarding remote
-               AllowAgentForwarding no
-           "});
 
-           println!("{:#?}", config);
-       }
-
-       #[test]
-       fn test_acceptenv() {
-           let config = Config::parse(indoc! {"
-               AcceptEnv LC_LANG LC_MONEY
-               AcceptEnv Second Line
-           "});
-
-           println!("{:#?}", config);
-       }
-    */
+    #[test]
+    fn test_allow_groups() {
+        assert_eq!(
+            Directive::parse("AllowGroups root wheel lol").unwrap().1,
+            Directive::AllowGroups(vec![
+                AllowGroups::new("root"),
+                AllowGroups::new("wheel"),
+                AllowGroups::new("lol"),
+            ])
+        );
+    }
 }
