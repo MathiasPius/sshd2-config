@@ -277,8 +277,7 @@ fn main() {
             let into_directive = values.impl_into_directive(&name_ident);
 
             let tokens = format!(
-                r#"
-                {includes}
+                r#"{includes}
 
                 {structure}
 
