@@ -15,7 +15,7 @@ use nom::{
 #[allow(unused_imports)]
 use std::borrow::Cow;
 
-#[doc = "Specifies the file that contains the public keys used for user authentication. The format is described in the [AUTHORIZED_KEYS FILE FORMAT](https://man.openbsd.org/sshd.8#AUTHORIZED_KEYS_FILE_FORMAT) section of [sshd(8)](https://man.openbsd.org/sshd.8). Arguments to [`AuthorizedKeysFile`] accept the tokens described in the TOKENS section. After expansion, [`AuthorizedKeysFile`] is taken to be an absolute path or one relative to the user's home directory. Multiple files may be listed, separated by whitespace. Alternately this option may be set to none to skip checking for user keys in files. The default is `.ssh/authorized_keys .ssh/authorized_keys2`."]
+#[doc = "Specifies the file that contains the public keys used for user authentication. The format is described in the AUTHORIZED_KEYS FILE FORMAT section of [sshd(8)](https://man.openbsd.org/sshd.8). Arguments to **AuthorizedKeysFile** accept the tokens described in the TOKENS section. After expansion, **AuthorizedKeysFile** is taken to be an absolute path or one relative to the user's home directory. Multiple files may be listed, separated by whitespace. Alternately this option may be set to **none** to skip checking for user keys in files. The default is '.ssh/authorized_keys .ssh/authorized_keys2'."]
 #[doc = "See also: [AuthorizedKeysFile](https://man.openbsd.org/sshd_config#AuthorizedKeysFile)"]
 #[derive(Debug, Clone, PartialEq, Eq, PartialOrd, Ord)]
 pub struct AuthorizedKeysFile<'a>(Cow<'a, str>);

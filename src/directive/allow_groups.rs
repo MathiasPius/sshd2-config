@@ -15,7 +15,7 @@ use nom::{
 #[allow(unused_imports)]
 use std::borrow::Cow;
 
-#[doc = "This keyword can be followed by a list of group name patterns, separated by spaces. If specified, login is allowed only for users whose primary group or supplementary group list matches one of the patterns. Only group names are valid; a numerical group ID is not recognized. By default, login is allowed for all groups. The allow/deny groups directives are processed in the following order: [`DenyGroups`], [`AllowGroups`].\n\nSee PATTERNS in [ssh_config(5)](https://man.openbsd.org/ssh_config.5#PATTERNS) for more information on patterns."]
+#[doc = "This keyword can be followed by a list of group name patterns, separated by spaces. If specified, login is allowed only for users whose primary group or supplementary group list matches one of the patterns. Only group names are valid; a numerical group ID is not recognized. By default, login is allowed for all groups. The allow/deny groups directives are processed in the following order: **DenyGroups**, **AllowGroups**. See PATTERNS in [ssh_config(5)](https://man.openbsd.org/ssh_config.5) for more information on patterns."]
 #[doc = "See also: [AllowGroups](https://man.openbsd.org/sshd_config#AllowGroups)"]
 #[derive(Debug, Clone, PartialEq, Eq, PartialOrd, Ord)]
 pub struct AllowGroups<'a>(Cow<'a, str>);

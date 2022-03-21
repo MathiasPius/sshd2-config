@@ -18,6 +18,8 @@ struct Config {
 #[derive(Debug, Deserialize)]
 struct ConfigOption {
     #[serde(default)]
+    pub name_override: Option<&'static str>,
+    #[serde(default)]
     pub values: ValueFormat,
     #[serde(borrow, default)]
     pub comment: Vec<&'static str>,
@@ -133,10 +135,14 @@ impl ValueFormat {
         }
     }
 
-    fn impl_struct(&self, name_ident: &Ident, comments: &[&str]) -> TokenStream {
+    fn impl_struct(
+        &self,
+        original_name: &'static str,
+        name_ident: &Ident,
+        comments: &[&str],
+    ) -> TokenStream {
         let reference = format!(
-            "See also: [{name}](https://man.openbsd.org/sshd_config#{name})",
-            name = name_ident.to_string()
+            "See also: [{original_name}](https://man.openbsd.org/sshd_config#{original_name})"
         );
 
         match self {
@@ -194,7 +200,9 @@ impl ValueFormat {
             }
             ValueFormat::Modifier(inner)
             | ValueFormat::CommaSeparated(inner)
-            | ValueFormat::SpaceSeparated(inner) => inner.impl_struct(name_ident, comments),
+            | ValueFormat::SpaceSeparated(inner) => {
+                inner.impl_struct(original_name, name_ident, comments)
+            }
         }
     }
 
@@ -221,16 +229,41 @@ impl ValueFormat {
             ValueFormat::Typed(values) => {
                 let value_idents: Vec<Ident> = values.iter().map(TypedValue::as_ident).collect();
 
-                let mapping = values
-                    .iter()
-                    .map(|value| **value)
-                    .zip(value_idents.iter())
-                    .map(|(value, ident)| {
-                        quote! {
-                            value(#name_ident::#ident, tag_no_case(#value))
-                        }
-                    })
-                    .collect::<Vec<_>>();
+                // If there are more than 20 variants, we need to chunk it.
+                let mapping: Vec<_> = if values.len() > 20 {
+                    values
+                        .iter()
+                        .map(|value| **value)
+                        .zip(value_idents.iter())
+                        .collect::<Vec<_>>()
+                        .as_slice()
+                        .chunks(20)
+                        .map(|chunk| {
+                            let chunk = chunk.iter().map(|(value, ident)| {
+                                quote! {
+                                    value(#name_ident::#ident, tag_no_case(#value))
+                                }
+                            });
+
+                            quote! {
+                                alt((
+                                    #(#chunk,)*
+                                ))
+                            }
+                        })
+                        .collect()
+                } else {
+                    values
+                        .iter()
+                        .map(|value| **value)
+                        .zip(value_idents.iter())
+                        .map(|(value, ident)| {
+                            quote! {
+                                value(#name_ident::#ident, tag_no_case(#value))
+                            }
+                        })
+                        .collect()
+                };
 
                 quote! {
                     preceded(space0, alt((#(#mapping),*)))
@@ -257,11 +290,11 @@ impl ValueFormat {
         }
     }
 
-    pub fn parse_impl(&self, name_ident: &Ident) -> TokenStream {
+    pub fn parse_impl(&self, original_name: &'static str, name_ident: &Ident) -> TokenStream {
         let inner_pattern = self.parse_impl_inner(name_ident);
         let output_type = self.output_type(name_ident);
         let lifetime = self.lifetime();
-        let name = name_ident.to_string();
+        let name = original_name.to_string();
 
         quote! {
             impl<'a> crate::Parse<'a> for #name_ident #lifetime {
@@ -317,7 +350,7 @@ fn reformat(text: impl std::fmt::Display) -> std::io::Result<String> {
 }
 
 fn main() {
-    let config: Config = toml::from_str(include_str!("sshd.toml")).unwrap();
+    let config: Config = serde_json::from_str(include_str!("sshd.json")).unwrap();
 
     let includes = quote! {
         #[allow(unused_imports)]
@@ -336,17 +369,25 @@ fn main() {
         };
     };
 
-    let directive_types: Vec<_> = config
+    let mut directive_types: Vec<_> = config
         .directives
         .iter()
-        .map(|(name, ConfigOption { values, comment })| {
-            let name_ident = Ident::new(name, Span::call_site());
-            let parse_impl = values.parse_impl(&name_ident);
-            let structure = values.impl_struct(&name_ident, comment);
-            let into_directive = values.impl_into_directive(&name_ident);
+        .map(
+            |(
+                name,
+                ConfigOption {
+                    values,
+                    comment,
+                    name_override,
+                },
+            )| {
+                let name_ident = Ident::new(name_override.unwrap_or(name), Span::call_site());
+                let parse_impl = values.parse_impl(name, &name_ident);
+                let structure = values.impl_struct(name, &name_ident, comment);
+                let into_directive = values.impl_into_directive(&name_ident);
 
-            let tokens = format!(
-                r#"{includes}
+                let tokens = format!(
+                    r#"{includes}
 
                 {structure}
 
@@ -354,22 +395,24 @@ fn main() {
 
                 {into_directive}
             "#
-            );
+                );
 
-            std::fs::write(
-                &project_root().join(format!(
-                    "src/directive/{filename}.rs",
-                    filename = name.to_case(Case::Snake)
-                )),
-                reformat(tokens).unwrap(),
-                //tokens.to_string(),
-            )
-            .unwrap();
+                std::fs::write(
+                    &project_root().join(format!(
+                        "src/directive/{filename}.rs",
+                        filename = name_ident.to_string().to_case(Case::Snake)
+                    )),
+                    reformat(tokens).unwrap(),
+                    //tokens.to_string(),
+                )
+                .unwrap();
 
-            let output_type = values.output_type(&name_ident);
-            (name_ident, output_type)
-        })
+                let output_type = values.output_type(&name_ident);
+                (name_ident, output_type)
+            },
+        )
         .collect();
+    directive_types.sort_by_key(|(name_ident, _)| name_ident.to_string());
 
     let enum_members = directive_types.iter().map(|(name_ident, output_type)| {
         quote! {
@@ -463,6 +506,6 @@ fn main() {
     )
     .unwrap();
 
-    println!("cargo:rerun-if-changed=sshd.toml");
+    println!("cargo:rerun-if-changed=sshd.json");
     println!("cargo:rerun-if-changed=build.rs");
 }

@@ -15,7 +15,7 @@ use nom::{
 #[allow(unused_imports)]
 use std::borrow::Cow;
 
-#[doc = "The contents of the specified file are sent to the remote user before authentication is allowed. If the argument is none then no banner is displayed. By default, no banner is displayed."]
+#[doc = "The contents of the specified file are sent to the remote user before authentication is allowed. If the argument is **none** then no banner is displayed. By default, no banner is displayed."]
 #[doc = "See also: [Banner](https://man.openbsd.org/sshd_config#Banner)"]
 #[derive(Debug, Clone, PartialEq, Eq, PartialOrd, Ord)]
 pub struct Banner<'a>(Cow<'a, str>);

@@ -15,7 +15,7 @@ use nom::{
 #[allow(unused_imports)]
 use std::borrow::Cow;
 
-#[doc = "Specifies the user under whose account the [`AuthorizedKeysCommand`] is run. It is recommended to use a dedicated user that has no other role on the host than running authorized keys commands. If [`AuthorizedKeysCommand`] is specified but [`AuthorizedKeysCommandUser`] is not, then [sshd(8)](https://man.openbsd.org/sshd.8) will refuse to start."]
+#[doc = "Specifies the user under whose account the **AuthorizedKeysCommand** is run. It is recommended to use a dedicated user that has no other role on the host than running authorized keys commands. If **AuthorizedKeysCommand** is specified but **AuthorizedKeysCommandUser** is not, then [sshd(8)](https://man.openbsd.org/sshd.8) will refuse to start."]
 #[doc = "See also: [AuthorizedKeysCommandUser](https://man.openbsd.org/sshd_config#AuthorizedKeysCommandUser)"]
 #[derive(Debug, Clone, PartialEq, Eq, PartialOrd, Ord)]
 pub struct AuthorizedKeysCommandUser<'a>(Cow<'a, str>);

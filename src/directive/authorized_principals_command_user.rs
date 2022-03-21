@@ -15,7 +15,7 @@ use nom::{
 #[allow(unused_imports)]
 use std::borrow::Cow;
 
-#[doc = "Specifies the user under whose account the [`AuthorizedPrincipalsCommand`] is run. It is recommended to use a dedicated user that has no other role on the host than running authorized principals commands. If [`AuthorizedPrincipalsCommand`] is specified but [`AuthorizedPrincipalsCommandUser`] is not, then [sshd(8)](https://man.openbsd.org/sshd.8) will refuse to start."]
+#[doc = "Specifies the user under whose account the **AuthorizedPrincipalsCommand** is run. It is recommended to use a dedicated user that has no other role on the host than running authorized principals commands. If **AuthorizedPrincipalsCommand** is specified but **AuthorizedPrincipalsCommandUser** is not, then [sshd(8)](https://man.openbsd.org/sshd.8) will refuse to start."]
 #[doc = "See also: [AuthorizedPrincipalsCommandUser](https://man.openbsd.org/sshd_config#AuthorizedPrincipalsCommandUser)"]
 #[derive(Debug, Clone, PartialEq, Eq, PartialOrd, Ord)]
 pub struct AuthorizedPrincipalsCommandUser<'a>(Cow<'a, str>);

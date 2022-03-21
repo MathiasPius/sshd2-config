@@ -15,7 +15,7 @@ use nom::{
 #[allow(unused_imports)]
 use std::borrow::Cow;
 
-#[doc = "Specifies whether or not the server will attempt to perform a reverse name lookup when matching the name in the `~/.shosts`, `~/.rhosts`, and `/etc/hosts.equiv` files during [`HostbasedAuthentication`]. A setting of **yes** means that sshd(8) uses the name supplied by the client rather than attempting to resolve the name from the TCP connection itself. The default is **no**."]
+#[doc = "Specifies whether or not the server will attempt to perform a reverse name lookup when matching the name in the ~/.shosts, ~/.rhosts, and /etc/hosts.equiv files during **HostbasedAuthentication**. A setting of **yes** means that [sshd(8)](https://man.openbsd.org/sshd.8) uses the name supplied by the client rather than attempting to resolve the name from the TCP connection itself. The default is **no**."]
 #[doc = "See also: [HostbasedUsesNameFromPacketOnly](https://man.openbsd.org/sshd_config#HostbasedUsesNameFromPacketOnly)"]
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord)]
 pub enum HostbasedUsesNameFromPacketOnly {

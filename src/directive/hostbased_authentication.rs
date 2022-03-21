@@ -15,7 +15,7 @@ use nom::{
 #[allow(unused_imports)]
 use std::borrow::Cow;
 
-#[doc = "Specifies whether rhosts or `/etc/hosts.equiv` authentication together with successful public key client host authentication is allowed (host-based authentication). The default is **no**."]
+#[doc = "Specifies whether rhosts or /etc/hosts.equiv authentication together with successful public key client host authentication is allowed (host-based authentication). The default is **no**."]
 #[doc = "See also: [HostbasedAuthentication](https://man.openbsd.org/sshd_config#HostbasedAuthentication)"]
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord)]
 pub enum HostbasedAuthentication {

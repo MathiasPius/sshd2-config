@@ -15,7 +15,7 @@ use nom::{
 #[allow(unused_imports)]
 use std::borrow::Cow;
 
-#[doc = "This keyword can be followed by a list of group name patterns, separated by spaces. Login is disallowed for users whose primary group or supplementary group list matches one of the patterns. Only group names are valid; a numerical group ID is not recognized. By default, login is allowed for all groups. The allow/deny groups directives are processed in the following order: [`DenyGroups`], [`AllowGroups`].\n\nSee PATTERNS in [ssh_config(5)](https://man.openbsd.org/ssh_config.5#PATTERNS) for more information on patterns."]
+#[doc = "This keyword can be followed by a list of group name patterns, separated by spaces. Login is disallowed for users whose primary group or supplementary group list matches one of the patterns. Only group names are valid; a numerical group ID is not recognized. By default, login is allowed for all groups. The allow/deny groups directives are processed in the following order: **DenyGroups**, **AllowGroups**. See PATTERNS in [ssh_config(5)](https://man.openbsd.org/ssh_config.5) for more information on patterns."]
 #[doc = "See also: [DenyGroups](https://man.openbsd.org/sshd_config#DenyGroups)"]
 #[derive(Debug, Clone, PartialEq, Eq, PartialOrd, Ord)]
 pub struct DenyGroups<'a>(Cow<'a, str>);
@@ -31,23 +31,26 @@ impl<'a> From<&'a str> for DenyGroups<'a> {
 }
 
 impl<'a> crate::Parse<'a> for DenyGroups<'a> {
-    type Output = DenyGroups<'a>;
+    type Output = Vec<DenyGroups<'a>>;
     fn parse(input: &'a str) -> IResult<&'a str, Self::Output> {
         preceded(
             tag("DenyGroups"),
             preceded(
                 space1,
-                map(
-                    preceded(space0, take_while1(|c: char| !c.is_whitespace())),
-                    DenyGroups::from,
+                separated_list1(
+                    tag(" "),
+                    map(
+                        preceded(space0, take_while1(|c: char| !c.is_whitespace())),
+                        DenyGroups::from,
+                    ),
                 ),
             ),
         )(input)
     }
 }
 
-impl<'a> From<DenyGroups<'a>> for crate::Directive<'a> {
-    fn from(directive: DenyGroups<'a>) -> Self {
+impl<'a> From<Vec<DenyGroups<'a>>> for crate::Directive<'a> {
+    fn from(directive: Vec<DenyGroups<'a>>) -> Self {
         crate::directive::Directive::DenyGroups(directive)
     }
 }

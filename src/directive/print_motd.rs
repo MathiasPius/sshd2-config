@@ -1,0 +1,51 @@
+//! Generated file, do not edit by hand
+
+#[allow(unused_imports)]
+use crate::Modifier;
+#[allow(unused_imports)]
+use nom::{
+    branch::alt,
+    bytes::complete::{tag, tag_no_case, take_until, take_while1},
+    character::complete::{alphanumeric1, one_of, space0, space1},
+    combinator::{into, map, not, opt, value},
+    multi::{many1, separated_list1},
+    sequence::{preceded, tuple},
+    IResult,
+};
+#[allow(unused_imports)]
+use std::borrow::Cow;
+
+#[doc = "Specifies whether [sshd(8)](https://man.openbsd.org/sshd.8) should print /etc/motd when a user logs in interactively. (On some systems it is also printed by the shell, /etc/profile, or equivalent.) The default is **yes**."]
+#[doc = "See also: [PrintMotd](https://man.openbsd.org/sshd_config#PrintMotd)"]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord)]
+pub enum PrintMotd {
+    #[doc = "yes"]
+    Yes,
+    #[doc = "no"]
+    No,
+}
+
+impl<'a> crate::Parse<'a> for PrintMotd {
+    type Output = PrintMotd;
+    fn parse(input: &'a str) -> IResult<&'a str, Self::Output> {
+        preceded(
+            tag("PrintMotd"),
+            preceded(
+                space1,
+                preceded(
+                    space0,
+                    alt((
+                        value(PrintMotd::Yes, tag_no_case("yes")),
+                        value(PrintMotd::No, tag_no_case("no")),
+                    )),
+                ),
+            ),
+        )(input)
+    }
+}
+
+impl<'a> From<PrintMotd> for crate::Directive<'a> {
+    fn from(directive: PrintMotd) -> Self {
+        crate::directive::Directive::PrintMotd(directive)
+    }
+}

@@ -53,36 +53,36 @@ mod tests {
     fn test_modifier_comma_separated() {
         assert_eq!(
             Directive::parse(
-                "KexAlgorithms +diffie-hellman-group14-sha12,diffie-hellman-group14-sha256"
+                "KexAlgorithms +diffie-hellman-group14-sha1,diffie-hellman-group14-sha256"
             )
             .unwrap()
             .1,
             Directive::KexAlgorithms(Modifier::Add(vec![
-                KexAlgorithms::DiffieHellmanGroup14Sha12,
+                KexAlgorithms::DiffieHellmanGroup14Sha1,
                 KexAlgorithms::DiffieHellmanGroup14Sha256
             ]))
         );
 
         assert_eq!(
             Directive::parse(
-                "KexAlgorithms -diffie-hellman-group14-sha12,diffie-hellman-group14-sha256"
+                "KexAlgorithms -diffie-hellman-group14-sha1,diffie-hellman-group14-sha256"
             )
             .unwrap()
             .1,
             Directive::KexAlgorithms(Modifier::Remove(vec![
-                KexAlgorithms::DiffieHellmanGroup14Sha12,
+                KexAlgorithms::DiffieHellmanGroup14Sha1,
                 KexAlgorithms::DiffieHellmanGroup14Sha256
             ]))
         );
 
         assert_eq!(
             Directive::parse(
-                "KexAlgorithms diffie-hellman-group14-sha12,diffie-hellman-group14-sha256"
+                "KexAlgorithms diffie-hellman-group14-sha1,diffie-hellman-group14-sha256"
             )
             .unwrap()
             .1,
             Directive::KexAlgorithms(Modifier::Set(vec![
-                KexAlgorithms::DiffieHellmanGroup14Sha12,
+                KexAlgorithms::DiffieHellmanGroup14Sha1,
                 KexAlgorithms::DiffieHellmanGroup14Sha256
             ]))
         );

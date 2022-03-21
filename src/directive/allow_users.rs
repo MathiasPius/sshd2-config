@@ -15,7 +15,7 @@ use nom::{
 #[allow(unused_imports)]
 use std::borrow::Cow;
 
-#[doc = "This keyword can be followed by a list of user name patterns, separated by spaces. If specified, login is allowed only for user names that match one of the patterns. Only user names are valid; a numerical user ID is not recognized. By default, login is allowed for all users. If the pattern takes the form USER@HOST then USER and HOST are separately checked, restricting logins to particular users from particular hosts. HOST criteria may additionally contain addresses to match in CIDR address/masklen format. The allow/deny users directives are processed in the following order: [`DenyUsers`], [`AllowUsers`].\n\nSee PATTERNS in [ssh_config(5)](https://man.openbsd.org/ssh_config.5#PATTERNS) for more information on patterns."]
+#[doc = "This keyword can be followed by a list of user name patterns, separated by spaces. If specified, login is allowed only for user names that match one of the patterns. Only user names are valid; a numerical user ID is not recognized. By default, login is allowed for all users. If the pattern takes the form USER@HOST then USER and HOST are separately checked, restricting logins to particular users from particular hosts. HOST criteria may additionally contain addresses to match in CIDR address/masklen format. The allow/deny users directives are processed in the following order: **DenyUsers**, **AllowUsers**. See PATTERNS in [ssh_config(5)](https://man.openbsd.org/ssh_config.5) for more information on patterns."]
 #[doc = "See also: [AllowUsers](https://man.openbsd.org/sshd_config#AllowUsers)"]
 #[derive(Debug, Clone, PartialEq, Eq, PartialOrd, Ord)]
 pub struct AllowUsers<'a>(Cow<'a, str>);
