@@ -370,8 +370,6 @@ fn main() {
 
                 let comments =  format!("/// {}\n///{}", first, rest);
 
-                println!("{}", comments);
-
                 let name_ident = Ident::new(name_override.unwrap_or(name), Span::call_site());
                 let parse_impl = values.parse_impl(name, &name_ident);
                 let structure = values.impl_struct(name, &name_ident);
