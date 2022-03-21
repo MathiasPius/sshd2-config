@@ -1,6 +1,5 @@
 //! Generated file, do not edit by hand
 
-
 mod accept_env;
 mod address_family;
 mod allow_agent_forwarding;
@@ -74,6 +73,7 @@ mod pid_file;
 mod port;
 mod print_last_log;
 mod print_motd;
+mod protocol;
 mod pubkey_accepted_algorithms;
 mod pubkey_auth_options;
 mod pubkey_authentication;
@@ -177,6 +177,7 @@ pub use pid_file::*;
 pub use port::*;
 pub use print_last_log::*;
 pub use print_motd::*;
+pub use protocol::*;
 pub use pubkey_accepted_algorithms::*;
 pub use pubkey_auth_options::*;
 pub use pubkey_authentication::*;
@@ -274,6 +275,7 @@ pub enum Directive<'a> {
     Port(Port),
     PrintLastLog(PrintLastLog),
     PrintMotd(PrintMotd),
+    Protocol(Protocol),
     PubkeyAcceptedAlgorithms(Modifier<Vec<PubkeyAcceptedAlgorithms>>),
     PubkeyAuthOptions(Vec<PubkeyAuthOptions>),
     PubkeyAuthentication(PubkeyAuthentication),
@@ -387,15 +389,16 @@ impl<'a> Parse<'a> for Directive<'a> {
                 directive::<Port>,
                 directive::<PrintLastLog>,
                 directive::<PrintMotd>,
+                directive::<Protocol>,
                 directive::<PubkeyAcceptedAlgorithms>,
                 directive::<PubkeyAuthOptions>,
                 directive::<PubkeyAuthentication>,
                 directive::<RDomain>,
                 directive::<RekeyLimit>,
                 directive::<RevokedKeys>,
-                directive::<SecurityKeyProvider>,
             )),
             alt((
+                directive::<SecurityKeyProvider>,
                 directive::<SetEnv>,
                 directive::<StreamLocalBindMask>,
                 directive::<StreamLocalBindUnlink>,
