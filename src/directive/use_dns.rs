@@ -1,5 +1,4 @@
-//! Generated file, do not edit by hand
-
+//! This file has been automatically generated. Any changes made to it will be overwritten upon subsequent runs!
 #[allow(unused_imports)]
 use crate::Modifier;
 #[allow(unused_imports)]
@@ -15,8 +14,9 @@ use nom::{
 #[allow(unused_imports)]
 use std::borrow::Cow;
 
-#[doc = "Specifies whether [sshd(8)](https://man.openbsd.org/sshd.8) should look up the remote host name, and to check that the resolved host name for the remote IP address maps back to the very same IP address. If this option is set to **no** (the default) then only addresses and not host names may be used in ~/.ssh/authorized_keys **from** and sshd_config **Match** **Host** directives."]
-#[doc = "See also: [UseDNS](https://man.openbsd.org/sshd_config#UseDNS)"]
+/// Specifies whether [sshd(8)](https://man.openbsd.org/sshd.8) should look up the remote host name, and to check that the resolved host name for the remote IP address maps back to the very same IP address.
+///
+/// If this option is set to **no** (the default) then only addresses and not host names may be used in ~/.ssh/authorized_keys **from** and sshd_config **Match** **Host** directives.
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord)]
 pub enum UseDNS {
     #[doc = "yes"]
@@ -49,3 +49,4 @@ impl<'a> From<UseDNS> for crate::Directive<'a> {
         crate::directive::Directive::UseDNS(directive)
     }
 }
+

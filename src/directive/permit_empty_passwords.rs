@@ -1,5 +1,4 @@
-//! Generated file, do not edit by hand
-
+//! This file has been automatically generated. Any changes made to it will be overwritten upon subsequent runs!
 #[allow(unused_imports)]
 use crate::Modifier;
 #[allow(unused_imports)]
@@ -15,8 +14,9 @@ use nom::{
 #[allow(unused_imports)]
 use std::borrow::Cow;
 
-#[doc = "When password authentication is allowed, it specifies whether the server allows login to accounts with empty password strings. The default is **no**."]
-#[doc = "See also: [PermitEmptyPasswords](https://man.openbsd.org/sshd_config#PermitEmptyPasswords)"]
+/// When password authentication is allowed, it specifies whether the server allows login to accounts with empty password strings.
+///
+/// The default is **no**.
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord)]
 pub enum PermitEmptyPasswords {
     #[doc = "yes"]
@@ -49,3 +49,4 @@ impl<'a> From<PermitEmptyPasswords> for crate::Directive<'a> {
         crate::directive::Directive::PermitEmptyPasswords(directive)
     }
 }
+

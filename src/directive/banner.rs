@@ -1,5 +1,4 @@
-//! Generated file, do not edit by hand
-
+//! This file has been automatically generated. Any changes made to it will be overwritten upon subsequent runs!
 #[allow(unused_imports)]
 use crate::Modifier;
 #[allow(unused_imports)]
@@ -15,8 +14,10 @@ use nom::{
 #[allow(unused_imports)]
 use std::borrow::Cow;
 
-#[doc = "The contents of the specified file are sent to the remote user before authentication is allowed. If the argument is **none** then no banner is displayed. By default, no banner is displayed."]
-#[doc = "See also: [Banner](https://man.openbsd.org/sshd_config#Banner)"]
+/// The contents of the specified file are sent to the remote user before authentication is allowed.
+///
+/// If the argument is **none** then no banner is displayed.
+/// By default, no banner is displayed.
 #[derive(Debug, Clone, PartialEq, Eq, PartialOrd, Ord)]
 pub struct Banner<'a>(Cow<'a, str>);
 impl<'a> Banner<'a> {
@@ -51,3 +52,4 @@ impl<'a> From<Banner<'a>> for crate::Directive<'a> {
         crate::directive::Directive::Banner(directive)
     }
 }
+

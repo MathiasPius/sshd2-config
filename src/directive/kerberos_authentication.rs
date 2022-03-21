@@ -1,5 +1,4 @@
-//! Generated file, do not edit by hand
-
+//! This file has been automatically generated. Any changes made to it will be overwritten upon subsequent runs!
 #[allow(unused_imports)]
 use crate::Modifier;
 #[allow(unused_imports)]
@@ -15,8 +14,10 @@ use nom::{
 #[allow(unused_imports)]
 use std::borrow::Cow;
 
-#[doc = "Specifies whether the password provided by the user for **PasswordAuthentication** will be validated through the Kerberos KDC. To use this option, the server needs a Kerberos servtab which allows the verification of the KDC's identity. The default is **no**."]
-#[doc = "See also: [KerberosAuthentication](https://man.openbsd.org/sshd_config#KerberosAuthentication)"]
+/// Specifies whether the password provided by the user for **PasswordAuthentication** will be validated through the Kerberos KDC.
+///
+/// To use this option, the server needs a Kerberos servtab which allows the verification of the KDC's identity.
+/// The default is **no**.
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord)]
 pub enum KerberosAuthentication {
     #[doc = "yes"]
@@ -49,3 +50,4 @@ impl<'a> From<KerberosAuthentication> for crate::Directive<'a> {
         crate::directive::Directive::KerberosAuthentication(directive)
     }
 }
+

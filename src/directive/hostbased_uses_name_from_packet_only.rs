@@ -1,5 +1,4 @@
-//! Generated file, do not edit by hand
-
+//! This file has been automatically generated. Any changes made to it will be overwritten upon subsequent runs!
 #[allow(unused_imports)]
 use crate::Modifier;
 #[allow(unused_imports)]
@@ -15,8 +14,10 @@ use nom::{
 #[allow(unused_imports)]
 use std::borrow::Cow;
 
-#[doc = "Specifies whether or not the server will attempt to perform a reverse name lookup when matching the name in the ~/.shosts, ~/.rhosts, and /etc/hosts.equiv files during **HostbasedAuthentication**. A setting of **yes** means that [sshd(8)](https://man.openbsd.org/sshd.8) uses the name supplied by the client rather than attempting to resolve the name from the TCP connection itself. The default is **no**."]
-#[doc = "See also: [HostbasedUsesNameFromPacketOnly](https://man.openbsd.org/sshd_config#HostbasedUsesNameFromPacketOnly)"]
+/// Specifies whether or not the server will attempt to perform a reverse name lookup when matching the name in the ~/.shosts, ~/.rhosts, and /etc/hosts.equiv files during **HostbasedAuthentication**.
+///
+/// A setting of **yes** means that [sshd(8)](https://man.openbsd.org/sshd.8) uses the name supplied by the client rather than attempting to resolve the name from the TCP connection itself.
+/// The default is **no**.
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord)]
 pub enum HostbasedUsesNameFromPacketOnly {
     #[doc = "yes"]
@@ -49,3 +50,4 @@ impl<'a> From<HostbasedUsesNameFromPacketOnly> for crate::Directive<'a> {
         crate::directive::Directive::HostbasedUsesNameFromPacketOnly(directive)
     }
 }
+

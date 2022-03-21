@@ -1,5 +1,4 @@
-//! Generated file, do not edit by hand
-
+//! This file has been automatically generated. Any changes made to it will be overwritten upon subsequent runs!
 #[allow(unused_imports)]
 use crate::Modifier;
 #[allow(unused_imports)]
@@ -15,8 +14,9 @@ use nom::{
 #[allow(unused_imports)]
 use std::borrow::Cow;
 
-#[doc = "Specifies the full pathname of the [xauth(1)](https://man.openbsd.org/xauth.1) program, or **none** to not use one. The default is /usr/X11R6/bin/xauth."]
-#[doc = "See also: [XAuthLocation](https://man.openbsd.org/sshd_config#XAuthLocation)"]
+/// Specifies the full pathname of the [xauth(1)](https://man.openbsd.org/xauth.1) program, or **none** to not use one.
+///
+/// The default is /usr/X11R6/bin/xauth.
 #[derive(Debug, Clone, PartialEq, Eq, PartialOrd, Ord)]
 pub struct XAuthLocation<'a>(Cow<'a, str>);
 impl<'a> XAuthLocation<'a> {
@@ -51,3 +51,4 @@ impl<'a> From<XAuthLocation<'a>> for crate::Directive<'a> {
         crate::directive::Directive::XAuthLocation(directive)
     }
 }
+

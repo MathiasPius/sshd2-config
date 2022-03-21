@@ -1,5 +1,4 @@
-//! Generated file, do not edit by hand
-
+//! This file has been automatically generated. Any changes made to it will be overwritten upon subsequent runs!
 #[allow(unused_imports)]
 use crate::Modifier;
 #[allow(unused_imports)]
@@ -15,8 +14,12 @@ use nom::{
 #[allow(unused_imports)]
 use std::borrow::Cow;
 
-#[doc = "Specifies the maximum amount of data that may be transmitted before the session key is renegotiated, optionally followed by a maximum amount of time that may pass before the session key is renegotiated. The first argument is specified in bytes and may have a suffix of ‘K’, ‘M’, or ‘G’ to indicate Kilobytes, Megabytes, or Gigabytes, respectively. The default is between ‘1G’ and ‘4G’, depending on the cipher. The optional second value is specified in seconds and may use any of the units documented in the TIME FORMATS section. The default value for **RekeyLimit** is **default none**, which means that rekeying is performed after the cipher's default amount of data has been sent or received and no time based rekeying is done."]
-#[doc = "See also: [RekeyLimit](https://man.openbsd.org/sshd_config#RekeyLimit)"]
+/// Specifies the maximum amount of data that may be transmitted before the session key is renegotiated, optionally followed by a maximum amount of time that may pass before the session key is renegotiated.
+///
+/// The first argument is specified in bytes and may have a suffix of ‘K’, ‘M’, or ‘G’ to indicate Kilobytes, Megabytes, or Gigabytes, respectively.
+/// The default is between ‘1G’ and ‘4G’, depending on the cipher.
+/// The optional second value is specified in seconds and may use any of the units documented in the TIME FORMATS section.
+/// The default value for **RekeyLimit** is **default none**, which means that rekeying is performed after the cipher's default amount of data has been sent or received and no time based rekeying is done.
 #[derive(Debug, Clone, PartialEq, Eq, PartialOrd, Ord)]
 pub struct RekeyLimit<'a>(Cow<'a, str>);
 impl<'a> RekeyLimit<'a> {
@@ -51,3 +54,4 @@ impl<'a> From<RekeyLimit<'a>> for crate::Directive<'a> {
         crate::directive::Directive::RekeyLimit(directive)
     }
 }
+

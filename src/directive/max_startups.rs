@@ -1,5 +1,4 @@
-//! Generated file, do not edit by hand
-
+//! This file has been automatically generated. Any changes made to it will be overwritten upon subsequent runs!
 #[allow(unused_imports)]
 use crate::Modifier;
 #[allow(unused_imports)]
@@ -15,8 +14,14 @@ use nom::{
 #[allow(unused_imports)]
 use std::borrow::Cow;
 
-#[doc = "Specifies the maximum number of concurrent unauthenticated connections to the SSH daemon. Additional connections will be dropped until authentication succeeds or the **LoginGraceTime** expires for a connection. The default is 10:30:100. Alternatively, random early drop can be enabled by specifying the three colon separated values start:rate:full (e.g. '10:30:60'). [sshd(8)](https://man.openbsd.org/sshd.8) will refuse connection attempts with a probability of rate/100 (30%) if there are currently start (10) unauthenticated connections. The probability increases linearly and all connection attempts are refused if the number of unauthenticated connections reaches full (60)."]
-#[doc = "See also: [MaxStartups](https://man.openbsd.org/sshd_config#MaxStartups)"]
+/// Specifies the maximum number of concurrent unauthenticated connections to the SSH daemon.
+///
+/// Additional connections will be dropped until authentication succeeds or the **LoginGraceTime** expires for a connection.
+/// The default is 10:30:100.
+/// Alternatively, random early drop can be enabled by specifying the three colon separated values start:rate:full (e.g.
+/// '10:30:60').
+/// [sshd(8)](https://man.openbsd.org/sshd.8) will refuse connection attempts with a probability of rate/100 (30%) if there are currently start (10) unauthenticated connections.
+/// The probability increases linearly and all connection attempts are refused if the number of unauthenticated connections reaches full (60).
 #[derive(Debug, Clone, PartialEq, Eq, PartialOrd, Ord)]
 pub struct MaxStartups<'a>(Cow<'a, str>);
 impl<'a> MaxStartups<'a> {
@@ -51,3 +56,4 @@ impl<'a> From<MaxStartups<'a>> for crate::Directive<'a> {
         crate::directive::Directive::MaxStartups(directive)
     }
 }
+

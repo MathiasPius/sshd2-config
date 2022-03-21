@@ -1,5 +1,4 @@
-//! Generated file, do not edit by hand
-
+//! This file has been automatically generated. Any changes made to it will be overwritten upon subsequent runs!
 #[allow(unused_imports)]
 use crate::Modifier;
 #[allow(unused_imports)]
@@ -15,8 +14,11 @@ use nom::{
 #[allow(unused_imports)]
 use std::borrow::Cow;
 
-#[doc = "Specifies the port number that [sshd(8)](https://man.openbsd.org/sshd.8) listens on. The default is 22. Multiple options of this type are permitted. See also **ListenAddress**."]
-#[doc = "See also: [Port](https://man.openbsd.org/sshd_config#Port)"]
+/// Specifies the port number that [sshd(8)](https://man.openbsd.org/sshd.8) listens on.
+///
+/// The default is 22.
+/// Multiple options of this type are permitted.
+/// See also **ListenAddress**.
 #[derive(Debug, Clone, PartialEq, Eq, PartialOrd, Ord)]
 pub struct Port(u64);
 impl Port {
@@ -48,3 +50,4 @@ impl<'a> From<Port> for crate::Directive<'a> {
         crate::directive::Directive::Port(directive)
     }
 }
+

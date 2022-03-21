@@ -1,5 +1,4 @@
-//! Generated file, do not edit by hand
-
+//! This file has been automatically generated. Any changes made to it will be overwritten upon subsequent runs!
 #[allow(unused_imports)]
 use crate::Modifier;
 #[allow(unused_imports)]
@@ -15,8 +14,11 @@ use nom::{
 #[allow(unused_imports)]
 use std::borrow::Cow;
 
-#[doc = "Include the specified configuration file(s). Multiple pathnames may be specified and each pathname may contain [glob(7)](https://man.openbsd.org/glob.7) wildcards that will be expanded and processed in lexical order. Files without absolute paths are assumed to be in /etc/ssh. An **Include** directive may appear inside a **Match** block to perform conditional inclusion."]
-#[doc = "See also: [Include](https://man.openbsd.org/sshd_config#Include)"]
+/// Include the specified configuration file(s).
+///
+/// Multiple pathnames may be specified and each pathname may contain [glob(7)](https://man.openbsd.org/glob.7) wildcards that will be expanded and processed in lexical order.
+/// Files without absolute paths are assumed to be in /etc/ssh.
+/// An **Include** directive may appear inside a **Match** block to perform conditional inclusion.
 #[derive(Debug, Clone, PartialEq, Eq, PartialOrd, Ord)]
 pub struct Include<'a>(Cow<'a, str>);
 impl<'a> Include<'a> {
@@ -54,3 +56,4 @@ impl<'a> From<Vec<Include<'a>>> for crate::Directive<'a> {
         crate::directive::Directive::Include(directive)
     }
 }
+

@@ -1,5 +1,4 @@
-//! Generated file, do not edit by hand
-
+//! This file has been automatically generated. Any changes made to it will be overwritten upon subsequent runs!
 #[allow(unused_imports)]
 use crate::Modifier;
 #[allow(unused_imports)]
@@ -15,8 +14,9 @@ use nom::{
 #[allow(unused_imports)]
 use std::borrow::Cow;
 
-#[doc = "Optionally specifies additional text to append to the SSH protocol banner sent by the server upon connection. The default is **none**."]
-#[doc = "See also: [VersionAddendum](https://man.openbsd.org/sshd_config#VersionAddendum)"]
+/// Optionally specifies additional text to append to the SSH protocol banner sent by the server upon connection.
+///
+/// The default is **none**.
 #[derive(Debug, Clone, PartialEq, Eq, PartialOrd, Ord)]
 pub struct VersionAddendum<'a>(Cow<'a, str>);
 impl<'a> VersionAddendum<'a> {
@@ -51,3 +51,4 @@ impl<'a> From<VersionAddendum<'a>> for crate::Directive<'a> {
         crate::directive::Directive::VersionAddendum(directive)
     }
 }
+

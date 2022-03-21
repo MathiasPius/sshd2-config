@@ -1,5 +1,4 @@
-//! Generated file, do not edit by hand
-
+//! This file has been automatically generated. Any changes made to it will be overwritten upon subsequent runs!
 #[allow(unused_imports)]
 use crate::Modifier;
 #[allow(unused_imports)]
@@ -15,8 +14,9 @@ use nom::{
 #[allow(unused_imports)]
 use std::borrow::Cow;
 
-#[doc = "If password authentication through Kerberos fails then the password will be validated via any additional local mechanism such as /etc/passwd. The default is **yes**."]
-#[doc = "See also: [KerberosOrLocalPasswd](https://man.openbsd.org/sshd_config#KerberosOrLocalPasswd)"]
+/// If password authentication through Kerberos fails then the password will be validated via any additional local mechanism such as /etc/passwd.
+///
+/// The default is **yes**.
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord)]
 pub enum KerberosOrLocalPasswd {
     #[doc = "yes"]
@@ -49,3 +49,4 @@ impl<'a> From<KerberosOrLocalPasswd> for crate::Directive<'a> {
         crate::directive::Directive::KerberosOrLocalPasswd(directive)
     }
 }
+

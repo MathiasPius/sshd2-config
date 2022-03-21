@@ -135,21 +135,10 @@ impl ValueFormat {
         }
     }
 
-    fn impl_struct(
-        &self,
-        original_name: &'static str,
-        name_ident: &Ident,
-        comments: &[&str],
-    ) -> TokenStream {
-        let reference = format!(
-            "See also: [{original_name}](https://man.openbsd.org/sshd_config#{original_name})"
-        );
-
+    fn impl_struct(&self, original_name: &'static str, name_ident: &Ident) -> TokenStream {
         match self {
             ValueFormat::Wildcard => {
                 quote! {
-                    #(#[doc = #comments])*
-                    #[doc = #reference]
                     #[derive(Debug, Clone, PartialEq, Eq, PartialOrd, Ord)]
                     pub struct #name_ident<'a>(Cow<'a, str>);
 
@@ -168,8 +157,6 @@ impl ValueFormat {
             }
             ValueFormat::Integer => {
                 quote! {
-                    #(#[doc = #comments])*
-                    #[doc = #reference]
                     #[derive(Debug, Clone, PartialEq, Eq, PartialOrd, Ord)]
                     pub struct #name_ident(u64);
 
@@ -190,8 +177,6 @@ impl ValueFormat {
                 let value_idents: Vec<TokenStream> =
                     values.iter().map(TypedValue::as_enum_entry).collect();
                 quote! {
-                    #(#[doc = #comments])*
-                    #[doc = #reference]
                     #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord)]
                     pub enum #name_ident {
                         #(#value_idents),*
@@ -200,9 +185,7 @@ impl ValueFormat {
             }
             ValueFormat::Modifier(inner)
             | ValueFormat::CommaSeparated(inner)
-            | ValueFormat::SpaceSeparated(inner) => {
-                inner.impl_struct(original_name, name_ident, comments)
-            }
+            | ValueFormat::SpaceSeparated(inner) => inner.impl_struct(original_name, name_ident),
         }
     }
 
@@ -345,8 +328,7 @@ fn reformat(text: impl std::fmt::Display) -> std::io::Result<String> {
     if stdout.is_empty() {
         panic!("{}", text);
     }
-    let preamble = "Generated file, do not edit by hand";
-    Ok(format!("//! {}\n\n{}", preamble, stdout))
+    Ok(stdout)
 }
 
 fn main() {
@@ -381,14 +363,24 @@ fn main() {
                     name_override,
                 },
             )| {
+                let joined = comment.join("\n").replace(". ", ".\n");
+                let mut iter = joined.lines();
+                let first = iter.next().unwrap();
+                let rest = iter.map(|str| format!("\n/// {}", str)).fold("".to_string(), |mut i,j| {i.push_str(&*j); i});
+
+                let comments =  format!("/// {}\n///{}", first, rest);
+
+                println!("{}", comments);
+
                 let name_ident = Ident::new(name_override.unwrap_or(name), Span::call_site());
                 let parse_impl = values.parse_impl(name, &name_ident);
-                let structure = values.impl_struct(name, &name_ident, comment);
+                let structure = values.impl_struct(name, &name_ident);
                 let into_directive = values.impl_into_directive(&name_ident);
 
                 let tokens = format!(
                     r#"{includes}
 
+                {comments}
                 {structure}
 
                 {parse_impl}
@@ -397,12 +389,18 @@ fn main() {
             "#
                 );
 
+                let source_code = format!(
+                    "//! {comment}\n{code}\n",
+                    comment = "This file has been automatically generated. Any changes made to it will be overwritten upon subsequent runs!",
+                    code = reformat(tokens).unwrap()
+                );
+
                 std::fs::write(
                     &project_root().join(format!(
                         "src/directive/{filename}.rs",
                         filename = name_ident.to_string().to_case(Case::Snake)
                     )),
-                    reformat(tokens).unwrap(),
+                    source_code,
                     //tokens.to_string(),
                 )
                 .unwrap();

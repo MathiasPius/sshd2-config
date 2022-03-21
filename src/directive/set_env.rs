@@ -1,5 +1,4 @@
-//! Generated file, do not edit by hand
-
+//! This file has been automatically generated. Any changes made to it will be overwritten upon subsequent runs!
 #[allow(unused_imports)]
 use crate::Modifier;
 #[allow(unused_imports)]
@@ -15,8 +14,11 @@ use nom::{
 #[allow(unused_imports)]
 use std::borrow::Cow;
 
-#[doc = "Specifies one or more environment variables to set in child sessions started by [sshd(8)](https://man.openbsd.org/sshd.8) as “NAME=VALUE”. The environment value may be quoted (e.g. if it contains whitespace characters). Environment variables set by **SetEnv** override the default environment and any variables specified by the user via **AcceptEnv** or **PermitUserEnvironment**."]
-#[doc = "See also: [SetEnv](https://man.openbsd.org/sshd_config#SetEnv)"]
+/// Specifies one or more environment variables to set in child sessions started by [sshd(8)](https://man.openbsd.org/sshd.8) as “NAME=VALUE”.
+///
+/// The environment value may be quoted (e.g.
+/// if it contains whitespace characters).
+/// Environment variables set by **SetEnv** override the default environment and any variables specified by the user via **AcceptEnv** or **PermitUserEnvironment**.
 #[derive(Debug, Clone, PartialEq, Eq, PartialOrd, Ord)]
 pub struct SetEnv<'a>(Cow<'a, str>);
 impl<'a> SetEnv<'a> {
@@ -51,3 +53,4 @@ impl<'a> From<SetEnv<'a>> for crate::Directive<'a> {
         crate::directive::Directive::SetEnv(directive)
     }
 }
+

@@ -1,5 +1,4 @@
-//! Generated file, do not edit by hand
-
+//! This file has been automatically generated. Any changes made to it will be overwritten upon subsequent runs!
 #[allow(unused_imports)]
 use crate::Modifier;
 #[allow(unused_imports)]
@@ -15,8 +14,8 @@ use nom::{
 #[allow(unused_imports)]
 use std::borrow::Cow;
 
-#[doc = "The SSH protocol version."]
-#[doc = "See also: [Protocol](https://man.openbsd.org/sshd_config#Protocol)"]
+/// The SSH protocol version.
+///
 #[derive(Debug, Clone, PartialEq, Eq, PartialOrd, Ord)]
 pub struct Protocol(u64);
 impl Protocol {
@@ -51,3 +50,4 @@ impl<'a> From<Protocol> for crate::Directive<'a> {
         crate::directive::Directive::Protocol(directive)
     }
 }
+

@@ -1,5 +1,4 @@
-//! Generated file, do not edit by hand
-
+//! This file has been automatically generated. Any changes made to it will be overwritten upon subsequent runs!
 #[allow(unused_imports)]
 use crate::Modifier;
 #[allow(unused_imports)]
@@ -15,8 +14,10 @@ use nom::{
 #[allow(unused_imports)]
 use std::borrow::Cow;
 
-#[doc = "Specifies the user under whose account the **AuthorizedPrincipalsCommand** is run. It is recommended to use a dedicated user that has no other role on the host than running authorized principals commands. If **AuthorizedPrincipalsCommand** is specified but **AuthorizedPrincipalsCommandUser** is not, then [sshd(8)](https://man.openbsd.org/sshd.8) will refuse to start."]
-#[doc = "See also: [AuthorizedPrincipalsCommandUser](https://man.openbsd.org/sshd_config#AuthorizedPrincipalsCommandUser)"]
+/// Specifies the user under whose account the **AuthorizedPrincipalsCommand** is run.
+///
+/// It is recommended to use a dedicated user that has no other role on the host than running authorized principals commands.
+/// If **AuthorizedPrincipalsCommand** is specified but **AuthorizedPrincipalsCommandUser** is not, then [sshd(8)](https://man.openbsd.org/sshd.8) will refuse to start.
 #[derive(Debug, Clone, PartialEq, Eq, PartialOrd, Ord)]
 pub struct AuthorizedPrincipalsCommandUser<'a>(Cow<'a, str>);
 impl<'a> AuthorizedPrincipalsCommandUser<'a> {
@@ -51,3 +52,4 @@ impl<'a> From<AuthorizedPrincipalsCommandUser<'a>> for crate::Directive<'a> {
         crate::directive::Directive::AuthorizedPrincipalsCommandUser(directive)
     }
 }
+

@@ -1,5 +1,4 @@
-//! Generated file, do not edit by hand
-
+//! This file has been automatically generated. Any changes made to it will be overwritten upon subsequent runs!
 #[allow(unused_imports)]
 use crate::Modifier;
 #[allow(unused_imports)]
@@ -15,8 +14,9 @@ use nom::{
 #[allow(unused_imports)]
 use std::borrow::Cow;
 
-#[doc = "Specifies whether [sshd(8)](https://man.openbsd.org/sshd.8) should print /etc/motd when a user logs in interactively. (On some systems it is also printed by the shell, /etc/profile, or equivalent.) The default is **yes**."]
-#[doc = "See also: [PrintMotd](https://man.openbsd.org/sshd_config#PrintMotd)"]
+/// Specifies whether [sshd(8)](https://man.openbsd.org/sshd.8) should print /etc/motd when a user logs in interactively.
+///
+/// (On some systems it is also printed by the shell, /etc/profile, or equivalent.) The default is **yes**.
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord)]
 pub enum PrintMotd {
     #[doc = "yes"]
@@ -49,3 +49,4 @@ impl<'a> From<PrintMotd> for crate::Directive<'a> {
         crate::directive::Directive::PrintMotd(directive)
     }
 }
+

@@ -1,5 +1,4 @@
-//! Generated file, do not edit by hand
-
+//! This file has been automatically generated. Any changes made to it will be overwritten upon subsequent runs!
 #[allow(unused_imports)]
 use crate::Modifier;
 #[allow(unused_imports)]
@@ -15,8 +14,10 @@ use nom::{
 #[allow(unused_imports)]
 use std::borrow::Cow;
 
-#[doc = "Gives the facility code that is used when logging messages from [sshd(8)](https://man.openbsd.org/sshd.8). The possible values are: DAEMON, USER, AUTH, LOCAL0, LOCAL1, LOCAL2, LOCAL3, LOCAL4, LOCAL5, LOCAL6, LOCAL7. The default is AUTH."]
-#[doc = "See also: [SyslogFacility](https://man.openbsd.org/sshd_config#SyslogFacility)"]
+/// Gives the facility code that is used when logging messages from [sshd(8)](https://man.openbsd.org/sshd.8).
+///
+/// The possible values are: DAEMON, USER, AUTH, LOCAL0, LOCAL1, LOCAL2, LOCAL3, LOCAL4, LOCAL5, LOCAL6, LOCAL7.
+/// The default is AUTH.
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord)]
 pub enum SyslogFacility {
     #[doc = "DAEMON"]
@@ -76,3 +77,4 @@ impl<'a> From<SyslogFacility> for crate::Directive<'a> {
         crate::directive::Directive::SyslogFacility(directive)
     }
 }
+

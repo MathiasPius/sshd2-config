@@ -1,5 +1,4 @@
-//! Generated file, do not edit by hand
-
+//! This file has been automatically generated. Any changes made to it will be overwritten upon subsequent runs!
 #[allow(unused_imports)]
 use crate::Modifier;
 #[allow(unused_imports)]
@@ -15,8 +14,8 @@ use nom::{
 #[allow(unused_imports)]
 use std::borrow::Cow;
 
-#[doc = "Specifies a path to a library that will be used when loading FIDO authenticator-hosted keys, overriding the default of using the built-in USB HID support."]
-#[doc = "See also: [SecurityKeyProvider](https://man.openbsd.org/sshd_config#SecurityKeyProvider)"]
+/// Specifies a path to a library that will be used when loading FIDO authenticator-hosted keys, overriding the default of using the built-in USB HID support.
+///
 #[derive(Debug, Clone, PartialEq, Eq, PartialOrd, Ord)]
 pub struct SecurityKeyProvider<'a>(Cow<'a, str>);
 impl<'a> SecurityKeyProvider<'a> {
@@ -51,3 +50,4 @@ impl<'a> From<SecurityKeyProvider<'a>> for crate::Directive<'a> {
         crate::directive::Directive::SecurityKeyProvider(directive)
     }
 }
+

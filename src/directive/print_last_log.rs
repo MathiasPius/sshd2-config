@@ -1,5 +1,4 @@
-//! Generated file, do not edit by hand
-
+//! This file has been automatically generated. Any changes made to it will be overwritten upon subsequent runs!
 #[allow(unused_imports)]
 use crate::Modifier;
 #[allow(unused_imports)]
@@ -15,8 +14,9 @@ use nom::{
 #[allow(unused_imports)]
 use std::borrow::Cow;
 
-#[doc = "Specifies whether [sshd(8)](https://man.openbsd.org/sshd.8) should print the date and time of the last user login when a user logs in interactively. The default is **yes**."]
-#[doc = "See also: [PrintLastLog](https://man.openbsd.org/sshd_config#PrintLastLog)"]
+/// Specifies whether [sshd(8)](https://man.openbsd.org/sshd.8) should print the date and time of the last user login when a user logs in interactively.
+///
+/// The default is **yes**.
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord)]
 pub enum PrintLastLog {
     #[doc = "yes"]
@@ -49,3 +49,4 @@ impl<'a> From<PrintLastLog> for crate::Directive<'a> {
         crate::directive::Directive::PrintLastLog(directive)
     }
 }
+

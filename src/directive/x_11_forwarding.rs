@@ -1,5 +1,4 @@
-//! Generated file, do not edit by hand
-
+//! This file has been automatically generated. Any changes made to it will be overwritten upon subsequent runs!
 #[allow(unused_imports)]
 use crate::Modifier;
 #[allow(unused_imports)]
@@ -15,8 +14,16 @@ use nom::{
 #[allow(unused_imports)]
 use std::borrow::Cow;
 
-#[doc = "Specifies whether X11 forwarding is permitted. The argument must be **yes** or **no**. The default is **no**. When X11 forwarding is enabled, there may be additional exposure to the server and to client displays if the [sshd(8)](https://man.openbsd.org/sshd.8) proxy display is configured to listen on the wildcard address (see **X11UseLocalhost**), though this is not the default. Additionally, the authentication spoofing and authentication data verification and substitution occur on the client side. The security risk of using X11 forwarding is that the client's X11 display server may be exposed to attack when the SSH client requests forwarding (see the warnings for **ForwardX11** in [ssh_config(5)](https://man.openbsd.org/ssh_config.5)). A system administrator may have a stance in which they want to protect clients that may expose themselves to attack by unwittingly requesting X11 forwarding, which can warrant a **no** setting. Note that disabling X11 forwarding does not prevent users from forwarding X11 traffic, as users can always install their own forwarders."]
-#[doc = "See also: [X11Forwarding](https://man.openbsd.org/sshd_config#X11Forwarding)"]
+/// Specifies whether X11 forwarding is permitted.
+///
+/// The argument must be **yes** or **no**.
+/// The default is **no**.
+/// When X11 forwarding is enabled, there may be additional exposure to the server and to client displays if the [sshd(8)](https://man.openbsd.org/sshd.8) proxy display is configured to listen on the wildcard address (see **X11UseLocalhost**), though this is not the default.
+/// Additionally, the authentication spoofing and authentication data verification and substitution occur on the client side.
+/// The security risk of using X11 forwarding is that the client's X11 display server may be exposed to attack when the SSH client requests forwarding (see the warnings for **ForwardX11** in [ssh_config(5)](https://man.openbsd.org/ssh_config.5)).
+/// A system administrator may have a stance in which they want to protect clients that may expose themselves to attack by unwittingly requesting X11 forwarding, which can warrant a **no** setting.
+///
+/// Note that disabling X11 forwarding does not prevent users from forwarding X11 traffic, as users can always install their own forwarders.
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord)]
 pub enum X11Forwarding {
     #[doc = "yes"]
@@ -49,3 +56,4 @@ impl<'a> From<X11Forwarding> for crate::Directive<'a> {
         crate::directive::Directive::X11Forwarding(directive)
     }
 }
+

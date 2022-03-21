@@ -1,5 +1,4 @@
-//! Generated file, do not edit by hand
-
+//! This file has been automatically generated. Any changes made to it will be overwritten upon subsequent runs!
 #[allow(unused_imports)]
 use crate::Modifier;
 #[allow(unused_imports)]
@@ -15,8 +14,12 @@ use nom::{
 #[allow(unused_imports)]
 use std::borrow::Cow;
 
-#[doc = "Determines whether to be strict about the identity of the GSSAPI acceptor a client authenticates against. If set to **yes** then the client must authenticate against the host service on the current hostname. If set to **no** then the client may authenticate against any service key stored in the machine's default store. This facility is provided to assist with operation on multi homed machines. The default is **yes**."]
-#[doc = "See also: [GSSAPIStrictAcceptorCheck](https://man.openbsd.org/sshd_config#GSSAPIStrictAcceptorCheck)"]
+/// Determines whether to be strict about the identity of the GSSAPI acceptor a client authenticates against.
+///
+/// If set to **yes** then the client must authenticate against the host service on the current hostname.
+/// If set to **no** then the client may authenticate against any service key stored in the machine's default store.
+/// This facility is provided to assist with operation on multi homed machines.
+/// The default is **yes**.
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord)]
 pub enum GSSAPIStrictAcceptorCheck {
     #[doc = "yes"]
@@ -49,3 +52,4 @@ impl<'a> From<GSSAPIStrictAcceptorCheck> for crate::Directive<'a> {
         crate::directive::Directive::GSSAPIStrictAcceptorCheck(directive)
     }
 }
+

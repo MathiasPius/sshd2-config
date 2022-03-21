@@ -1,5 +1,4 @@
-//! Generated file, do not edit by hand
-
+//! This file has been automatically generated. Any changes made to it will be overwritten upon subsequent runs!
 #[allow(unused_imports)]
 use crate::Modifier;
 #[allow(unused_imports)]
@@ -15,8 +14,10 @@ use nom::{
 #[allow(unused_imports)]
 use std::borrow::Cow;
 
-#[doc = "Specifies a file containing a public host certificate. The certificate's public key must match a private host key already specified by **HostKey**. The default behaviour of [sshd(8)](https://man.openbsd.org/sshd.8) is not to load any certificates."]
-#[doc = "See also: [HostCertificate](https://man.openbsd.org/sshd_config#HostCertificate)"]
+/// Specifies a file containing a public host certificate.
+///
+/// The certificate's public key must match a private host key already specified by **HostKey**.
+/// The default behaviour of [sshd(8)](https://man.openbsd.org/sshd.8) is not to load any certificates.
 #[derive(Debug, Clone, PartialEq, Eq, PartialOrd, Ord)]
 pub struct HostCertificate<'a>(Cow<'a, str>);
 impl<'a> HostCertificate<'a> {
@@ -51,3 +52,4 @@ impl<'a> From<HostCertificate<'a>> for crate::Directive<'a> {
         crate::directive::Directive::HostCertificate(directive)
     }
 }
+

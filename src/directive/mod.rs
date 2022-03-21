@@ -1,4 +1,3 @@
-//! Generated file, do not edit by hand
 
 mod accept_env;
 mod address_family;

@@ -1,5 +1,4 @@
-//! Generated file, do not edit by hand
-
+//! This file has been automatically generated. Any changes made to it will be overwritten upon subsequent runs!
 #[allow(unused_imports)]
 use crate::Modifier;
 #[allow(unused_imports)]
@@ -15,11 +14,16 @@ use nom::{
 #[allow(unused_imports)]
 use std::borrow::Cow;
 
-#[doc = "Specifies which algorithms are allowed for signing of certificates by certificate authorities (CAs). The default is:"]
-#[doc = "> ssh-ed25519,ecdsa-sha2-nistp256, ecdsa-sha2-nistp384,ecdsa-sha2-nistp521, sk-ssh-ed25519@openssh.com, sk-ecdsa-sha2-nistp256@openssh.com, rsa-sha2-512,rsa-sha2-256"]
-#[doc = ""]
-#[doc = "If the specified list begins with a ‘+’ character, then the specified algorithms will be appended to the default set instead of replacing them. If the specified list begins with a ‘-’ character, then the specified algorithms (including wildcards) will be removed from the default set instead of replacing them. Certificates signed using other algorithms will not be accepted for public key or host-based authentication."]
-#[doc = "See also: [CASignatureAlgorithms](https://man.openbsd.org/sshd_config#CASignatureAlgorithms)"]
+/// Specifies which algorithms are allowed for signing of certificates by certificate authorities (CAs).
+///
+/// The default is:
+/// > ssh-ed25519,ecdsa-sha2-nistp256, ecdsa-sha2-nistp384,ecdsa-sha2-nistp521, sk-ssh-ed25519@openssh.com, sk-ecdsa-sha2-nistp256@openssh.com, rsa-sha2-512,rsa-sha2-256
+///
+///
+/// If the specified list begins with a ‘+’ character, then the specified algorithms will be appended to the default set instead of replacing them.
+/// If the specified list begins with a ‘-’ character, then the specified algorithms (including wildcards) will be removed from the default set instead of replacing them.
+///
+/// Certificates signed using other algorithms will not be accepted for public key or host-based authentication.
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord)]
 pub enum CASignatureAlgorithms {
     #[doc = "ssh-ed25519"]
@@ -78,3 +82,4 @@ impl<'a> From<Modifier<Vec<CASignatureAlgorithms>>> for crate::Directive<'a> {
         crate::directive::Directive::CASignatureAlgorithms(directive)
     }
 }
+

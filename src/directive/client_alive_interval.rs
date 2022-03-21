@@ -1,5 +1,4 @@
-//! Generated file, do not edit by hand
-
+//! This file has been automatically generated. Any changes made to it will be overwritten upon subsequent runs!
 #[allow(unused_imports)]
 use crate::Modifier;
 #[allow(unused_imports)]
@@ -15,8 +14,9 @@ use nom::{
 #[allow(unused_imports)]
 use std::borrow::Cow;
 
-#[doc = "Sets a timeout interval in seconds after which if no data has been received from the client, [sshd(8)](https://man.openbsd.org/sshd.8) will send a message through the encrypted channel to request a response from the client. The default is 0, indicating that these messages will not be sent to the client."]
-#[doc = "See also: [ClientAliveInterval](https://man.openbsd.org/sshd_config#ClientAliveInterval)"]
+/// Sets a timeout interval in seconds after which if no data has been received from the client, [sshd(8)](https://man.openbsd.org/sshd.8) will send a message through the encrypted channel to request a response from the client.
+///
+/// The default is 0, indicating that these messages will not be sent to the client.
 #[derive(Debug, Clone, PartialEq, Eq, PartialOrd, Ord)]
 pub struct ClientAliveInterval(u64);
 impl ClientAliveInterval {
@@ -51,3 +51,4 @@ impl<'a> From<ClientAliveInterval> for crate::Directive<'a> {
         crate::directive::Directive::ClientAliveInterval(directive)
     }
 }
+

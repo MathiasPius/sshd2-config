@@ -1,5 +1,4 @@
-//! Generated file, do not edit by hand
-
+//! This file has been automatically generated. Any changes made to it will be overwritten upon subsequent runs!
 #[allow(unused_imports)]
 use crate::Modifier;
 #[allow(unused_imports)]
@@ -15,8 +14,15 @@ use nom::{
 #[allow(unused_imports)]
 use std::borrow::Cow;
 
-#[doc = "Specifies whether the system should send TCP keepalive messages to the other side. If they are sent, death of the connection or crash of one of the machines will be properly noticed. However, this means that connections will die if the route is down temporarily, and some people find it annoying. On the other hand, if TCP keepalives are not sent, sessions may hang indefinitely on the server, leaving 'ghost' users and consuming server resources. The default is **yes** (to send TCP keepalive messages), and the server will notice if the network goes down or the client host crashes. This avoids infinitely hanging sessions. To disable TCP keepalive messages, the value should be set to **no**."]
-#[doc = "See also: [TCPKeepAlive](https://man.openbsd.org/sshd_config#TCPKeepAlive)"]
+/// Specifies whether the system should send TCP keepalive messages to the other side.
+///
+/// If they are sent, death of the connection or crash of one of the machines will be properly noticed.
+/// However, this means that connections will die if the route is down temporarily, and some people find it annoying.
+/// On the other hand, if TCP keepalives are not sent, sessions may hang indefinitely on the server, leaving 'ghost' users and consuming server resources.
+/// The default is **yes** (to send TCP keepalive messages), and the server will notice if the network goes down or the client host crashes.
+/// This avoids infinitely hanging sessions.
+///
+/// To disable TCP keepalive messages, the value should be set to **no**.
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord)]
 pub enum TCPKeepAlive {
     #[doc = "yes"]
@@ -49,3 +55,4 @@ impl<'a> From<TCPKeepAlive> for crate::Directive<'a> {
         crate::directive::Directive::TCPKeepAlive(directive)
     }
 }
+

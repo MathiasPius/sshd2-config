@@ -1,5 +1,4 @@
-//! Generated file, do not edit by hand
-
+//! This file has been automatically generated. Any changes made to it will be overwritten upon subsequent runs!
 #[allow(unused_imports)]
 use crate::Modifier;
 #[allow(unused_imports)]
@@ -15,8 +14,22 @@ use nom::{
 #[allow(unused_imports)]
 use std::borrow::Cow;
 
-#[doc = "Specifies the authentication methods that must be successfully completed for a user to be granted access. This option must be followed by one or more lists of comma-separated authentication method names, or by the single string **any** to indicate the default behaviour of accepting any single authentication method. If the default is overridden, then successful authentication requires completion of every method in at least one of these lists. For example, 'publickey,password publickey,keyboard-interactive' would require the user to complete public key authentication, followed by either password or keyboard interactive authentication. Only methods that are next in one or more lists are offered at each stage, so for this example it would not be possible to attempt password or keyboard-interactive authentication before public key. For keyboard interactive authentication it is also possible to restrict authentication to a specific device by appending a colon followed by the device identifier **bsdauth**, **pam**, or **skey**, depending on the server configuration. For example, 'keyboard-interactive:bsdauth' would restrict keyboard interactive authentication to the **bsdauth** device. If the publickey method is listed more than once, [sshd(8)](https://man.openbsd.org/sshd.8) verifies that keys that have been used successfully are not reused for subsequent authentications. For example, 'publickey,publickey' requires successful authentication using two different public keys. Note that each authentication method listed should also be explicitly enabled in the configuration. The available authentication methods are: 'gssapi-with-mic', 'hostbased', 'keyboard-interactive', 'none' (used for access to password-less accounts when **PermitEmptyPasswords** is enabled), 'password' and 'publickey'."]
-#[doc = "See also: [AuthenticationMethods](https://man.openbsd.org/sshd_config#AuthenticationMethods)"]
+/// Specifies the authentication methods that must be successfully completed for a user to be granted access.
+///
+/// This option must be followed by one or more lists of comma-separated authentication method names, or by the single string **any** to indicate the default behaviour of accepting any single authentication method.
+/// If the default is overridden, then successful authentication requires completion of every method in at least one of these lists.
+/// For example, 'publickey,password publickey,keyboard-interactive' would require the user to complete public key authentication, followed by either password or keyboard interactive authentication.
+/// Only methods that are next in one or more lists are offered at each stage, so for this example it would not be possible to attempt password or keyboard-interactive authentication before public key.
+///
+/// For keyboard interactive authentication it is also possible to restrict authentication to a specific device by appending a colon followed by the device identifier **bsdauth**, **pam**, or **skey**, depending on the server configuration.
+/// For example, 'keyboard-interactive:bsdauth' would restrict keyboard interactive authentication to the **bsdauth** device.
+///
+/// If the publickey method is listed more than once, [sshd(8)](https://man.openbsd.org/sshd.8) verifies that keys that have been used successfully are not reused for subsequent authentications.
+/// For example, 'publickey,publickey' requires successful authentication using two different public keys.
+///
+/// Note that each authentication method listed should also be explicitly enabled in the configuration.
+///
+/// The available authentication methods are: 'gssapi-with-mic', 'hostbased', 'keyboard-interactive', 'none' (used for access to password-less accounts when **PermitEmptyPasswords** is enabled), 'password' and 'publickey'.
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord)]
 pub enum AuthenticationMethods {
     #[doc = "Allow authentication by any method."]
@@ -100,3 +113,4 @@ impl<'a> From<Vec<Vec<AuthenticationMethods>>> for crate::Directive<'a> {
         crate::directive::Directive::AuthenticationMethods(directive)
     }
 }
+

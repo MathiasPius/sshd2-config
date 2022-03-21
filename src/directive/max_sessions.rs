@@ -1,5 +1,4 @@
-//! Generated file, do not edit by hand
-
+//! This file has been automatically generated. Any changes made to it will be overwritten upon subsequent runs!
 #[allow(unused_imports)]
 use crate::Modifier;
 #[allow(unused_imports)]
@@ -15,8 +14,12 @@ use nom::{
 #[allow(unused_imports)]
 use std::borrow::Cow;
 
-#[doc = "Specifies the maximum number of open shell, login or subsystem (e.g. sftp) sessions permitted per network connection. Multiple sessions may be established by clients that support connection multiplexing. Setting **MaxSessions** to 1 will effectively disable session multiplexing, whereas setting it to 0 will prevent all shell, login and subsystem sessions while still permitting forwarding. The default is 10."]
-#[doc = "See also: [MaxSessions](https://man.openbsd.org/sshd_config#MaxSessions)"]
+/// Specifies the maximum number of open shell, login or subsystem (e.g.
+///
+/// sftp) sessions permitted per network connection.
+/// Multiple sessions may be established by clients that support connection multiplexing.
+/// Setting **MaxSessions** to 1 will effectively disable session multiplexing, whereas setting it to 0 will prevent all shell, login and subsystem sessions while still permitting forwarding.
+/// The default is 10.
 #[derive(Debug, Clone, PartialEq, Eq, PartialOrd, Ord)]
 pub struct MaxSessions(u64);
 impl MaxSessions {
@@ -51,3 +54,4 @@ impl<'a> From<MaxSessions> for crate::Directive<'a> {
         crate::directive::Directive::MaxSessions(directive)
     }
 }
+

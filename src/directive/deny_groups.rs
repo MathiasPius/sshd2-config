@@ -1,5 +1,4 @@
-//! Generated file, do not edit by hand
-
+//! This file has been automatically generated. Any changes made to it will be overwritten upon subsequent runs!
 #[allow(unused_imports)]
 use crate::Modifier;
 #[allow(unused_imports)]
@@ -15,8 +14,13 @@ use nom::{
 #[allow(unused_imports)]
 use std::borrow::Cow;
 
-#[doc = "This keyword can be followed by a list of group name patterns, separated by spaces. Login is disallowed for users whose primary group or supplementary group list matches one of the patterns. Only group names are valid; a numerical group ID is not recognized. By default, login is allowed for all groups. The allow/deny groups directives are processed in the following order: **DenyGroups**, **AllowGroups**. See PATTERNS in [ssh_config(5)](https://man.openbsd.org/ssh_config.5) for more information on patterns."]
-#[doc = "See also: [DenyGroups](https://man.openbsd.org/sshd_config#DenyGroups)"]
+/// This keyword can be followed by a list of group name patterns, separated by spaces.
+///
+/// Login is disallowed for users whose primary group or supplementary group list matches one of the patterns.
+/// Only group names are valid; a numerical group ID is not recognized.
+/// By default, login is allowed for all groups.
+/// The allow/deny groups directives are processed in the following order: **DenyGroups**, **AllowGroups**.
+/// See PATTERNS in [ssh_config(5)](https://man.openbsd.org/ssh_config.5) for more information on patterns.
 #[derive(Debug, Clone, PartialEq, Eq, PartialOrd, Ord)]
 pub struct DenyGroups<'a>(Cow<'a, str>);
 impl<'a> DenyGroups<'a> {
@@ -54,3 +58,4 @@ impl<'a> From<Vec<DenyGroups<'a>>> for crate::Directive<'a> {
         crate::directive::Directive::DenyGroups(directive)
     }
 }
+

@@ -1,5 +1,4 @@
-//! Generated file, do not edit by hand
-
+//! This file has been automatically generated. Any changes made to it will be overwritten upon subsequent runs!
 #[allow(unused_imports)]
 use crate::Modifier;
 #[allow(unused_imports)]
@@ -15,30 +14,44 @@ use nom::{
 #[allow(unused_imports)]
 use std::borrow::Cow;
 
-#[doc = "Specifies the available MAC (message authentication code) algorithms. The MAC algorithm is used for data integrity protection. Multiple algorithms must be comma-separated. If the specified list begins with a ‘+’ character, then the specified algorithms will be appended to the default set instead of replacing them. If the specified list begins with a ‘-’ character, then the specified algorithms (including wildcards) will be removed from the default set instead of replacing them. If the specified list begins with a ‘^’ character, then the specified algorithms will be placed at the head of the default set. The algorithms that contain '-etm' calculate the MAC after encryption (encrypt-then-mac). These are considered safer and their use recommended. The supported MACs are:"]
-#[doc = ""]
-#[doc = "* hmac-md5"]
-#[doc = "* hmac-md5-96"]
-#[doc = "* hmac-sha1"]
-#[doc = "* hmac-sha1-96"]
-#[doc = "* hmac-sha2-256"]
-#[doc = "* hmac-sha2-512"]
-#[doc = "* umac-64@openssh.com"]
-#[doc = "* umac-128@openssh.com"]
-#[doc = "* hmac-md5-etm@openssh.com"]
-#[doc = "* hmac-md5-96-etm@openssh.com"]
-#[doc = "* hmac-sha1-etm@openssh.com"]
-#[doc = "* hmac-sha1-96-etm@openssh.com"]
-#[doc = "* hmac-sha2-256-etm@openssh.com"]
-#[doc = "* hmac-sha2-512-etm@openssh.com"]
-#[doc = "* umac-64-etm@openssh.com"]
-#[doc = "* umac-128-etm@openssh.com"]
-#[doc = ""]
-#[doc = "The default is:"]
-#[doc = "> umac-64-etm@openssh.com,umac-128-etm@openssh.com, hmac-sha2-256-etm@openssh.com,hmac-sha2-512-etm@openssh.com, hmac-sha1-etm@openssh.com, umac-64@openssh.com,umac-128@openssh.com, hmac-sha2-256,hmac-sha2-512,hmac-sha1"]
-#[doc = ""]
-#[doc = "The list of available MAC algorithms may also be obtained using 'ssh -Q mac'."]
-#[doc = "See also: [MACs](https://man.openbsd.org/sshd_config#MACs)"]
+/// Specifies the available MAC (message authentication code) algorithms.
+///
+/// The MAC algorithm is used for data integrity protection.
+/// Multiple algorithms must be comma-separated.
+/// If the specified list begins with a ‘+’ character, then the specified algorithms will be appended to the default set instead of replacing them.
+/// If the specified list begins with a ‘-’ character, then the specified algorithms (including wildcards) will be removed from the default set instead of replacing them.
+/// If the specified list begins with a ‘^’ character, then the specified algorithms will be placed at the head of the default set.
+/// The algorithms that contain '-etm' calculate the MAC after encryption (encrypt-then-mac).
+/// These are considered safer and their use recommended.
+/// The supported MACs are:
+///
+///
+///
+///
+/// * hmac-md5
+/// * hmac-md5-96
+/// * hmac-sha1
+/// * hmac-sha1-96
+/// * hmac-sha2-256
+/// * hmac-sha2-512
+/// * umac-64@openssh.com
+/// * umac-128@openssh.com
+/// * hmac-md5-etm@openssh.com
+/// * hmac-md5-96-etm@openssh.com
+/// * hmac-sha1-etm@openssh.com
+/// * hmac-sha1-96-etm@openssh.com
+/// * hmac-sha2-256-etm@openssh.com
+/// * hmac-sha2-512-etm@openssh.com
+/// * umac-64-etm@openssh.com
+/// * umac-128-etm@openssh.com
+///
+///
+/// The default is:
+///
+/// > umac-64-etm@openssh.com,umac-128-etm@openssh.com, hmac-sha2-256-etm@openssh.com,hmac-sha2-512-etm@openssh.com, hmac-sha1-etm@openssh.com, umac-64@openssh.com,umac-128@openssh.com, hmac-sha2-256,hmac-sha2-512,hmac-sha1
+///
+///
+/// The list of available MAC algorithms may also be obtained using 'ssh -Q mac'.
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord)]
 pub enum MACs {
     #[doc = "hmac-md5"]
@@ -152,3 +165,4 @@ impl<'a> From<Modifier<Vec<MACs>>> for crate::Directive<'a> {
         crate::directive::Directive::MACs(directive)
     }
 }
+

@@ -1,5 +1,4 @@
-//! Generated file, do not edit by hand
-
+//! This file has been automatically generated. Any changes made to it will be overwritten upon subsequent runs!
 #[allow(unused_imports)]
 use crate::Modifier;
 #[allow(unused_imports)]
@@ -15,8 +14,12 @@ use nom::{
 #[allow(unused_imports)]
 use std::borrow::Cow;
 
-#[doc = "Specifies whether [tun(4)](https://man.openbsd.org/tun.4) device forwarding is allowed. The argument must be **yes**, **point-to-point** (layer 3), **ethernet** (layer 2), or **no**. Specifying **yes** permits both **point-to-point** and **ethernet**. The default is **no**. Independent of this setting, the permissions of the selected [tun(4)](https://man.openbsd.org/tun.4) device must allow access to the user."]
-#[doc = "See also: [PermitTunnel](https://man.openbsd.org/sshd_config#PermitTunnel)"]
+/// Specifies whether [tun(4)](https://man.openbsd.org/tun.4) device forwarding is allowed.
+///
+/// The argument must be **yes**, **point-to-point** (layer 3), **ethernet** (layer 2), or **no**.
+/// Specifying **yes** permits both **point-to-point** and **ethernet**.
+/// The default is **no**.
+/// Independent of this setting, the permissions of the selected [tun(4)](https://man.openbsd.org/tun.4) device must allow access to the user.
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord)]
 pub enum PermitTunnel {
     #[doc = "yes"]
@@ -55,3 +58,4 @@ impl<'a> From<PermitTunnel> for crate::Directive<'a> {
         crate::directive::Directive::PermitTunnel(directive)
     }
 }
+

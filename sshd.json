@@ -39,7 +39,9 @@
     },
     "AllowGroups": {
       "comment": [
-        "This keyword can be followed by a list of group name patterns, separated by spaces. If specified, login is allowed only for users whose primary group or supplementary group list matches one of the patterns. Only group names are valid; a numerical group ID is not recognized. By default, login is allowed for all groups. The allow/deny groups directives are processed in the following order: **DenyGroups**, **AllowGroups**. See PATTERNS in [ssh_config(5)](https://man.openbsd.org/ssh_config.5) for more information on patterns."
+        "This keyword can be followed by a list of group name patterns, separated by spaces. If specified, login is allowed only for users whose primary group or supplementary group list matches one of the patterns. Only group names are valid; a numerical group ID is not recognized. By default, login is allowed for all groups. The allow/deny groups directives are processed in the following order: **DenyGroups**, **AllowGroups**.",
+        "See PATTERNS in [ssh_config(5)](https://man.openbsd.org/ssh_config.5) for more information on patterns.",
+        ""
       ],
       "values": {
         "space_separated": "wildcard"
@@ -75,7 +77,9 @@
     },
     "AllowUsers": {
       "comment": [
-        "This keyword can be followed by a list of user name patterns, separated by spaces. If specified, login is allowed only for user names that match one of the patterns. Only user names are valid; a numerical user ID is not recognized. By default, login is allowed for all users. If the pattern takes the form USER@HOST then USER and HOST are separately checked, restricting logins to particular users from particular hosts. HOST criteria may additionally contain addresses to match in CIDR address/masklen format. The allow/deny users directives are processed in the following order: **DenyUsers**, **AllowUsers**. See PATTERNS in [ssh_config(5)](https://man.openbsd.org/ssh_config.5) for more information on patterns."
+        "This keyword can be followed by a list of user name patterns, separated by spaces. If specified, login is allowed only for user names that match one of the patterns. Only user names are valid; a numerical user ID is not recognized. By default, login is allowed for all users. If the pattern takes the form USER@HOST then USER and HOST are separately checked, restricting logins to particular users from particular hosts. HOST criteria may additionally contain addresses to match in CIDR address/masklen format. The allow/deny users directives are processed in the following order: **DenyUsers**, **AllowUsers**.",
+        "See PATTERNS in [ssh_config(5)](https://man.openbsd.org/ssh_config.5) for more information on patterns.",
+        ""
       ],
       "values": {
         "space_separated": "wildcard"
@@ -83,7 +87,17 @@
     },
     "AuthenticationMethods": {
       "comment": [
-        "Specifies the authentication methods that must be successfully completed for a user to be granted access. This option must be followed by one or more lists of comma-separated authentication method names, or by the single string **any** to indicate the default behaviour of accepting any single authentication method. If the default is overridden, then successful authentication requires completion of every method in at least one of these lists. For example, 'publickey,password publickey,keyboard-interactive' would require the user to complete public key authentication, followed by either password or keyboard interactive authentication. Only methods that are next in one or more lists are offered at each stage, so for this example it would not be possible to attempt password or keyboard-interactive authentication before public key. For keyboard interactive authentication it is also possible to restrict authentication to a specific device by appending a colon followed by the device identifier **bsdauth**, **pam**, or **skey**, depending on the server configuration. For example, 'keyboard-interactive:bsdauth' would restrict keyboard interactive authentication to the **bsdauth** device. If the publickey method is listed more than once, [sshd(8)](https://man.openbsd.org/sshd.8) verifies that keys that have been used successfully are not reused for subsequent authentications. For example, 'publickey,publickey' requires successful authentication using two different public keys. Note that each authentication method listed should also be explicitly enabled in the configuration. The available authentication methods are: 'gssapi-with-mic', 'hostbased', 'keyboard-interactive', 'none' (used for access to password-less accounts when **PermitEmptyPasswords** is enabled), 'password' and 'publickey'."
+        "Specifies the authentication methods that must be successfully completed for a user to be granted access. This option must be followed by one or more lists of comma-separated authentication method names, or by the single string **any** to indicate the default behaviour of accepting any single authentication method. If the default is overridden, then successful authentication requires completion of every method in at least one of these lists.",
+        "For example, 'publickey,password publickey,keyboard-interactive' would require the user to complete public key authentication, followed by either password or keyboard interactive authentication. Only methods that are next in one or more lists are offered at each stage, so for this example it would not be possible to attempt password or keyboard-interactive authentication before public key.",
+        "",
+        "For keyboard interactive authentication it is also possible to restrict authentication to a specific device by appending a colon followed by the device identifier **bsdauth**, **pam**, or **skey**, depending on the server configuration. For example, 'keyboard-interactive:bsdauth' would restrict keyboard interactive authentication to the **bsdauth** device.",
+        "",
+        "If the publickey method is listed more than once, [sshd(8)](https://man.openbsd.org/sshd.8) verifies that keys that have been used successfully are not reused for subsequent authentications. For example, 'publickey,publickey' requires successful authentication using two different public keys.",
+        "",
+        "Note that each authentication method listed should also be explicitly enabled in the configuration.",
+        "",
+        "The available authentication methods are: 'gssapi-with-mic', 'hostbased', 'keyboard-interactive', 'none' (used for access to password-less accounts when **PermitEmptyPasswords** is enabled), 'password' and 'publickey'.",
+        ""
       ],
       "values": {
         "space_separated": {
@@ -140,7 +154,9 @@
     },
     "AuthorizedKeysCommand": {
       "comment": [
-        "Specifies a program to be used to look up the user's public keys. The program must be owned by root, not writable by group or others and specified by an absolute path. Arguments to **AuthorizedKeysCommand** accept the tokens described in the TOKENS section. If no arguments are specified then the username of the target user is used. The program should produce on standard output zero or more lines of authorized_keys output (see AUTHORIZED_KEYS in [sshd(8)](https://man.openbsd.org/sshd.8)). **AuthorizedKeysCommand** is tried after the usual **AuthorizedKeysFile** files and will not be executed if a matching key is found there. By default, no **AuthorizedKeysCommand** is run."
+        "Specifies a program to be used to look up the user's public keys. The program must be owned by root, not writable by group or others and specified by an absolute path. Arguments to **AuthorizedKeysCommand** accept the tokens described in the TOKENS section. If no arguments are specified then the username of the target user is used.",
+        "The program should produce on standard output zero or more lines of authorized_keys output (see AUTHORIZED_KEYS in [sshd(8)](https://man.openbsd.org/sshd.8)). **AuthorizedKeysCommand** is tried after the usual **AuthorizedKeysFile** files and will not be executed if a matching key is found there. By default, no **AuthorizedKeysCommand** is run.",
+        ""
       ],
       "values": "wildcard"
     },
@@ -158,7 +174,9 @@
     },
     "AuthorizedPrincipalsCommand": {
       "comment": [
-        "Specifies a program to be used to generate the list of allowed certificate principals as per **AuthorizedPrincipalsFile**. The program must be owned by root, not writable by group or others and specified by an absolute path. Arguments to **AuthorizedPrincipalsCommand** accept the tokens described in the TOKENS section. If no arguments are specified then the username of the target user is used. The program should produce on standard output zero or more lines of **AuthorizedPrincipalsFile** output. If either **AuthorizedPrincipalsCommand** or **AuthorizedPrincipalsFile** is specified, then certificates offered by the client for authentication must contain a principal that is listed. By default, no **AuthorizedPrincipalsCommand** is run."
+        "Specifies a program to be used to generate the list of allowed certificate principals as per **AuthorizedPrincipalsFile**. The program must be owned by root, not writable by group or others and specified by an absolute path. Arguments to **AuthorizedPrincipalsCommand** accept the tokens described in the TOKENS section. If no arguments are specified then the username of the target user is used.",
+        "The program should produce on standard output zero or more lines of **AuthorizedPrincipalsFile** output. If either **AuthorizedPrincipalsCommand** or **AuthorizedPrincipalsFile** is specified, then certificates offered by the client for authentication must contain a principal that is listed. By default, no **AuthorizedPrincipalsCommand** is run.",
+        ""
       ],
       "values": "wildcard"
     },
@@ -170,7 +188,11 @@
     },
     "AuthorizedPrincipalsFile": {
       "comment": [
-        "Specifies a file that lists principal names that are accepted for certificate authentication. When using certificates signed by a key listed in **TrustedUserCAKeys**, this file lists names, one of which must appear in the certificate for it to be accepted for authentication. Names are listed one per line preceded by key options (as described in AUTHORIZED_KEYS FILE FORMAT in [sshd(8)](https://man.openbsd.org/sshd.8)). Empty lines and comments starting with ‘#’ are ignored. Arguments to **AuthorizedPrincipalsFile** accept the tokens described in the TOKENS section. After expansion, **AuthorizedPrincipalsFile** is taken to be an absolute path or one relative to the user's home directory. The default is **none**, i.e. not to use a principals file – in this case, the username of the user must appear in a certificate's principals list for it to be accepted. Note that **AuthorizedPrincipalsFile** is only used when authentication proceeds using a CA listed in **TrustedUserCAKeys** and is not consulted for certification authorities trusted via ~/.ssh/authorized_keys, though the **principals=** key option offers a similar facility (see [sshd(8)](https://man.openbsd.org/sshd.8) for details)."
+        "Specifies a file that lists principal names that are accepted for certificate authentication. When using certificates signed by a key listed in **TrustedUserCAKeys**, this file lists names, one of which must appear in the certificate for it to be accepted for authentication. Names are listed one per line preceded by key options (as described in AUTHORIZED_KEYS FILE FORMAT in [sshd(8)](https://man.openbsd.org/sshd.8)). Empty lines and comments starting with ‘#’ are ignored.",
+        "Arguments to **AuthorizedPrincipalsFile** accept the tokens described in the TOKENS section. After expansion, **AuthorizedPrincipalsFile** is taken to be an absolute path or one relative to the user's home directory. The default is **none**, i.e. not to use a principals file – in this case, the username of the user must appear in a certificate's principals list for it to be accepted.",
+        "",
+        "Note that **AuthorizedPrincipalsFile** is only used when authentication proceeds using a CA listed in **TrustedUserCAKeys** and is not consulted for certification authorities trusted via ~/.ssh/authorized_keys, though the **principals=** key option offers a similar facility (see [sshd(8)](https://man.openbsd.org/sshd.8) for details).",
+        ""
       ],
       "values": "wildcard"
     },
@@ -185,7 +207,11 @@
         "Specifies which algorithms are allowed for signing of certificates by certificate authorities (CAs). The default is:",
         "> ssh-ed25519,ecdsa-sha2-nistp256, ecdsa-sha2-nistp384,ecdsa-sha2-nistp521, sk-ssh-ed25519@openssh.com, sk-ecdsa-sha2-nistp256@openssh.com, rsa-sha2-512,rsa-sha2-256",
         "",
-        "If the specified list begins with a ‘+’ character, then the specified algorithms will be appended to the default set instead of replacing them. If the specified list begins with a ‘-’ character, then the specified algorithms (including wildcards) will be removed from the default set instead of replacing them. Certificates signed using other algorithms will not be accepted for public key or host-based authentication."
+        "",
+        "If the specified list begins with a ‘+’ character, then the specified algorithms will be appended to the default set instead of replacing them. If the specified list begins with a ‘-’ character, then the specified algorithms (including wildcards) will be removed from the default set instead of replacing them.",
+        "",
+        "Certificates signed using other algorithms will not be accepted for public key or host-based authentication.",
+        ""
       ],
       "values": {
         "modifier": {
@@ -219,13 +245,23 @@
     },
     "ChrootDirectory": {
       "comment": [
-        "Specifies the pathname of a directory to [chroot(2)](https://man.openbsd.org/chroot.2) to after authentication. At session startup [sshd(8)](https://man.openbsd.org/sshd.8) checks that all components of the pathname are root-owned directories which are not writable by any other user or group. After the chroot, [sshd(8)](https://man.openbsd.org/sshd.8) changes the working directory to the user's home directory. Arguments to **ChrootDirectory** accept the tokens described in the TOKENS section. The **ChrootDirectory** must contain the necessary files and directories to support the user's session. For an interactive session this requires at least a shell, typically [sh(1)](https://man.openbsd.org/sh.1), and basic /dev nodes such as [null(4)](https://man.openbsd.org/null.4), [zero(4)](https://man.openbsd.org/zero.4), [stdin(4)](https://man.openbsd.org/stdin.4), [stdout(4)](https://man.openbsd.org/stdout.4), [stderr(4)](https://man.openbsd.org/stderr.4), and [tty(4)](https://man.openbsd.org/tty.4) devices. For file transfer sessions using SFTP no additional configuration of the environment is necessary if the in-process sftp-server is used, though sessions which use logging may require /dev/log inside the chroot directory on some operating systems (see [sftp-server(8)](https://man.openbsd.org/sftp-server.8) for details). For safety, it is very important that the directory hierarchy be prevented from modification by other processes on the system (especially those outside the jail). Misconfiguration can lead to unsafe environments which [sshd(8)](https://man.openbsd.org/sshd.8) cannot detect. The default is **none**, indicating not to [chroot(2)](https://man.openbsd.org/chroot.2)."
+        "Specifies the pathname of a directory to [chroot(2)](https://man.openbsd.org/chroot.2) to after authentication. At session startup [sshd(8)](https://man.openbsd.org/sshd.8) checks that all components of the pathname are root-owned directories which are not writable by any other user or group. After the chroot, [sshd(8)](https://man.openbsd.org/sshd.8) changes the working directory to the user's home directory. Arguments to **ChrootDirectory** accept the tokens described in the TOKENS section.",
+        "The **ChrootDirectory** must contain the necessary files and directories to support the user's session. For an interactive session this requires at least a shell, typically [sh(1)](https://man.openbsd.org/sh.1), and basic /dev nodes such as [null(4)](https://man.openbsd.org/null.4), [zero(4)](https://man.openbsd.org/zero.4), [stdin(4)](https://man.openbsd.org/stdin.4), [stdout(4)](https://man.openbsd.org/stdout.4), [stderr(4)](https://man.openbsd.org/stderr.4), and [tty(4)](https://man.openbsd.org/tty.4) devices. For file transfer sessions using SFTP no additional configuration of the environment is necessary if the in-process sftp-server is used, though sessions which use logging may require /dev/log inside the chroot directory on some operating systems (see [sftp-server(8)](https://man.openbsd.org/sftp-server.8) for details).",
+        "",
+        "For safety, it is very important that the directory hierarchy be prevented from modification by other processes on the system (especially those outside the jail). Misconfiguration can lead to unsafe environments which [sshd(8)](https://man.openbsd.org/sshd.8) cannot detect.",
+        "",
+        "The default is **none**, indicating not to [chroot(2)](https://man.openbsd.org/chroot.2).",
+        ""
       ],
       "values": "wildcard"
     },
     "Ciphers": {
       "comment": [
-        "Specifies the ciphers allowed. Multiple ciphers must be comma-separated. If the specified list begins with a ‘+’ character, then the specified ciphers will be appended to the default set instead of replacing them. If the specified list begins with a ‘-’ character, then the specified ciphers (including wildcards) will be removed from the default set instead of replacing them. If the specified list begins with a ‘^’ character, then the specified ciphers will be placed at the head of the default set. The supported ciphers are:",
+        "Specifies the ciphers allowed. Multiple ciphers must be comma-separated. If the specified list begins with a ‘+’ character, then the specified ciphers will be appended to the default set instead of replacing them. If the specified list begins with a ‘-’ character, then the specified ciphers (including wildcards) will be removed from the default set instead of replacing them. If the specified list begins with a ‘^’ character, then the specified ciphers will be placed at the head of the default set.",
+        "The supported ciphers are:",
+        "",
+        "",
+        "",
         "",
         "* 3des-cbc",
         "* aes128-cbc",
@@ -238,10 +274,14 @@
         "* aes256-gcm@openssh.com",
         "* chacha20-poly1305@openssh.com",
         "",
+        "",
         "The default is:",
+        "",
         "> chacha20-poly1305@openssh.com, aes128-ctr,aes192-ctr,aes256-ctr, aes128-gcm@openssh.com,aes256-gcm@openssh.com",
         "",
-        "The list of available ciphers may also be obtained using 'ssh -Q cipher'."
+        "",
+        "The list of available ciphers may also be obtained using 'ssh -Q cipher'.",
+        ""
       ],
       "values": {
         "modifier": {
@@ -264,7 +304,9 @@
     },
     "ClientAliveCountMax": {
       "comment": [
-        "Sets the number of client alive messages which may be sent without [sshd(8)](https://man.openbsd.org/sshd.8) receiving any messages back from the client. If this threshold is reached while client alive messages are being sent, sshd will disconnect the client, terminating the session. It is important to note that the use of client alive messages is very different from **TCPKeepAlive**. The client alive messages are sent through the encrypted channel and therefore will not be spoofable. The TCP keepalive option enabled by **TCPKeepAlive** is spoofable. The client alive mechanism is valuable when the client or server depend on knowing when a connection has become unresponsive. The default value is 3. If **ClientAliveInterval** is set to 15, and **ClientAliveCountMax** is left at the default, unresponsive SSH clients will be disconnected after approximately 45 seconds. Setting a zero **ClientAliveCountMax** disables connection termination."
+        "Sets the number of client alive messages which may be sent without [sshd(8)](https://man.openbsd.org/sshd.8) receiving any messages back from the client. If this threshold is reached while client alive messages are being sent, sshd will disconnect the client, terminating the session. It is important to note that the use of client alive messages is very different from **TCPKeepAlive**. The client alive messages are sent through the encrypted channel and therefore will not be spoofable. The TCP keepalive option enabled by **TCPKeepAlive** is spoofable. The client alive mechanism is valuable when the client or server depend on knowing when a connection has become unresponsive.",
+        "The default value is 3. If **ClientAliveInterval** is set to 15, and **ClientAliveCountMax** is left at the default, unresponsive SSH clients will be disconnected after approximately 45 seconds. Setting a zero **ClientAliveCountMax** disables connection termination.",
+        ""
       ],
       "values": "integer"
     },
@@ -288,7 +330,9 @@
     },
     "DenyGroups": {
       "comment": [
-        "This keyword can be followed by a list of group name patterns, separated by spaces. Login is disallowed for users whose primary group or supplementary group list matches one of the patterns. Only group names are valid; a numerical group ID is not recognized. By default, login is allowed for all groups. The allow/deny groups directives are processed in the following order: **DenyGroups**, **AllowGroups**. See PATTERNS in [ssh_config(5)](https://man.openbsd.org/ssh_config.5) for more information on patterns."
+        "This keyword can be followed by a list of group name patterns, separated by spaces. Login is disallowed for users whose primary group or supplementary group list matches one of the patterns. Only group names are valid; a numerical group ID is not recognized. By default, login is allowed for all groups. The allow/deny groups directives are processed in the following order: **DenyGroups**, **AllowGroups**.",
+        "See PATTERNS in [ssh_config(5)](https://man.openbsd.org/ssh_config.5) for more information on patterns.",
+        ""
       ],
       "values": {
         "space_separated": "wildcard"
@@ -296,7 +340,9 @@
     },
     "DenyUsers": {
       "comment": [
-        "This keyword can be followed by a list of user name patterns, separated by spaces. Login is disallowed for user names that match one of the patterns. Only user names are valid; a numerical user ID is not recognized. By default, login is allowed for all users. If the pattern takes the form USER@HOST then USER and HOST are separately checked, restricting logins to particular users from particular hosts. HOST criteria may additionally contain addresses to match in CIDR address/masklen format. The allow/deny users directives are processed in the following order: **DenyUsers**, **AllowUsers**. See PATTERNS in [ssh_config(5)](https://man.openbsd.org/ssh_config.5) for more information on patterns."
+        "This keyword can be followed by a list of user name patterns, separated by spaces. Login is disallowed for user names that match one of the patterns. Only user names are valid; a numerical user ID is not recognized. By default, login is allowed for all users. If the pattern takes the form USER@HOST then USER and HOST are separately checked, restricting logins to particular users from particular hosts. HOST criteria may additionally contain addresses to match in CIDR address/masklen format. The allow/deny users directives are processed in the following order: **DenyUsers**, **AllowUsers**.",
+        "See PATTERNS in [ssh_config(5)](https://man.openbsd.org/ssh_config.5) for more information on patterns.",
+        ""
       ],
       "values": {
         "space_separated": "wildcard"
@@ -394,7 +440,11 @@
     },
     "HostKey": {
       "comment": [
-        "Specifies a file containing a private host key used by SSH. The defaults are /etc/ssh/ssh_host_ecdsa_key, /etc/ssh/ssh_host_ed25519_key and /etc/ssh/ssh_host_rsa_key. Note that [sshd(8)](https://man.openbsd.org/sshd.8) will refuse to use a file if it is group/world-accessible and that the **HostKeyAlgorithms** option restricts which of the keys are actually used by [sshd(8)](https://man.openbsd.org/sshd.8). It is possible to have multiple host key files. It is also possible to specify public host key files instead. In this case operations on the private key will be delegated to an [ssh-agent(1)](https://man.openbsd.org/ssh-agent.1)."
+        "Specifies a file containing a private host key used by SSH. The defaults are /etc/ssh/ssh_host_ecdsa_key, /etc/ssh/ssh_host_ed25519_key and /etc/ssh/ssh_host_rsa_key.",
+        "Note that [sshd(8)](https://man.openbsd.org/sshd.8) will refuse to use a file if it is group/world-accessible and that the **HostKeyAlgorithms** option restricts which of the keys are actually used by [sshd(8)](https://man.openbsd.org/sshd.8).",
+        "",
+        "It is possible to have multiple host key files. It is also possible to specify public host key files instead. In this case operations on the private key will be delegated to an [ssh-agent(1)](https://man.openbsd.org/ssh-agent.1).",
+        ""
       ],
       "values": "wildcard"
     },
@@ -409,7 +459,9 @@
         "Specifies the host key signature algorithms that the server offers. The default for this option is:",
         "> ssh-ed25519-cert-v01@openssh.com, ecdsa-sha2-nistp256-cert-v01@openssh.com, ecdsa-sha2-nistp384-cert-v01@openssh.com, ecdsa-sha2-nistp521-cert-v01@openssh.com, sk-ssh-ed25519-cert-v01@openssh.com, sk-ecdsa-sha2-nistp256-cert-v01@openssh.com, rsa-sha2-512-cert-v01@openssh.com, rsa-sha2-256-cert-v01@openssh.com, ssh-ed25519, ecdsa-sha2-nistp256,ecdsa-sha2-nistp384,ecdsa-sha2-nistp521, sk-ssh-ed25519@openssh.com, sk-ecdsa-sha2-nistp256@openssh.com, rsa-sha2-512,rsa-sha2-256",
         "",
-        "The list of available signature algorithms may also be obtained using 'ssh -Q HostKeyAlgorithms'."
+        "",
+        "The list of available signature algorithms may also be obtained using 'ssh -Q HostKeyAlgorithms'.",
+        ""
       ],
       "values": {
         "modifier": {
@@ -446,7 +498,9 @@
         "Specifies the signature algorithms that will be accepted for hostbased authentication as a list of comma-separated patterns. Alternately if the specified list begins with a ‘+’ character, then the specified signature algorithms will be appended to the default set instead of replacing them. If the specified list begins with a ‘-’ character, then the specified signature algorithms (including wildcards) will be removed from the default set instead of replacing them. If the specified list begins with a ‘^’ character, then the specified signature algorithms will be placed at the head of the default set. The default for this option is:",
         "> ssh-ed25519-cert-v01@openssh.com, ecdsa-sha2-nistp256-cert-v01@openssh.com, ecdsa-sha2-nistp384-cert-v01@openssh.com, ecdsa-sha2-nistp521-cert-v01@openssh.com, sk-ssh-ed25519-cert-v01@openssh.com, sk-ecdsa-sha2-nistp256-cert-v01@openssh.com, rsa-sha2-512-cert-v01@openssh.com, rsa-sha2-256-cert-v01@openssh.com, ssh-ed25519, ecdsa-sha2-nistp256,ecdsa-sha2-nistp384,ecdsa-sha2-nistp521, sk-ssh-ed25519@openssh.com, sk-ecdsa-sha2-nistp256@openssh.com, rsa-sha2-512,rsa-sha2-256",
         "",
-        "The list of available signature algorithms may also be obtained using 'ssh -Q HostbasedAcceptedAlgorithms'. This was formerly named HostbasedAcceptedKeyTypes."
+        "",
+        "The list of available signature algorithms may also be obtained using 'ssh -Q HostbasedAcceptedAlgorithms'. This was formerly named HostbasedAcceptedKeyTypes.",
+        ""
       ],
       "values": {
         "modifier": {
@@ -539,7 +593,9 @@
     },
     "IgnoreRhosts": {
       "comment": [
-        "Specifies whether to ignore per-user .rhosts and .shosts files during **HostbasedAuthentication**. The system-wide /etc/hosts.equiv and /etc/shosts.equiv are still used regardless of this setting. Accepted values are **yes** (the default) to ignore all per-user files, **shosts-only** to allow the use of .shosts but to ignore .rhosts or **no** to allow both .shosts and rhosts."
+        "Specifies whether to ignore per-user .rhosts and .shosts files during **HostbasedAuthentication**. The system-wide /etc/hosts.equiv and /etc/shosts.equiv are still used regardless of this setting.",
+        "Accepted values are **yes** (the default) to ignore all per-user files, **shosts-only** to allow the use of .shosts but to ignore .rhosts or **no** to allow both .shosts and rhosts.",
+        ""
       ],
       "values": {
         "typed": [
@@ -627,6 +683,8 @@
       "comment": [
         "Specifies the available KEX (Key Exchange) algorithms. Multiple algorithms must be comma-separated. Alternately if the specified list begins with a ‘+’ character, then the specified algorithms will be appended to the default set instead of replacing them. If the specified list begins with a ‘-’ character, then the specified algorithms (including wildcards) will be removed from the default set instead of replacing them. If the specified list begins with a ‘^’ character, then the specified algorithms will be placed at the head of the default set. The supported algorithms are:",
         "",
+        "",
+        "",
         "* curve25519-sha256",
         "* curve25519-sha256@libssh.org",
         "* diffie-hellman-group1-sha1",
@@ -641,10 +699,14 @@
         "* ecdh-sha2-nistp521",
         "* sntrup761x25519-sha512@openssh.com",
         "",
+        "",
         "The default is:",
+        "",
         "> curve25519-sha256,curve25519-sha256@libssh.org, ecdh-sha2-nistp256,ecdh-sha2-nistp384,ecdh-sha2-nistp521, sntrup761x25519-sha512@openssh.com, diffie-hellman-group-exchange-sha256, diffie-hellman-group16-sha512,diffie-hellman-group18-sha512, diffie-hellman-group14-sha256",
         "",
-        "The list of available key exchange algorithms may also be obtained using 'ssh -Q KexAlgorithms'."
+        "",
+        "The list of available key exchange algorithms may also be obtained using 'ssh -Q KexAlgorithms'.",
+        ""
       ],
       "values": {
         "modifier": {
@@ -672,12 +734,16 @@
       "comment": [
         "Specifies the local addresses [sshd(8)](https://man.openbsd.org/sshd.8) should listen on. The following forms may be used:",
         "",
+        "",
+        "",
         "* **ListenAddress** hostname|address [**rdomain** domain]",
         "* **ListenAddress** hostname:port [**rdomain** domain]",
         "* **ListenAddress** IPv4_address:port [**rdomain** domain]",
         "* **ListenAddress** [hostname|address]:port [**rdomain** domain]",
         "",
-        "The optional **rdomain** qualifier requests [sshd(8)](https://man.openbsd.org/sshd.8) listen in an explicit routing domain. If port is not specified, sshd will listen on the address and all **Port** options specified. The default is to listen on all local addresses on the current default routing domain. Multiple **ListenAddress** options are permitted. For more information on routing domains, see [rdomain(4)](https://man.openbsd.org/rdomain.4)."
+        "",
+        "The optional **rdomain** qualifier requests [sshd(8)](https://man.openbsd.org/sshd.8) listen in an explicit routing domain. If port is not specified, sshd will listen on the address and all **Port** options specified. The default is to listen on all local addresses on the current default routing domain. Multiple **ListenAddress** options are permitted. For more information on routing domains, see [rdomain(4)](https://man.openbsd.org/rdomain.4).",
+        ""
       ],
       "values": {
         "space_separated": "wildcard"
@@ -706,7 +772,9 @@
         "Specify one or more overrides to LogLevel. An override consists of a pattern lists that matches the source file, function and line number to force detailed logging for. For example, an override pattern of:",
         "> kex.c:*:1000,*:kex_exchange_identification():*,packet.c:*",
         "",
-        "would enable detailed logging for line 1000 of kex.c, everything in the kex_exchange_identification() function, and all code in the packet.c file. This option is intended for debugging and no overrides are enabled by default."
+        "",
+        "would enable detailed logging for line 1000 of kex.c, everything in the kex_exchange_identification() function, and all code in the packet.c file. This option is intended for debugging and no overrides are enabled by default.",
+        ""
       ],
       "values": "wildcard"
     },
@@ -718,7 +786,11 @@
     },
     "MACs": {
       "comment": [
-        "Specifies the available MAC (message authentication code) algorithms. The MAC algorithm is used for data integrity protection. Multiple algorithms must be comma-separated. If the specified list begins with a ‘+’ character, then the specified algorithms will be appended to the default set instead of replacing them. If the specified list begins with a ‘-’ character, then the specified algorithms (including wildcards) will be removed from the default set instead of replacing them. If the specified list begins with a ‘^’ character, then the specified algorithms will be placed at the head of the default set. The algorithms that contain '-etm' calculate the MAC after encryption (encrypt-then-mac). These are considered safer and their use recommended. The supported MACs are:",
+        "Specifies the available MAC (message authentication code) algorithms. The MAC algorithm is used for data integrity protection. Multiple algorithms must be comma-separated. If the specified list begins with a ‘+’ character, then the specified algorithms will be appended to the default set instead of replacing them. If the specified list begins with a ‘-’ character, then the specified algorithms (including wildcards) will be removed from the default set instead of replacing them. If the specified list begins with a ‘^’ character, then the specified algorithms will be placed at the head of the default set.",
+        "The algorithms that contain '-etm' calculate the MAC after encryption (encrypt-then-mac). These are considered safer and their use recommended. The supported MACs are:",
+        "",
+        "",
+        "",
         "",
         "* hmac-md5",
         "* hmac-md5-96",
@@ -737,10 +809,14 @@
         "* umac-64-etm@openssh.com",
         "* umac-128-etm@openssh.com",
         "",
+        "",
         "The default is:",
+        "",
         "> umac-64-etm@openssh.com,umac-128-etm@openssh.com, hmac-sha2-256-etm@openssh.com,hmac-sha2-512-etm@openssh.com, hmac-sha1-etm@openssh.com, umac-64@openssh.com,umac-128@openssh.com, hmac-sha2-256,hmac-sha2-512,hmac-sha1",
         "",
-        "The list of available MAC algorithms may also be obtained using 'ssh -Q mac'."
+        "",
+        "The list of available MAC algorithms may also be obtained using 'ssh -Q mac'.",
+        ""
       ],
       "values": {
         "modifier": {
@@ -770,7 +846,15 @@
     "Match": {
       "name_override": "MatchBlock",
       "comment": [
-        "Introduces a conditional block. If all of the criteria on the **Match** line are satisfied, the keywords on the following lines override those set in the global section of the config file, until either another **Match** line or the end of the file. If a keyword appears in multiple **Match** blocks that are satisfied, only the first instance of the keyword is applied. The arguments to **Match** are one or more criteria-pattern pairs or the single token **All** which matches all criteria. The available criteria are **User**, **Group**, **Host**, **LocalAddress**, **LocalPort**, **RDomain**, and **Address** (with **RDomain** representing the [rdomain(4)](https://man.openbsd.org/rdomain.4) on which the connection was received). The match patterns may consist of single entries or comma-separated lists and may use the wildcard and negation operators described in the PATTERNS section of [ssh_config(5)](https://man.openbsd.org/ssh_config.5). The patterns in an **Address** criteria may additionally contain addresses to match in CIDR address/masklen format, such as 192.0.2.0/24 or 2001:db8::/32. Note that the mask length provided must be consistent with the address - it is an error to specify a mask length that is too long for the address or one with bits set in this host portion of the address. For example, 192.0.2.0/33 and 192.0.2.0/8, respectively. Only a subset of keywords may be used on the lines following a **Match** keyword. Available keywords are **AcceptEnv**, **AllowAgentForwarding**, **AllowGroups**, **AllowStreamLocalForwarding**, **AllowTcpForwarding**, **AllowUsers**, **AuthenticationMethods**, **AuthorizedKeysCommand**, **AuthorizedKeysCommandUser**, **AuthorizedKeysFile**, **AuthorizedPrincipalsCommand**, **AuthorizedPrincipalsCommandUser**, **AuthorizedPrincipalsFile**, **Banner**, **CASignatureAlgorithms**, **ChrootDirectory**, **ClientAliveCountMax**, **ClientAliveInterval**, **DenyGroups**, **DenyUsers**, **DisableForwarding**, **ExposeAuthInfo**, **ForceCommand**, **GatewayPorts**, **GSSAPIAuthentication**, **HostbasedAcceptedAlgorithms**, **HostbasedAuthentication**, **HostbasedUsesNameFromPacketOnly**, **IgnoreRhosts**, **Include**, **IPQoS**, **KbdInteractiveAuthentication**, **KerberosAuthentication**, **LogLevel**, **MaxAuthTries**, **MaxSessions**, **PasswordAuthentication**, **PermitEmptyPasswords**, **PermitListen**, **PermitOpen**, **PermitRootLogin**, **PermitTTY**, **PermitTunnel**, **PermitUserRC**, **PubkeyAcceptedAlgorithms**, **PubkeyAuthentication**, **PubkeyAuthOptions**, **RekeyLimit**, **RevokedKeys**, **RDomain**, **SetEnv**, **StreamLocalBindMask**, **StreamLocalBindUnlink**, **TrustedUserCAKeys**, **X11DisplayOffset**, **X11Forwarding** and **X11UseLocalhost**."
+        "Introduces a conditional block. If all of the criteria on the **Match** line are satisfied, the keywords on the following lines override those set in the global section of the config file, until either another **Match** line or the end of the file. If a keyword appears in multiple **Match** blocks that are satisfied, only the first instance of the keyword is applied.",
+        "The arguments to **Match** are one or more criteria-pattern pairs or the single token **All** which matches all criteria. The available criteria are **User**, **Group**, **Host**, **LocalAddress**, **LocalPort**, **RDomain**, and **Address** (with **RDomain** representing the [rdomain(4)](https://man.openbsd.org/rdomain.4) on which the connection was received).",
+        "",
+        "The match patterns may consist of single entries or comma-separated lists and may use the wildcard and negation operators described in the PATTERNS section of [ssh_config(5)](https://man.openbsd.org/ssh_config.5).",
+        "",
+        "The patterns in an **Address** criteria may additionally contain addresses to match in CIDR address/masklen format, such as 192.0.2.0/24 or 2001:db8::/32. Note that the mask length provided must be consistent with the address - it is an error to specify a mask length that is too long for the address or one with bits set in this host portion of the address. For example, 192.0.2.0/33 and 192.0.2.0/8, respectively.",
+        "",
+        "Only a subset of keywords may be used on the lines following a **Match** keyword. Available keywords are **AcceptEnv**, **AllowAgentForwarding**, **AllowGroups**, **AllowStreamLocalForwarding**, **AllowTcpForwarding**, **AllowUsers**, **AuthenticationMethods**, **AuthorizedKeysCommand**, **AuthorizedKeysCommandUser**, **AuthorizedKeysFile**, **AuthorizedPrincipalsCommand**, **AuthorizedPrincipalsCommandUser**, **AuthorizedPrincipalsFile**, **Banner**, **CASignatureAlgorithms**, **ChrootDirectory**, **ClientAliveCountMax**, **ClientAliveInterval**, **DenyGroups**, **DenyUsers**, **DisableForwarding**, **ExposeAuthInfo**, **ForceCommand**, **GatewayPorts**, **GSSAPIAuthentication**, **HostbasedAcceptedAlgorithms**, **HostbasedAuthentication**, **HostbasedUsesNameFromPacketOnly**, **IgnoreRhosts**, **Include**, **IPQoS**, **KbdInteractiveAuthentication**, **KerberosAuthentication**, **LogLevel**, **MaxAuthTries**, **MaxSessions**, **PasswordAuthentication**, **PermitEmptyPasswords**, **PermitListen**, **PermitOpen**, **PermitRootLogin**, **PermitTTY**, **PermitTunnel**, **PermitUserRC**, **PubkeyAcceptedAlgorithms**, **PubkeyAuthentication**, **PubkeyAuthOptions**, **RekeyLimit**, **RevokedKeys**, **RDomain**, **SetEnv**, **StreamLocalBindMask**, **StreamLocalBindUnlink**, **TrustedUserCAKeys**, **X11DisplayOffset**, **X11Forwarding** and **X11UseLocalhost**.",
+        ""
       ],
       "values": "wildcard"
     },
@@ -788,7 +872,9 @@
     },
     "MaxStartups": {
       "comment": [
-        "Specifies the maximum number of concurrent unauthenticated connections to the SSH daemon. Additional connections will be dropped until authentication succeeds or the **LoginGraceTime** expires for a connection. The default is 10:30:100. Alternatively, random early drop can be enabled by specifying the three colon separated values start:rate:full (e.g. '10:30:60'). [sshd(8)](https://man.openbsd.org/sshd.8) will refuse connection attempts with a probability of rate/100 (30%) if there are currently start (10) unauthenticated connections. The probability increases linearly and all connection attempts are refused if the number of unauthenticated connections reaches full (60)."
+        "Specifies the maximum number of concurrent unauthenticated connections to the SSH daemon. Additional connections will be dropped until authentication succeeds or the **LoginGraceTime** expires for a connection. The default is 10:30:100.",
+        "Alternatively, random early drop can be enabled by specifying the three colon separated values start:rate:full (e.g. '10:30:60'). [sshd(8)](https://man.openbsd.org/sshd.8) will refuse connection attempts with a probability of rate/100 (30%) if there are currently start (10) unauthenticated connections. The probability increases linearly and all connection attempts are refused if the number of unauthenticated connections reaches full (60).",
+        ""
       ],
       "values": "wildcard"
     },
@@ -836,10 +922,14 @@
       "comment": [
         "Specifies the addresses/ports on which a remote TCP port forwarding may listen. The listen specification must be one of the following forms:",
         "",
+        "",
+        "",
         "* **PermitListen** port",
         "* **PermitListen** host:port",
         "",
-        "Multiple permissions may be specified by separating them with whitespace. An argument of **any** can be used to remove all restrictions and permit any listen requests. An argument of **none** can be used to prohibit all listen requests. The host name may contain wildcards as described in the PATTERNS section in [ssh_config(5)](https://man.openbsd.org/ssh_config.5). The wildcard ‘*’ can also be used in place of a port number to allow all ports. By default all port forwarding listen requests are permitted. Note that the **GatewayPorts** option may further restrict which addresses may be listened on. Note also that [ssh(1)](https://man.openbsd.org/ssh.1) will request a listen host of “localhost” if no listen host was specifically requested, and this name is treated differently to explicit localhost addresses of “127.0.0.1” and “::1”."
+        "",
+        "Multiple permissions may be specified by separating them with whitespace. An argument of **any** can be used to remove all restrictions and permit any listen requests. An argument of **none** can be used to prohibit all listen requests. The host name may contain wildcards as described in the PATTERNS section in [ssh_config(5)](https://man.openbsd.org/ssh_config.5). The wildcard ‘*’ can also be used in place of a port number to allow all ports. By default all port forwarding listen requests are permitted. Note that the **GatewayPorts** option may further restrict which addresses may be listened on. Note also that [ssh(1)](https://man.openbsd.org/ssh.1) will request a listen host of “localhost” if no listen host was specifically requested, and this name is treated differently to explicit localhost addresses of “127.0.0.1” and “::1”.",
+        ""
       ],
       "values": "wildcard"
     },
@@ -847,17 +937,27 @@
       "comment": [
         "Specifies the destinations to which TCP port forwarding is permitted. The forwarding specification must be one of the following forms:",
         "",
+        "",
+        "",
         "* **PermitOpen** host:port",
         "* **PermitOpen** IPv4_addr:port",
         "* **PermitOpen** [IPv6_addr]:port",
         "",
-        "Multiple forwards may be specified by separating them with whitespace. An argument of **any** can be used to remove all restrictions and permit any forwarding requests. An argument of **none** can be used to prohibit all forwarding requests. The wildcard ‘*’ can be used for host or port to allow all hosts or ports respectively. Otherwise, no pattern matching or address lookups are performed on supplied names. By default all port forwarding requests are permitted."
+        "",
+        "Multiple forwards may be specified by separating them with whitespace. An argument of **any** can be used to remove all restrictions and permit any forwarding requests. An argument of **none** can be used to prohibit all forwarding requests. The wildcard ‘*’ can be used for host or port to allow all hosts or ports respectively. Otherwise, no pattern matching or address lookups are performed on supplied names. By default all port forwarding requests are permitted.",
+        ""
       ],
       "values": "wildcard"
     },
     "PermitRootLogin": {
       "comment": [
-        "Specifies whether root can log in using [ssh(1)](https://man.openbsd.org/ssh.1). The argument must be **yes**, **prohibit-password**, **forced-commands-only**, or **no**. The default is **prohibit-password**. If this option is set to **prohibit-password** (or its deprecated alias, **without-password**), password and keyboard-interactive authentication are disabled for root. If this option is set to **forced-commands-only**, root login with public key authentication will be allowed, but only if the command option has been specified (which may be useful for taking remote backups even if root login is normally not allowed). All other authentication methods are disabled for root. If this option is set to **no**, root is not allowed to log in."
+        "Specifies whether root can log in using [ssh(1)](https://man.openbsd.org/ssh.1). The argument must be **yes**, **prohibit-password**, **forced-commands-only**, or **no**. The default is **prohibit-password**.",
+        "If this option is set to **prohibit-password** (or its deprecated alias, **without-password**), password and keyboard-interactive authentication are disabled for root.",
+        "",
+        "If this option is set to **forced-commands-only**, root login with public key authentication will be allowed, but only if the command option has been specified (which may be useful for taking remote backups even if root login is normally not allowed). All other authentication methods are disabled for root.",
+        "",
+        "If this option is set to **no**, root is not allowed to log in.",
+        ""
       ],
       "values": {
         "typed": [
@@ -881,7 +981,9 @@
     },
     "PermitTunnel": {
       "comment": [
-        "Specifies whether [tun(4)](https://man.openbsd.org/tun.4) device forwarding is allowed. The argument must be **yes**, **point-to-point** (layer 3), **ethernet** (layer 2), or **no**. Specifying **yes** permits both **point-to-point** and **ethernet**. The default is **no**. Independent of this setting, the permissions of the selected [tun(4)](https://man.openbsd.org/tun.4) device must allow access to the user."
+        "Specifies whether [tun(4)](https://man.openbsd.org/tun.4) device forwarding is allowed. The argument must be **yes**, **point-to-point** (layer 3), **ethernet** (layer 2), or **no**. Specifying **yes** permits both **point-to-point** and **ethernet**. The default is **no**.",
+        "Independent of this setting, the permissions of the selected [tun(4)](https://man.openbsd.org/tun.4) device must allow access to the user.",
+        ""
       ],
       "values": {
         "typed": [
@@ -948,7 +1050,9 @@
         "Specifies the signature algorithms that will be accepted for public key authentication as a list of comma-separated patterns. Alternately if the specified list begins with a ‘+’ character, then the specified algorithms will be appended to the default set instead of replacing them. If the specified list begins with a ‘-’ character, then the specified algorithms (including wildcards) will be removed from the default set instead of replacing them. If the specified list begins with a ‘^’ character, then the specified algorithms will be placed at the head of the default set. The default for this option is:",
         "> ssh-ed25519-cert-v01@openssh.com, ecdsa-sha2-nistp256-cert-v01@openssh.com, ecdsa-sha2-nistp384-cert-v01@openssh.com, ecdsa-sha2-nistp521-cert-v01@openssh.com, sk-ssh-ed25519-cert-v01@openssh.com, sk-ecdsa-sha2-nistp256-cert-v01@openssh.com, rsa-sha2-512-cert-v01@openssh.com, rsa-sha2-256-cert-v01@openssh.com, ssh-ed25519, ecdsa-sha2-nistp256,ecdsa-sha2-nistp384,ecdsa-sha2-nistp521, sk-ssh-ed25519@openssh.com, sk-ecdsa-sha2-nistp256@openssh.com, rsa-sha2-512,rsa-sha2-256",
         "",
-        "The list of available signature algorithms may also be obtained using 'ssh -Q PubkeyAcceptedAlgorithms'."
+        "",
+        "The list of available signature algorithms may also be obtained using 'ssh -Q PubkeyAcceptedAlgorithms'.",
+        ""
       ],
       "values": {
         "modifier": {
@@ -982,7 +1086,13 @@
     },
     "PubkeyAuthOptions": {
       "comment": [
-        "Sets one or more public key authentication options. The supported keywords are: **none** (the default; indicating no additional options are enabled), **touch-required** and **verify-required**. The **touch-required** option causes public key authentication using a FIDO authenticator algorithm (i.e. **ecdsa-sk** or **ed25519-sk**) to always require the signature to attest that a physically present user explicitly confirmed the authentication (usually by touching the authenticator). By default, [sshd(8)](https://man.openbsd.org/sshd.8) requires user presence unless overridden with an authorized_keys option. The **touch-required** flag disables this override. The **verify-required** option requires a FIDO key signature attest that the user was verified, e.g. via a PIN. Neither the **touch-required** or **verify-required** options have any effect for other, non-FIDO, public key types."
+        "Sets one or more public key authentication options. The supported keywords are: **none** (the default; indicating no additional options are enabled), **touch-required** and **verify-required**.",
+        "The **touch-required** option causes public key authentication using a FIDO authenticator algorithm (i.e. **ecdsa-sk** or **ed25519-sk**) to always require the signature to attest that a physically present user explicitly confirmed the authentication (usually by touching the authenticator). By default, [sshd(8)](https://man.openbsd.org/sshd.8) requires user presence unless overridden with an authorized_keys option. The **touch-required** flag disables this override.",
+        "",
+        "The **verify-required** option requires a FIDO key signature attest that the user was verified, e.g. via a PIN.",
+        "",
+        "Neither the **touch-required** or **verify-required** options have any effect for other, non-FIDO, public key types.",
+        ""
       ],
       "values": {
         "space_separated": {
@@ -1037,13 +1147,17 @@
     },
     "StreamLocalBindMask": {
       "comment": [
-        "Sets the octal file creation mode mask (umask) used when creating a Unix-domain socket file for local or remote port forwarding. This option is only used for port forwarding to a Unix-domain socket file. The default value is 0177, which creates a Unix-domain socket file that is readable and writable only by the owner. Note that not all operating systems honor the file mode on Unix-domain socket files."
+        "Sets the octal file creation mode mask (umask) used when creating a Unix-domain socket file for local or remote port forwarding. This option is only used for port forwarding to a Unix-domain socket file.",
+        "The default value is 0177, which creates a Unix-domain socket file that is readable and writable only by the owner. Note that not all operating systems honor the file mode on Unix-domain socket files.",
+        ""
       ],
       "values": "wildcard"
     },
     "StreamLocalBindUnlink": {
       "comment": [
-        "Specifies whether to remove an existing Unix-domain socket file for local or remote port forwarding before creating a new one. If the socket file already exists and **StreamLocalBindUnlink** is not enabled, sshd will be unable to forward the port to the Unix-domain socket file. This option is only used for port forwarding to a Unix-domain socket file. The argument must be **yes** or **no**. The default is **no**."
+        "Specifies whether to remove an existing Unix-domain socket file for local or remote port forwarding before creating a new one. If the socket file already exists and **StreamLocalBindUnlink** is not enabled, sshd will be unable to forward the port to the Unix-domain socket file. This option is only used for port forwarding to a Unix-domain socket file.",
+        "The argument must be **yes** or **no**. The default is **no**.",
+        ""
       ],
       "values": {
         "typed": [
@@ -1065,7 +1179,13 @@
     },
     "Subsystem": {
       "comment": [
-        "Configures an external subsystem (e.g. file transfer daemon). Arguments should be a subsystem name and a command (with optional arguments) to execute upon subsystem request. The command **sftp-server** implements the SFTP file transfer subsystem. Alternately the name **internal-sftp** implements an in-process SFTP server. This may simplify configurations using **ChrootDirectory** to force a different filesystem root on clients. By default no subsystems are defined."
+        "Configures an external subsystem (e.g. file transfer daemon). Arguments should be a subsystem name and a command (with optional arguments) to execute upon subsystem request.",
+        "The command **sftp-server** implements the SFTP file transfer subsystem.",
+        "",
+        "Alternately the name **internal-sftp** implements an in-process SFTP server. This may simplify configurations using **ChrootDirectory** to force a different filesystem root on clients.",
+        "",
+        "By default no subsystems are defined.",
+        ""
       ],
       "values": "wildcard"
     },
@@ -1091,7 +1211,11 @@
     },
     "TCPKeepAlive": {
       "comment": [
-        "Specifies whether the system should send TCP keepalive messages to the other side. If they are sent, death of the connection or crash of one of the machines will be properly noticed. However, this means that connections will die if the route is down temporarily, and some people find it annoying. On the other hand, if TCP keepalives are not sent, sessions may hang indefinitely on the server, leaving 'ghost' users and consuming server resources. The default is **yes** (to send TCP keepalive messages), and the server will notice if the network goes down or the client host crashes. This avoids infinitely hanging sessions. To disable TCP keepalive messages, the value should be set to **no**."
+        "Specifies whether the system should send TCP keepalive messages to the other side. If they are sent, death of the connection or crash of one of the machines will be properly noticed. However, this means that connections will die if the route is down temporarily, and some people find it annoying. On the other hand, if TCP keepalives are not sent, sessions may hang indefinitely on the server, leaving 'ghost' users and consuming server resources.",
+        "The default is **yes** (to send TCP keepalive messages), and the server will notice if the network goes down or the client host crashes. This avoids infinitely hanging sessions.",
+        "",
+        "To disable TCP keepalive messages, the value should be set to **no**.",
+        ""
       ],
       "values": {
         "typed": [
@@ -1108,7 +1232,9 @@
     },
     "UseDNS": {
       "comment": [
-        "Specifies whether [sshd(8)](https://man.openbsd.org/sshd.8) should look up the remote host name, and to check that the resolved host name for the remote IP address maps back to the very same IP address. If this option is set to **no** (the default) then only addresses and not host names may be used in ~/.ssh/authorized_keys **from** and sshd_config **Match** **Host** directives."
+        "Specifies whether [sshd(8)](https://man.openbsd.org/sshd.8) should look up the remote host name, and to check that the resolved host name for the remote IP address maps back to the very same IP address.",
+        "If this option is set to **no** (the default) then only addresses and not host names may be used in ~/.ssh/authorized_keys **from** and sshd_config **Match** **Host** directives.",
+        ""
       ],
       "values": {
         "typed": [
@@ -1131,7 +1257,11 @@
     },
     "X11Forwarding": {
       "comment": [
-        "Specifies whether X11 forwarding is permitted. The argument must be **yes** or **no**. The default is **no**. When X11 forwarding is enabled, there may be additional exposure to the server and to client displays if the [sshd(8)](https://man.openbsd.org/sshd.8) proxy display is configured to listen on the wildcard address (see **X11UseLocalhost**), though this is not the default. Additionally, the authentication spoofing and authentication data verification and substitution occur on the client side. The security risk of using X11 forwarding is that the client's X11 display server may be exposed to attack when the SSH client requests forwarding (see the warnings for **ForwardX11** in [ssh_config(5)](https://man.openbsd.org/ssh_config.5)). A system administrator may have a stance in which they want to protect clients that may expose themselves to attack by unwittingly requesting X11 forwarding, which can warrant a **no** setting. Note that disabling X11 forwarding does not prevent users from forwarding X11 traffic, as users can always install their own forwarders."
+        "Specifies whether X11 forwarding is permitted. The argument must be **yes** or **no**. The default is **no**.",
+        "When X11 forwarding is enabled, there may be additional exposure to the server and to client displays if the [sshd(8)](https://man.openbsd.org/sshd.8) proxy display is configured to listen on the wildcard address (see **X11UseLocalhost**), though this is not the default. Additionally, the authentication spoofing and authentication data verification and substitution occur on the client side. The security risk of using X11 forwarding is that the client's X11 display server may be exposed to attack when the SSH client requests forwarding (see the warnings for **ForwardX11** in [ssh_config(5)](https://man.openbsd.org/ssh_config.5)). A system administrator may have a stance in which they want to protect clients that may expose themselves to attack by unwittingly requesting X11 forwarding, which can warrant a **no** setting.",
+        "",
+        "Note that disabling X11 forwarding does not prevent users from forwarding X11 traffic, as users can always install their own forwarders.",
+        ""
       ],
       "values": {
         "typed": [

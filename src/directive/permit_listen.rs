@@ -1,5 +1,4 @@
-//! Generated file, do not edit by hand
-
+//! This file has been automatically generated. Any changes made to it will be overwritten upon subsequent runs!
 #[allow(unused_imports)]
 use crate::Modifier;
 #[allow(unused_imports)]
@@ -15,13 +14,24 @@ use nom::{
 #[allow(unused_imports)]
 use std::borrow::Cow;
 
-#[doc = "Specifies the addresses/ports on which a remote TCP port forwarding may listen. The listen specification must be one of the following forms:"]
-#[doc = ""]
-#[doc = "* **PermitListen** port"]
-#[doc = "* **PermitListen** host:port"]
-#[doc = ""]
-#[doc = "Multiple permissions may be specified by separating them with whitespace. An argument of **any** can be used to remove all restrictions and permit any listen requests. An argument of **none** can be used to prohibit all listen requests. The host name may contain wildcards as described in the PATTERNS section in [ssh_config(5)](https://man.openbsd.org/ssh_config.5). The wildcard ‘*’ can also be used in place of a port number to allow all ports. By default all port forwarding listen requests are permitted. Note that the **GatewayPorts** option may further restrict which addresses may be listened on. Note also that [ssh(1)](https://man.openbsd.org/ssh.1) will request a listen host of “localhost” if no listen host was specifically requested, and this name is treated differently to explicit localhost addresses of “127.0.0.1” and “::1”."]
-#[doc = "See also: [PermitListen](https://man.openbsd.org/sshd_config#PermitListen)"]
+/// Specifies the addresses/ports on which a remote TCP port forwarding may listen.
+///
+/// The listen specification must be one of the following forms:
+///
+///
+///
+/// * **PermitListen** port
+/// * **PermitListen** host:port
+///
+///
+/// Multiple permissions may be specified by separating them with whitespace.
+/// An argument of **any** can be used to remove all restrictions and permit any listen requests.
+/// An argument of **none** can be used to prohibit all listen requests.
+/// The host name may contain wildcards as described in the PATTERNS section in [ssh_config(5)](https://man.openbsd.org/ssh_config.5).
+/// The wildcard ‘*’ can also be used in place of a port number to allow all ports.
+/// By default all port forwarding listen requests are permitted.
+/// Note that the **GatewayPorts** option may further restrict which addresses may be listened on.
+/// Note also that [ssh(1)](https://man.openbsd.org/ssh.1) will request a listen host of “localhost” if no listen host was specifically requested, and this name is treated differently to explicit localhost addresses of “127.0.0.1” and “::1”.
 #[derive(Debug, Clone, PartialEq, Eq, PartialOrd, Ord)]
 pub struct PermitListen<'a>(Cow<'a, str>);
 impl<'a> PermitListen<'a> {
@@ -56,3 +66,4 @@ impl<'a> From<PermitListen<'a>> for crate::Directive<'a> {
         crate::directive::Directive::PermitListen(directive)
     }
 }
+

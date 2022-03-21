@@ -1,5 +1,4 @@
-//! Generated file, do not edit by hand
-
+//! This file has been automatically generated. Any changes made to it will be overwritten upon subsequent runs!
 #[allow(unused_imports)]
 use crate::Modifier;
 #[allow(unused_imports)]
@@ -15,8 +14,10 @@ use nom::{
 #[allow(unused_imports)]
 use std::borrow::Cow;
 
-#[doc = "Specifies whether compression is enabled after the user has authenticated successfully. The argument must be **yes**, **delayed** (a legacy synonym for **yes**) or **no**. The default is **yes**."]
-#[doc = "See also: [Compression](https://man.openbsd.org/sshd_config#Compression)"]
+/// Specifies whether compression is enabled after the user has authenticated successfully.
+///
+/// The argument must be **yes**, **delayed** (a legacy synonym for **yes**) or **no**.
+/// The default is **yes**.
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord)]
 pub enum Compression {
     #[doc = "yes"]
@@ -52,3 +53,4 @@ impl<'a> From<Compression> for crate::Directive<'a> {
         crate::directive::Directive::Compression(directive)
     }
 }
+

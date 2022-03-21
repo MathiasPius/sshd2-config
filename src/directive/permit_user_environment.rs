@@ -1,5 +1,4 @@
-//! Generated file, do not edit by hand
-
+//! This file has been automatically generated. Any changes made to it will be overwritten upon subsequent runs!
 #[allow(unused_imports)]
 use crate::Modifier;
 #[allow(unused_imports)]
@@ -15,8 +14,11 @@ use nom::{
 #[allow(unused_imports)]
 use std::borrow::Cow;
 
-#[doc = "Specifies whether ~/.ssh/environment and **environment=** options in ~/.ssh/authorized_keys are processed by [sshd(8)](https://man.openbsd.org/sshd.8). Valid options are **yes**, **no** or a pattern-list specifying which environment variable names to accept (for example 'LANG,LC_*'). The default is **no**. Enabling environment processing may enable users to bypass access restrictions in some configurations using mechanisms such as `LD_PRELOAD`."]
-#[doc = "See also: [PermitUserEnvironment](https://man.openbsd.org/sshd_config#PermitUserEnvironment)"]
+/// Specifies whether ~/.ssh/environment and **environment=** options in ~/.ssh/authorized_keys are processed by [sshd(8)](https://man.openbsd.org/sshd.8).
+///
+/// Valid options are **yes**, **no** or a pattern-list specifying which environment variable names to accept (for example 'LANG,LC_*').
+/// The default is **no**.
+/// Enabling environment processing may enable users to bypass access restrictions in some configurations using mechanisms such as `LD_PRELOAD`.
 #[derive(Debug, Clone, PartialEq, Eq, PartialOrd, Ord)]
 pub struct PermitUserEnvironment<'a>(Cow<'a, str>);
 impl<'a> PermitUserEnvironment<'a> {
@@ -51,3 +53,4 @@ impl<'a> From<PermitUserEnvironment<'a>> for crate::Directive<'a> {
         crate::directive::Directive::PermitUserEnvironment(directive)
     }
 }
+

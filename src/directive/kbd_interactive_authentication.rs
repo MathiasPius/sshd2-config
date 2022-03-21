@@ -1,5 +1,4 @@
-//! Generated file, do not edit by hand
-
+//! This file has been automatically generated. Any changes made to it will be overwritten upon subsequent runs!
 #[allow(unused_imports)]
 use crate::Modifier;
 #[allow(unused_imports)]
@@ -15,8 +14,12 @@ use nom::{
 #[allow(unused_imports)]
 use std::borrow::Cow;
 
-#[doc = "Specifies whether to allow keyboard-interactive authentication. All authentication styles from [login.conf(5)](https://man.openbsd.org/login.conf.5) are supported. The default is **yes**. The argument to this keyword must be **yes** or **no**. **ChallengeResponseAuthentication** is a deprecated alias for this."]
-#[doc = "See also: [KbdInteractiveAuthentication](https://man.openbsd.org/sshd_config#KbdInteractiveAuthentication)"]
+/// Specifies whether to allow keyboard-interactive authentication.
+///
+/// All authentication styles from [login.conf(5)](https://man.openbsd.org/login.conf.5) are supported.
+/// The default is **yes**.
+/// The argument to this keyword must be **yes** or **no**.
+/// **ChallengeResponseAuthentication** is a deprecated alias for this.
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord)]
 pub enum KbdInteractiveAuthentication {
     #[doc = "yes"]
@@ -49,3 +52,4 @@ impl<'a> From<KbdInteractiveAuthentication> for crate::Directive<'a> {
         crate::directive::Directive::KbdInteractiveAuthentication(directive)
     }
 }
+

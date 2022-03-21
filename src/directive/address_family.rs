@@ -1,5 +1,4 @@
-//! Generated file, do not edit by hand
-
+//! This file has been automatically generated. Any changes made to it will be overwritten upon subsequent runs!
 #[allow(unused_imports)]
 use crate::Modifier;
 #[allow(unused_imports)]
@@ -15,8 +14,9 @@ use nom::{
 #[allow(unused_imports)]
 use std::borrow::Cow;
 
-#[doc = "Specifies which address family should be used by [sshd(8)](https://man.openbsd.org/sshd.8). Valid arguments are **any** (the default), **inet** (use IPv4 only), or **inet6** (use IPv6 only)."]
-#[doc = "See also: [AddressFamily](https://man.openbsd.org/sshd_config#AddressFamily)"]
+/// Specifies which address family should be used by [sshd(8)](https://man.openbsd.org/sshd.8).
+///
+/// Valid arguments are **any** (the default), **inet** (use IPv4 only), or **inet6** (use IPv6 only).
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord)]
 pub enum AddressFamily {
     #[doc = "any"]
@@ -52,3 +52,4 @@ impl<'a> From<AddressFamily> for crate::Directive<'a> {
         crate::directive::Directive::AddressFamily(directive)
     }
 }
+

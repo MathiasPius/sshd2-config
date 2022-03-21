@@ -1,5 +1,4 @@
-//! Generated file, do not edit by hand
-
+//! This file has been automatically generated. Any changes made to it will be overwritten upon subsequent runs!
 #[allow(unused_imports)]
 use crate::Modifier;
 #[allow(unused_imports)]
@@ -15,8 +14,10 @@ use nom::{
 #[allow(unused_imports)]
 use std::borrow::Cow;
 
-#[doc = "Specifies the maximum number of authentication attempts permitted per connection. Once the number of failures reaches half this value, additional failures are logged. The default is 6."]
-#[doc = "See also: [MaxAuthTries](https://man.openbsd.org/sshd_config#MaxAuthTries)"]
+/// Specifies the maximum number of authentication attempts permitted per connection.
+///
+/// Once the number of failures reaches half this value, additional failures are logged.
+/// The default is 6.
 #[derive(Debug, Clone, PartialEq, Eq, PartialOrd, Ord)]
 pub struct MaxAuthTries(u64);
 impl MaxAuthTries {
@@ -51,3 +52,4 @@ impl<'a> From<MaxAuthTries> for crate::Directive<'a> {
         crate::directive::Directive::MaxAuthTries(directive)
     }
 }
+

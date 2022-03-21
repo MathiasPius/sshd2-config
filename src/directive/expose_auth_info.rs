@@ -1,5 +1,4 @@
-//! Generated file, do not edit by hand
-
+//! This file has been automatically generated. Any changes made to it will be overwritten upon subsequent runs!
 #[allow(unused_imports)]
 use crate::Modifier;
 #[allow(unused_imports)]
@@ -15,8 +14,11 @@ use nom::{
 #[allow(unused_imports)]
 use std::borrow::Cow;
 
-#[doc = "Writes a temporary file containing a list of authentication methods and public credentials (e.g. keys) used to authenticate the user. The location of the file is exposed to the user session through the `SSH_USER_AUTH` environment variable. The default is **no**."]
-#[doc = "See also: [ExposeAuthInfo](https://man.openbsd.org/sshd_config#ExposeAuthInfo)"]
+/// Writes a temporary file containing a list of authentication methods and public credentials (e.g.
+///
+/// keys) used to authenticate the user.
+/// The location of the file is exposed to the user session through the `SSH_USER_AUTH` environment variable.
+/// The default is **no**.
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord)]
 pub enum ExposeAuthInfo {
     #[doc = "yes"]
@@ -49,3 +51,4 @@ impl<'a> From<ExposeAuthInfo> for crate::Directive<'a> {
         crate::directive::Directive::ExposeAuthInfo(directive)
     }
 }
+

@@ -1,5 +1,4 @@
-//! Generated file, do not edit by hand
-
+//! This file has been automatically generated. Any changes made to it will be overwritten upon subsequent runs!
 #[allow(unused_imports)]
 use crate::Modifier;
 #[allow(unused_imports)]
@@ -15,8 +14,17 @@ use nom::{
 #[allow(unused_imports)]
 use std::borrow::Cow;
 
-#[doc = "Specifies a file that lists principal names that are accepted for certificate authentication. When using certificates signed by a key listed in **TrustedUserCAKeys**, this file lists names, one of which must appear in the certificate for it to be accepted for authentication. Names are listed one per line preceded by key options (as described in AUTHORIZED_KEYS FILE FORMAT in [sshd(8)](https://man.openbsd.org/sshd.8)). Empty lines and comments starting with ‘#’ are ignored. Arguments to **AuthorizedPrincipalsFile** accept the tokens described in the TOKENS section. After expansion, **AuthorizedPrincipalsFile** is taken to be an absolute path or one relative to the user's home directory. The default is **none**, i.e. not to use a principals file – in this case, the username of the user must appear in a certificate's principals list for it to be accepted. Note that **AuthorizedPrincipalsFile** is only used when authentication proceeds using a CA listed in **TrustedUserCAKeys** and is not consulted for certification authorities trusted via ~/.ssh/authorized_keys, though the **principals=** key option offers a similar facility (see [sshd(8)](https://man.openbsd.org/sshd.8) for details)."]
-#[doc = "See also: [AuthorizedPrincipalsFile](https://man.openbsd.org/sshd_config#AuthorizedPrincipalsFile)"]
+/// Specifies a file that lists principal names that are accepted for certificate authentication.
+///
+/// When using certificates signed by a key listed in **TrustedUserCAKeys**, this file lists names, one of which must appear in the certificate for it to be accepted for authentication.
+/// Names are listed one per line preceded by key options (as described in AUTHORIZED_KEYS FILE FORMAT in [sshd(8)](https://man.openbsd.org/sshd.8)).
+/// Empty lines and comments starting with ‘#’ are ignored.
+/// Arguments to **AuthorizedPrincipalsFile** accept the tokens described in the TOKENS section.
+/// After expansion, **AuthorizedPrincipalsFile** is taken to be an absolute path or one relative to the user's home directory.
+/// The default is **none**, i.e.
+/// not to use a principals file – in this case, the username of the user must appear in a certificate's principals list for it to be accepted.
+///
+/// Note that **AuthorizedPrincipalsFile** is only used when authentication proceeds using a CA listed in **TrustedUserCAKeys** and is not consulted for certification authorities trusted via ~/.ssh/authorized_keys, though the **principals=** key option offers a similar facility (see [sshd(8)](https://man.openbsd.org/sshd.8) for details).
 #[derive(Debug, Clone, PartialEq, Eq, PartialOrd, Ord)]
 pub struct AuthorizedPrincipalsFile<'a>(Cow<'a, str>);
 impl<'a> AuthorizedPrincipalsFile<'a> {
@@ -51,3 +59,4 @@ impl<'a> From<AuthorizedPrincipalsFile<'a>> for crate::Directive<'a> {
         crate::directive::Directive::AuthorizedPrincipalsFile(directive)
     }
 }
+

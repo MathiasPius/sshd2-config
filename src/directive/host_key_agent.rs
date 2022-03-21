@@ -1,5 +1,4 @@
-//! Generated file, do not edit by hand
-
+//! This file has been automatically generated. Any changes made to it will be overwritten upon subsequent runs!
 #[allow(unused_imports)]
 use crate::Modifier;
 #[allow(unused_imports)]
@@ -15,8 +14,9 @@ use nom::{
 #[allow(unused_imports)]
 use std::borrow::Cow;
 
-#[doc = "Identifies the UNIX-domain socket used to communicate with an agent that has access to the private host keys. If the string 'SSH_AUTH_SOCK' is specified, the location of the socket will be read from the `SSH_AUTH_SOCK` environment variable."]
-#[doc = "See also: [HostKeyAgent](https://man.openbsd.org/sshd_config#HostKeyAgent)"]
+/// Identifies the UNIX-domain socket used to communicate with an agent that has access to the private host keys.
+///
+/// If the string 'SSH_AUTH_SOCK' is specified, the location of the socket will be read from the `SSH_AUTH_SOCK` environment variable.
 #[derive(Debug, Clone, PartialEq, Eq, PartialOrd, Ord)]
 pub struct HostKeyAgent<'a>(Cow<'a, str>);
 impl<'a> HostKeyAgent<'a> {
@@ -51,3 +51,4 @@ impl<'a> From<HostKeyAgent<'a>> for crate::Directive<'a> {
         crate::directive::Directive::HostKeyAgent(directive)
     }
 }
+

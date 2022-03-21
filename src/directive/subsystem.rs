@@ -1,5 +1,4 @@
-//! Generated file, do not edit by hand
-
+//! This file has been automatically generated. Any changes made to it will be overwritten upon subsequent runs!
 #[allow(unused_imports)]
 use crate::Modifier;
 #[allow(unused_imports)]
@@ -15,8 +14,16 @@ use nom::{
 #[allow(unused_imports)]
 use std::borrow::Cow;
 
-#[doc = "Configures an external subsystem (e.g. file transfer daemon). Arguments should be a subsystem name and a command (with optional arguments) to execute upon subsystem request. The command **sftp-server** implements the SFTP file transfer subsystem. Alternately the name **internal-sftp** implements an in-process SFTP server. This may simplify configurations using **ChrootDirectory** to force a different filesystem root on clients. By default no subsystems are defined."]
-#[doc = "See also: [Subsystem](https://man.openbsd.org/sshd_config#Subsystem)"]
+/// Configures an external subsystem (e.g.
+///
+/// file transfer daemon).
+/// Arguments should be a subsystem name and a command (with optional arguments) to execute upon subsystem request.
+/// The command **sftp-server** implements the SFTP file transfer subsystem.
+///
+/// Alternately the name **internal-sftp** implements an in-process SFTP server.
+/// This may simplify configurations using **ChrootDirectory** to force a different filesystem root on clients.
+///
+/// By default no subsystems are defined.
 #[derive(Debug, Clone, PartialEq, Eq, PartialOrd, Ord)]
 pub struct Subsystem<'a>(Cow<'a, str>);
 impl<'a> Subsystem<'a> {
@@ -51,3 +58,4 @@ impl<'a> From<Subsystem<'a>> for crate::Directive<'a> {
         crate::directive::Directive::Subsystem(directive)
     }
 }
+

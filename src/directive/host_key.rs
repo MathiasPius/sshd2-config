@@ -1,5 +1,4 @@
-//! Generated file, do not edit by hand
-
+//! This file has been automatically generated. Any changes made to it will be overwritten upon subsequent runs!
 #[allow(unused_imports)]
 use crate::Modifier;
 #[allow(unused_imports)]
@@ -15,8 +14,14 @@ use nom::{
 #[allow(unused_imports)]
 use std::borrow::Cow;
 
-#[doc = "Specifies a file containing a private host key used by SSH. The defaults are /etc/ssh/ssh_host_ecdsa_key, /etc/ssh/ssh_host_ed25519_key and /etc/ssh/ssh_host_rsa_key. Note that [sshd(8)](https://man.openbsd.org/sshd.8) will refuse to use a file if it is group/world-accessible and that the **HostKeyAlgorithms** option restricts which of the keys are actually used by [sshd(8)](https://man.openbsd.org/sshd.8). It is possible to have multiple host key files. It is also possible to specify public host key files instead. In this case operations on the private key will be delegated to an [ssh-agent(1)](https://man.openbsd.org/ssh-agent.1)."]
-#[doc = "See also: [HostKey](https://man.openbsd.org/sshd_config#HostKey)"]
+/// Specifies a file containing a private host key used by SSH.
+///
+/// The defaults are /etc/ssh/ssh_host_ecdsa_key, /etc/ssh/ssh_host_ed25519_key and /etc/ssh/ssh_host_rsa_key.
+/// Note that [sshd(8)](https://man.openbsd.org/sshd.8) will refuse to use a file if it is group/world-accessible and that the **HostKeyAlgorithms** option restricts which of the keys are actually used by [sshd(8)](https://man.openbsd.org/sshd.8).
+///
+/// It is possible to have multiple host key files.
+/// It is also possible to specify public host key files instead.
+/// In this case operations on the private key will be delegated to an [ssh-agent(1)](https://man.openbsd.org/ssh-agent.1).
 #[derive(Debug, Clone, PartialEq, Eq, PartialOrd, Ord)]
 pub struct HostKey<'a>(Cow<'a, str>);
 impl<'a> HostKey<'a> {
@@ -51,3 +56,4 @@ impl<'a> From<HostKey<'a>> for crate::Directive<'a> {
         crate::directive::Directive::HostKey(directive)
     }
 }
+

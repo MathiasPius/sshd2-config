@@ -1,5 +1,4 @@
-//! Generated file, do not edit by hand
-
+//! This file has been automatically generated. Any changes made to it will be overwritten upon subsequent runs!
 #[allow(unused_imports)]
 use crate::Modifier;
 #[allow(unused_imports)]
@@ -15,8 +14,13 @@ use nom::{
 #[allow(unused_imports)]
 use std::borrow::Cow;
 
-#[doc = "Gives the verbosity level that is used when logging messages from [sshd(8)](https://man.openbsd.org/sshd.8). The possible values are: QUIET, FATAL, ERROR, INFO, VERBOSE, DEBUG, DEBUG1, DEBUG2, and DEBUG3. The default is INFO. DEBUG and DEBUG1 are equivalent. DEBUG2 and DEBUG3 each specify higher levels of debugging output. Logging with a DEBUG level violates the privacy of users and is not recommended."]
-#[doc = "See also: [LogLevel](https://man.openbsd.org/sshd_config#LogLevel)"]
+/// Gives the verbosity level that is used when logging messages from [sshd(8)](https://man.openbsd.org/sshd.8).
+///
+/// The possible values are: QUIET, FATAL, ERROR, INFO, VERBOSE, DEBUG, DEBUG1, DEBUG2, and DEBUG3.
+/// The default is INFO.
+/// DEBUG and DEBUG1 are equivalent.
+/// DEBUG2 and DEBUG3 each specify higher levels of debugging output.
+/// Logging with a DEBUG level violates the privacy of users and is not recommended.
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord)]
 pub enum LogLevel {
     #[doc = "QUIET"]
@@ -70,3 +74,4 @@ impl<'a> From<LogLevel> for crate::Directive<'a> {
         crate::directive::Directive::LogLevel(directive)
     }
 }
+

@@ -1,5 +1,4 @@
-//! Generated file, do not edit by hand
-
+//! This file has been automatically generated. Any changes made to it will be overwritten upon subsequent runs!
 #[allow(unused_imports)]
 use crate::Modifier;
 #[allow(unused_imports)]
@@ -15,8 +14,9 @@ use nom::{
 #[allow(unused_imports)]
 use std::borrow::Cow;
 
-#[doc = "Specifies whether [sshd(8)](https://man.openbsd.org/sshd.8) should ignore the user's ~/.ssh/known_hosts during **HostbasedAuthentication** and use only the system-wide known hosts file /etc/ssh/known_hosts. The default is “no”."]
-#[doc = "See also: [IgnoreUserKnownHosts](https://man.openbsd.org/sshd_config#IgnoreUserKnownHosts)"]
+/// Specifies whether [sshd(8)](https://man.openbsd.org/sshd.8) should ignore the user's ~/.ssh/known_hosts during **HostbasedAuthentication** and use only the system-wide known hosts file /etc/ssh/known_hosts.
+///
+/// The default is “no”.
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord)]
 pub enum IgnoreUserKnownHosts {
     #[doc = "yes"]
@@ -49,3 +49,4 @@ impl<'a> From<IgnoreUserKnownHosts> for crate::Directive<'a> {
         crate::directive::Directive::IgnoreUserKnownHosts(directive)
     }
 }
+

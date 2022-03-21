@@ -1,5 +1,4 @@
-//! Generated file, do not edit by hand
-
+//! This file has been automatically generated. Any changes made to it will be overwritten upon subsequent runs!
 #[allow(unused_imports)]
 use crate::Modifier;
 #[allow(unused_imports)]
@@ -15,8 +14,10 @@ use nom::{
 #[allow(unused_imports)]
 use std::borrow::Cow;
 
-#[doc = "Specifies whether to ignore per-user .rhosts and .shosts files during **HostbasedAuthentication**. The system-wide /etc/hosts.equiv and /etc/shosts.equiv are still used regardless of this setting. Accepted values are **yes** (the default) to ignore all per-user files, **shosts-only** to allow the use of .shosts but to ignore .rhosts or **no** to allow both .shosts and rhosts."]
-#[doc = "See also: [IgnoreRhosts](https://man.openbsd.org/sshd_config#IgnoreRhosts)"]
+/// Specifies whether to ignore per-user .rhosts and .shosts files during **HostbasedAuthentication**.
+///
+/// The system-wide /etc/hosts.equiv and /etc/shosts.equiv are still used regardless of this setting.
+/// Accepted values are **yes** (the default) to ignore all per-user files, **shosts-only** to allow the use of .shosts but to ignore .rhosts or **no** to allow both .shosts and rhosts.
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord)]
 pub enum IgnoreRhosts {
     #[doc = "yes"]
@@ -52,3 +53,4 @@ impl<'a> From<IgnoreRhosts> for crate::Directive<'a> {
         crate::directive::Directive::IgnoreRhosts(directive)
     }
 }
+

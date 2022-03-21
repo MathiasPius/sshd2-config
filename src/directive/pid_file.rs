@@ -1,5 +1,4 @@
-//! Generated file, do not edit by hand
-
+//! This file has been automatically generated. Any changes made to it will be overwritten upon subsequent runs!
 #[allow(unused_imports)]
 use crate::Modifier;
 #[allow(unused_imports)]
@@ -15,8 +14,9 @@ use nom::{
 #[allow(unused_imports)]
 use std::borrow::Cow;
 
-#[doc = "Specifies the file that contains the process ID of the SSH daemon, or **none** to not write one. The default is /var/run/sshd.pid."]
-#[doc = "See also: [PidFile](https://man.openbsd.org/sshd_config#PidFile)"]
+/// Specifies the file that contains the process ID of the SSH daemon, or **none** to not write one.
+///
+/// The default is /var/run/sshd.pid.
 #[derive(Debug, Clone, PartialEq, Eq, PartialOrd, Ord)]
 pub struct PidFile<'a>(Cow<'a, str>);
 impl<'a> PidFile<'a> {
@@ -51,3 +51,4 @@ impl<'a> From<PidFile<'a>> for crate::Directive<'a> {
         crate::directive::Directive::PidFile(directive)
     }
 }
+

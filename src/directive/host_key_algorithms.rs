@@ -1,5 +1,4 @@
-//! Generated file, do not edit by hand
-
+//! This file has been automatically generated. Any changes made to it will be overwritten upon subsequent runs!
 #[allow(unused_imports)]
 use crate::Modifier;
 #[allow(unused_imports)]
@@ -15,11 +14,13 @@ use nom::{
 #[allow(unused_imports)]
 use std::borrow::Cow;
 
-#[doc = "Specifies the host key signature algorithms that the server offers. The default for this option is:"]
-#[doc = "> ssh-ed25519-cert-v01@openssh.com, ecdsa-sha2-nistp256-cert-v01@openssh.com, ecdsa-sha2-nistp384-cert-v01@openssh.com, ecdsa-sha2-nistp521-cert-v01@openssh.com, sk-ssh-ed25519-cert-v01@openssh.com, sk-ecdsa-sha2-nistp256-cert-v01@openssh.com, rsa-sha2-512-cert-v01@openssh.com, rsa-sha2-256-cert-v01@openssh.com, ssh-ed25519, ecdsa-sha2-nistp256,ecdsa-sha2-nistp384,ecdsa-sha2-nistp521, sk-ssh-ed25519@openssh.com, sk-ecdsa-sha2-nistp256@openssh.com, rsa-sha2-512,rsa-sha2-256"]
-#[doc = ""]
-#[doc = "The list of available signature algorithms may also be obtained using 'ssh -Q HostKeyAlgorithms'."]
-#[doc = "See also: [HostKeyAlgorithms](https://man.openbsd.org/sshd_config#HostKeyAlgorithms)"]
+/// Specifies the host key signature algorithms that the server offers.
+///
+/// The default for this option is:
+/// > ssh-ed25519-cert-v01@openssh.com, ecdsa-sha2-nistp256-cert-v01@openssh.com, ecdsa-sha2-nistp384-cert-v01@openssh.com, ecdsa-sha2-nistp521-cert-v01@openssh.com, sk-ssh-ed25519-cert-v01@openssh.com, sk-ecdsa-sha2-nistp256-cert-v01@openssh.com, rsa-sha2-512-cert-v01@openssh.com, rsa-sha2-256-cert-v01@openssh.com, ssh-ed25519, ecdsa-sha2-nistp256,ecdsa-sha2-nistp384,ecdsa-sha2-nistp521, sk-ssh-ed25519@openssh.com, sk-ecdsa-sha2-nistp256@openssh.com, rsa-sha2-512,rsa-sha2-256
+///
+///
+/// The list of available signature algorithms may also be obtained using 'ssh -Q HostKeyAlgorithms'.
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord)]
 pub enum HostKeyAlgorithms {
     #[doc = "ssh-ed25519"]
@@ -78,3 +79,4 @@ impl<'a> From<Modifier<Vec<HostKeyAlgorithms>>> for crate::Directive<'a> {
         crate::directive::Directive::HostKeyAlgorithms(directive)
     }
 }
+

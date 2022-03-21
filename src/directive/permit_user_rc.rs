@@ -1,5 +1,4 @@
-//! Generated file, do not edit by hand
-
+//! This file has been automatically generated. Any changes made to it will be overwritten upon subsequent runs!
 #[allow(unused_imports)]
 use crate::Modifier;
 #[allow(unused_imports)]
@@ -15,8 +14,9 @@ use nom::{
 #[allow(unused_imports)]
 use std::borrow::Cow;
 
-#[doc = "Specifies whether any ~/.ssh/rc file is executed. The default is **yes**."]
-#[doc = "See also: [PermitUserRC](https://man.openbsd.org/sshd_config#PermitUserRC)"]
+/// Specifies whether any ~/.ssh/rc file is executed.
+///
+/// The default is **yes**.
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord)]
 pub enum PermitUserRC {
     #[doc = "yes"]
@@ -49,3 +49,4 @@ impl<'a> From<PermitUserRC> for crate::Directive<'a> {
         crate::directive::Directive::PermitUserRC(directive)
     }
 }
+

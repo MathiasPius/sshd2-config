@@ -1,5 +1,4 @@
-//! Generated file, do not edit by hand
-
+//! This file has been automatically generated. Any changes made to it will be overwritten upon subsequent runs!
 #[allow(unused_imports)]
 use crate::Modifier;
 #[allow(unused_imports)]
@@ -15,24 +14,35 @@ use nom::{
 #[allow(unused_imports)]
 use std::borrow::Cow;
 
-#[doc = "Specifies the ciphers allowed. Multiple ciphers must be comma-separated. If the specified list begins with a ‘+’ character, then the specified ciphers will be appended to the default set instead of replacing them. If the specified list begins with a ‘-’ character, then the specified ciphers (including wildcards) will be removed from the default set instead of replacing them. If the specified list begins with a ‘^’ character, then the specified ciphers will be placed at the head of the default set. The supported ciphers are:"]
-#[doc = ""]
-#[doc = "* 3des-cbc"]
-#[doc = "* aes128-cbc"]
-#[doc = "* aes192-cbc"]
-#[doc = "* aes256-cbc"]
-#[doc = "* aes128-ctr"]
-#[doc = "* aes192-ctr"]
-#[doc = "* aes256-ctr"]
-#[doc = "* aes128-gcm@openssh.com"]
-#[doc = "* aes256-gcm@openssh.com"]
-#[doc = "* chacha20-poly1305@openssh.com"]
-#[doc = ""]
-#[doc = "The default is:"]
-#[doc = "> chacha20-poly1305@openssh.com, aes128-ctr,aes192-ctr,aes256-ctr, aes128-gcm@openssh.com,aes256-gcm@openssh.com"]
-#[doc = ""]
-#[doc = "The list of available ciphers may also be obtained using 'ssh -Q cipher'."]
-#[doc = "See also: [Ciphers](https://man.openbsd.org/sshd_config#Ciphers)"]
+/// Specifies the ciphers allowed.
+///
+/// Multiple ciphers must be comma-separated.
+/// If the specified list begins with a ‘+’ character, then the specified ciphers will be appended to the default set instead of replacing them.
+/// If the specified list begins with a ‘-’ character, then the specified ciphers (including wildcards) will be removed from the default set instead of replacing them.
+/// If the specified list begins with a ‘^’ character, then the specified ciphers will be placed at the head of the default set.
+/// The supported ciphers are:
+///
+///
+///
+///
+/// * 3des-cbc
+/// * aes128-cbc
+/// * aes192-cbc
+/// * aes256-cbc
+/// * aes128-ctr
+/// * aes192-ctr
+/// * aes256-ctr
+/// * aes128-gcm@openssh.com
+/// * aes256-gcm@openssh.com
+/// * chacha20-poly1305@openssh.com
+///
+///
+/// The default is:
+///
+/// > chacha20-poly1305@openssh.com, aes128-ctr,aes192-ctr,aes256-ctr, aes128-gcm@openssh.com,aes256-gcm@openssh.com
+///
+///
+/// The list of available ciphers may also be obtained using 'ssh -Q cipher'.
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord)]
 pub enum Ciphers {
     #[doc = "3des-cbc"]
@@ -107,3 +117,4 @@ impl<'a> From<Modifier<Vec<Ciphers>>> for crate::Directive<'a> {
         crate::directive::Directive::Ciphers(directive)
     }
 }
+

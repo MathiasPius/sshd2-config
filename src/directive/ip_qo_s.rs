@@ -1,5 +1,4 @@
-//! Generated file, do not edit by hand
-
+//! This file has been automatically generated. Any changes made to it will be overwritten upon subsequent runs!
 #[allow(unused_imports)]
 use crate::Modifier;
 #[allow(unused_imports)]
@@ -15,8 +14,13 @@ use nom::{
 #[allow(unused_imports)]
 use std::borrow::Cow;
 
-#[doc = "Specifies the IPv4 type-of-service or DSCP class for the connection. Accepted values are **af11**, **af12**, **af13**, **af21**, **af22**, **af23**, **af31**, **af32**, **af33**, **af41**, **af42**, **af43**, **cs0**, **cs1**, **cs2**, **cs3**, **cs4**, **cs5**, **cs6**, **cs7**, **ef**, **le**, **lowdelay**, **throughput**, **reliability**, a numeric value, or **none** to use the operating system default. This option may take one or two arguments, separated by whitespace. If one argument is specified, it is used as the packet class unconditionally. If two values are specified, the first is automatically selected for interactive sessions and the second for non-interactive sessions. The default is **af21** (Low-Latency Data) for interactive sessions and **cs1** (Lower Effort) for non-interactive sessions."]
-#[doc = "See also: [IPQoS](https://man.openbsd.org/sshd_config#IPQoS)"]
+/// Specifies the IPv4 type-of-service or DSCP class for the connection.
+///
+/// Accepted values are **af11**, **af12**, **af13**, **af21**, **af22**, **af23**, **af31**, **af32**, **af33**, **af41**, **af42**, **af43**, **cs0**, **cs1**, **cs2**, **cs3**, **cs4**, **cs5**, **cs6**, **cs7**, **ef**, **le**, **lowdelay**, **throughput**, **reliability**, a numeric value, or **none** to use the operating system default.
+/// This option may take one or two arguments, separated by whitespace.
+/// If one argument is specified, it is used as the packet class unconditionally.
+/// If two values are specified, the first is automatically selected for interactive sessions and the second for non-interactive sessions.
+/// The default is **af21** (Low-Latency Data) for interactive sessions and **cs1** (Lower Effort) for non-interactive sessions.
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord)]
 pub enum IPQoS {
     #[doc = "af11"]
@@ -128,3 +132,4 @@ impl<'a> From<Vec<IPQoS>> for crate::Directive<'a> {
         crate::directive::Directive::IPQoS(directive)
     }
 }
+

@@ -1,5 +1,4 @@
-//! Generated file, do not edit by hand
-
+//! This file has been automatically generated. Any changes made to it will be overwritten upon subsequent runs!
 #[allow(unused_imports)]
 use crate::Modifier;
 #[allow(unused_imports)]
@@ -15,8 +14,11 @@ use nom::{
 #[allow(unused_imports)]
 use std::borrow::Cow;
 
-#[doc = "Sets the octal file creation mode mask (umask) used when creating a Unix-domain socket file for local or remote port forwarding. This option is only used for port forwarding to a Unix-domain socket file. The default value is 0177, which creates a Unix-domain socket file that is readable and writable only by the owner. Note that not all operating systems honor the file mode on Unix-domain socket files."]
-#[doc = "See also: [StreamLocalBindMask](https://man.openbsd.org/sshd_config#StreamLocalBindMask)"]
+/// Sets the octal file creation mode mask (umask) used when creating a Unix-domain socket file for local or remote port forwarding.
+///
+/// This option is only used for port forwarding to a Unix-domain socket file.
+/// The default value is 0177, which creates a Unix-domain socket file that is readable and writable only by the owner.
+/// Note that not all operating systems honor the file mode on Unix-domain socket files.
 #[derive(Debug, Clone, PartialEq, Eq, PartialOrd, Ord)]
 pub struct StreamLocalBindMask<'a>(Cow<'a, str>);
 impl<'a> StreamLocalBindMask<'a> {
@@ -51,3 +53,4 @@ impl<'a> From<StreamLocalBindMask<'a>> for crate::Directive<'a> {
         crate::directive::Directive::StreamLocalBindMask(directive)
     }
 }
+

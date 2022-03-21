@@ -1,7 +1,12 @@
+//! This crate is not yet ready to be used.
+//!
+//! Long-term the plan for this library is to be a one-stop-shop for
+//! parsing and generating configuration files to be consumed by `sshd_config`.
+//!
+
 use nom::IResult;
 
 mod directive;
-
 pub use directive::*;
 
 pub trait Parse<'a>: Sized {

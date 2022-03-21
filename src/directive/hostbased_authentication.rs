@@ -1,5 +1,4 @@
-//! Generated file, do not edit by hand
-
+//! This file has been automatically generated. Any changes made to it will be overwritten upon subsequent runs!
 #[allow(unused_imports)]
 use crate::Modifier;
 #[allow(unused_imports)]
@@ -15,8 +14,9 @@ use nom::{
 #[allow(unused_imports)]
 use std::borrow::Cow;
 
-#[doc = "Specifies whether rhosts or /etc/hosts.equiv authentication together with successful public key client host authentication is allowed (host-based authentication). The default is **no**."]
-#[doc = "See also: [HostbasedAuthentication](https://man.openbsd.org/sshd_config#HostbasedAuthentication)"]
+/// Specifies whether rhosts or /etc/hosts.equiv authentication together with successful public key client host authentication is allowed (host-based authentication).
+///
+/// The default is **no**.
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord)]
 pub enum HostbasedAuthentication {
     #[doc = "yes"]
@@ -49,3 +49,4 @@ impl<'a> From<HostbasedAuthentication> for crate::Directive<'a> {
         crate::directive::Directive::HostbasedAuthentication(directive)
     }
 }
+

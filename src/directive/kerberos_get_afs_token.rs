@@ -1,5 +1,4 @@
-//! Generated file, do not edit by hand
-
+//! This file has been automatically generated. Any changes made to it will be overwritten upon subsequent runs!
 #[allow(unused_imports)]
 use crate::Modifier;
 #[allow(unused_imports)]
@@ -15,8 +14,9 @@ use nom::{
 #[allow(unused_imports)]
 use std::borrow::Cow;
 
-#[doc = "If AFS is active and the user has a Kerberos 5 TGT, attempt to acquire an AFS token before accessing the user's home directory. The default is **no**."]
-#[doc = "See also: [KerberosGetAFSToken](https://man.openbsd.org/sshd_config#KerberosGetAFSToken)"]
+/// If AFS is active and the user has a Kerberos 5 TGT, attempt to acquire an AFS token before accessing the user's home directory.
+///
+/// The default is **no**.
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord)]
 pub enum KerberosGetAFSToken {
     #[doc = "yes"]
@@ -49,3 +49,4 @@ impl<'a> From<KerberosGetAFSToken> for crate::Directive<'a> {
         crate::directive::Directive::KerberosGetAFSToken(directive)
     }
 }
+

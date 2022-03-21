@@ -1,5 +1,4 @@
-//! Generated file, do not edit by hand
-
+//! This file has been automatically generated. Any changes made to it will be overwritten upon subsequent runs!
 #[allow(unused_imports)]
 use crate::Modifier;
 #[allow(unused_imports)]
@@ -15,8 +14,10 @@ use nom::{
 #[allow(unused_imports)]
 use std::borrow::Cow;
 
-#[doc = "Specifies the first display number available for [sshd(8)](https://man.openbsd.org/sshd.8)'s X11 forwarding. This prevents sshd from interfering with real X11 servers. The default is 10."]
-#[doc = "See also: [X11DisplayOffset](https://man.openbsd.org/sshd_config#X11DisplayOffset)"]
+/// Specifies the first display number available for [sshd(8)](https://man.openbsd.org/sshd.8)'s X11 forwarding.
+///
+/// This prevents sshd from interfering with real X11 servers.
+/// The default is 10.
 #[derive(Debug, Clone, PartialEq, Eq, PartialOrd, Ord)]
 pub struct X11DisplayOffset(u64);
 impl X11DisplayOffset {
@@ -51,3 +52,4 @@ impl<'a> From<X11DisplayOffset> for crate::Directive<'a> {
         crate::directive::Directive::X11DisplayOffset(directive)
     }
 }
+

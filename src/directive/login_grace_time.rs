@@ -1,5 +1,4 @@
-//! Generated file, do not edit by hand
-
+//! This file has been automatically generated. Any changes made to it will be overwritten upon subsequent runs!
 #[allow(unused_imports)]
 use crate::Modifier;
 #[allow(unused_imports)]
@@ -15,8 +14,10 @@ use nom::{
 #[allow(unused_imports)]
 use std::borrow::Cow;
 
-#[doc = "The server disconnects after this time if the user has not successfully logged in. If the value is 0, there is no time limit. The default is 120 seconds."]
-#[doc = "See also: [LoginGraceTime](https://man.openbsd.org/sshd_config#LoginGraceTime)"]
+/// The server disconnects after this time if the user has not successfully logged in.
+///
+/// If the value is 0, there is no time limit.
+/// The default is 120 seconds.
 #[derive(Debug, Clone, PartialEq, Eq, PartialOrd, Ord)]
 pub struct LoginGraceTime(u64);
 impl LoginGraceTime {
@@ -51,3 +52,4 @@ impl<'a> From<LoginGraceTime> for crate::Directive<'a> {
         crate::directive::Directive::LoginGraceTime(directive)
     }
 }
+

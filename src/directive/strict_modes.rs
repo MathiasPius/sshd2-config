@@ -1,5 +1,4 @@
-//! Generated file, do not edit by hand
-
+//! This file has been automatically generated. Any changes made to it will be overwritten upon subsequent runs!
 #[allow(unused_imports)]
 use crate::Modifier;
 #[allow(unused_imports)]
@@ -15,8 +14,11 @@ use nom::{
 #[allow(unused_imports)]
 use std::borrow::Cow;
 
-#[doc = "Specifies whether [sshd(8)](https://man.openbsd.org/sshd.8) should check file modes and ownership of the user's files and home directory before accepting login. This is normally desirable because novices sometimes accidentally leave their directory or files world-writable. The default is **yes**. Note that this does not apply to **ChrootDirectory**, whose permissions and ownership are checked unconditionally."]
-#[doc = "See also: [StrictModes](https://man.openbsd.org/sshd_config#StrictModes)"]
+/// Specifies whether [sshd(8)](https://man.openbsd.org/sshd.8) should check file modes and ownership of the user's files and home directory before accepting login.
+///
+/// This is normally desirable because novices sometimes accidentally leave their directory or files world-writable.
+/// The default is **yes**.
+/// Note that this does not apply to **ChrootDirectory**, whose permissions and ownership are checked unconditionally.
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord)]
 pub enum StrictModes {
     #[doc = "yes"]
@@ -49,3 +51,4 @@ impl<'a> From<StrictModes> for crate::Directive<'a> {
         crate::directive::Directive::StrictModes(directive)
     }
 }
+

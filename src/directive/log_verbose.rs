@@ -1,5 +1,4 @@
-//! Generated file, do not edit by hand
-
+//! This file has been automatically generated. Any changes made to it will be overwritten upon subsequent runs!
 #[allow(unused_imports)]
 use crate::Modifier;
 #[allow(unused_imports)]
@@ -15,11 +14,15 @@ use nom::{
 #[allow(unused_imports)]
 use std::borrow::Cow;
 
-#[doc = "Specify one or more overrides to LogLevel. An override consists of a pattern lists that matches the source file, function and line number to force detailed logging for. For example, an override pattern of:"]
-#[doc = "> kex.c:*:1000,*:kex_exchange_identification():*,packet.c:*"]
-#[doc = ""]
-#[doc = "would enable detailed logging for line 1000 of kex.c, everything in the kex_exchange_identification() function, and all code in the packet.c file. This option is intended for debugging and no overrides are enabled by default."]
-#[doc = "See also: [LogVerbose](https://man.openbsd.org/sshd_config#LogVerbose)"]
+/// Specify one or more overrides to LogLevel.
+///
+/// An override consists of a pattern lists that matches the source file, function and line number to force detailed logging for.
+/// For example, an override pattern of:
+/// > kex.c:*:1000,*:kex_exchange_identification():*,packet.c:*
+///
+///
+/// would enable detailed logging for line 1000 of kex.c, everything in the kex_exchange_identification() function, and all code in the packet.c file.
+/// This option is intended for debugging and no overrides are enabled by default.
 #[derive(Debug, Clone, PartialEq, Eq, PartialOrd, Ord)]
 pub struct LogVerbose<'a>(Cow<'a, str>);
 impl<'a> LogVerbose<'a> {
@@ -54,3 +57,4 @@ impl<'a> From<LogVerbose<'a>> for crate::Directive<'a> {
         crate::directive::Directive::LogVerbose(directive)
     }
 }
+

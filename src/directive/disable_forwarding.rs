@@ -1,5 +1,4 @@
-//! Generated file, do not edit by hand
-
+//! This file has been automatically generated. Any changes made to it will be overwritten upon subsequent runs!
 #[allow(unused_imports)]
 use crate::Modifier;
 #[allow(unused_imports)]
@@ -15,8 +14,9 @@ use nom::{
 #[allow(unused_imports)]
 use std::borrow::Cow;
 
-#[doc = "Disables all forwarding features, including X11, [ssh-agent(1)](https://man.openbsd.org/ssh-agent.1), TCP and StreamLocal. This option overrides all other forwarding-related options and may simplify restricted configurations."]
-#[doc = "See also: [DisableForwarding](https://man.openbsd.org/sshd_config#DisableForwarding)"]
+/// Disables all forwarding features, including X11, [ssh-agent(1)](https://man.openbsd.org/ssh-agent.1), TCP and StreamLocal.
+///
+/// This option overrides all other forwarding-related options and may simplify restricted configurations.
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord)]
 pub enum DisableForwarding {
     #[doc = "yes"]
@@ -49,3 +49,4 @@ impl<'a> From<DisableForwarding> for crate::Directive<'a> {
         crate::directive::Directive::DisableForwarding(directive)
     }
 }
+

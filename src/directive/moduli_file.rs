@@ -1,5 +1,4 @@
-//! Generated file, do not edit by hand
-
+//! This file has been automatically generated. Any changes made to it will be overwritten upon subsequent runs!
 #[allow(unused_imports)]
 use crate::Modifier;
 #[allow(unused_imports)]
@@ -15,8 +14,9 @@ use nom::{
 #[allow(unused_imports)]
 use std::borrow::Cow;
 
-#[doc = "Specifies the [moduli(5)](https://man.openbsd.org/moduli.5) file that contains the Diffie-Hellman groups used for the “diffie-hellman-group-exchange-sha1” and “diffie-hellman-group-exchange-sha256” key exchange methods. The default is /etc/moduli."]
-#[doc = "See also: [ModuliFile](https://man.openbsd.org/sshd_config#ModuliFile)"]
+/// Specifies the [moduli(5)](https://man.openbsd.org/moduli.5) file that contains the Diffie-Hellman groups used for the “diffie-hellman-group-exchange-sha1” and “diffie-hellman-group-exchange-sha256” key exchange methods.
+///
+/// The default is /etc/moduli.
 #[derive(Debug, Clone, PartialEq, Eq, PartialOrd, Ord)]
 pub struct ModuliFile<'a>(Cow<'a, str>);
 impl<'a> ModuliFile<'a> {
@@ -51,3 +51,4 @@ impl<'a> From<ModuliFile<'a>> for crate::Directive<'a> {
         crate::directive::Directive::ModuliFile(directive)
     }
 }
+

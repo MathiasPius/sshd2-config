@@ -1,5 +1,4 @@
-//! Generated file, do not edit by hand
-
+//! This file has been automatically generated. Any changes made to it will be overwritten upon subsequent runs!
 #[allow(unused_imports)]
 use crate::Modifier;
 #[allow(unused_imports)]
@@ -15,8 +14,10 @@ use nom::{
 #[allow(unused_imports)]
 use std::borrow::Cow;
 
-#[doc = "Specifies the hash algorithm used when logging key fingerprints. Valid options are: **md5** and **sha256**. The default is **sha256**."]
-#[doc = "See also: [FingerprintHash](https://man.openbsd.org/sshd_config#FingerprintHash)"]
+/// Specifies the hash algorithm used when logging key fingerprints.
+///
+/// Valid options are: **md5** and **sha256**.
+/// The default is **sha256**.
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord)]
 pub enum FingerprintHash {
     #[doc = "md5"]
@@ -49,3 +50,4 @@ impl<'a> From<FingerprintHash> for crate::Directive<'a> {
         crate::directive::Directive::FingerprintHash(directive)
     }
 }
+

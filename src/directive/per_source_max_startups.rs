@@ -1,5 +1,4 @@
-//! Generated file, do not edit by hand
-
+//! This file has been automatically generated. Any changes made to it will be overwritten upon subsequent runs!
 #[allow(unused_imports)]
 use crate::Modifier;
 #[allow(unused_imports)]
@@ -15,8 +14,10 @@ use nom::{
 #[allow(unused_imports)]
 use std::borrow::Cow;
 
-#[doc = "Specifies the number of unauthenticated connections allowed from a given source address, or “none” if there is no limit. This limit is applied in addition to **MaxStartups**, whichever is lower. The default is **none**."]
-#[doc = "See also: [PerSourceMaxStartups](https://man.openbsd.org/sshd_config#PerSourceMaxStartups)"]
+/// Specifies the number of unauthenticated connections allowed from a given source address, or “none” if there is no limit.
+///
+/// This limit is applied in addition to **MaxStartups**, whichever is lower.
+/// The default is **none**.
 #[derive(Debug, Clone, PartialEq, Eq, PartialOrd, Ord)]
 pub struct PerSourceMaxStartups<'a>(Cow<'a, str>);
 impl<'a> PerSourceMaxStartups<'a> {
@@ -51,3 +52,4 @@ impl<'a> From<PerSourceMaxStartups<'a>> for crate::Directive<'a> {
         crate::directive::Directive::PerSourceMaxStartups(directive)
     }
 }
+

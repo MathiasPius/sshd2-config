@@ -1,5 +1,4 @@
-//! Generated file, do not edit by hand
-
+//! This file has been automatically generated. Any changes made to it will be overwritten upon subsequent runs!
 #[allow(unused_imports)]
 use crate::Modifier;
 #[allow(unused_imports)]
@@ -15,8 +14,14 @@ use nom::{
 #[allow(unused_imports)]
 use std::borrow::Cow;
 
-#[doc = "Specifies whether [sshd(8)](https://man.openbsd.org/sshd.8) should bind the X11 forwarding server to the loopback address or to the wildcard address. By default, sshd binds the forwarding server to the loopback address and sets the hostname part of the `DISPLAY` environment variable to **localhost**. This prevents remote hosts from connecting to the proxy display. However, some older X11 clients may not function with this configuration. **X11UseLocalhost** may be set to **no** to specify that the forwarding server should be bound to the wildcard address. The argument must be **yes** or **no**. The default is **yes**."]
-#[doc = "See also: [X11UseLocalhost](https://man.openbsd.org/sshd_config#X11UseLocalhost)"]
+/// Specifies whether [sshd(8)](https://man.openbsd.org/sshd.8) should bind the X11 forwarding server to the loopback address or to the wildcard address.
+///
+/// By default, sshd binds the forwarding server to the loopback address and sets the hostname part of the `DISPLAY` environment variable to **localhost**.
+/// This prevents remote hosts from connecting to the proxy display.
+/// However, some older X11 clients may not function with this configuration.
+/// **X11UseLocalhost** may be set to **no** to specify that the forwarding server should be bound to the wildcard address.
+/// The argument must be **yes** or **no**.
+/// The default is **yes**.
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord)]
 pub enum X11UseLocalhost {
     #[doc = "yes"]
@@ -49,3 +54,4 @@ impl<'a> From<X11UseLocalhost> for crate::Directive<'a> {
         crate::directive::Directive::X11UseLocalhost(directive)
     }
 }
+

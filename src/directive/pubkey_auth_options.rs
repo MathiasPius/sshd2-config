@@ -1,5 +1,4 @@
-//! Generated file, do not edit by hand
-
+//! This file has been automatically generated. Any changes made to it will be overwritten upon subsequent runs!
 #[allow(unused_imports)]
 use crate::Modifier;
 #[allow(unused_imports)]
@@ -15,8 +14,18 @@ use nom::{
 #[allow(unused_imports)]
 use std::borrow::Cow;
 
-#[doc = "Sets one or more public key authentication options. The supported keywords are: **none** (the default; indicating no additional options are enabled), **touch-required** and **verify-required**. The **touch-required** option causes public key authentication using a FIDO authenticator algorithm (i.e. **ecdsa-sk** or **ed25519-sk**) to always require the signature to attest that a physically present user explicitly confirmed the authentication (usually by touching the authenticator). By default, [sshd(8)](https://man.openbsd.org/sshd.8) requires user presence unless overridden with an authorized_keys option. The **touch-required** flag disables this override. The **verify-required** option requires a FIDO key signature attest that the user was verified, e.g. via a PIN. Neither the **touch-required** or **verify-required** options have any effect for other, non-FIDO, public key types."]
-#[doc = "See also: [PubkeyAuthOptions](https://man.openbsd.org/sshd_config#PubkeyAuthOptions)"]
+/// Sets one or more public key authentication options.
+///
+/// The supported keywords are: **none** (the default; indicating no additional options are enabled), **touch-required** and **verify-required**.
+/// The **touch-required** option causes public key authentication using a FIDO authenticator algorithm (i.e.
+/// **ecdsa-sk** or **ed25519-sk**) to always require the signature to attest that a physically present user explicitly confirmed the authentication (usually by touching the authenticator).
+/// By default, [sshd(8)](https://man.openbsd.org/sshd.8) requires user presence unless overridden with an authorized_keys option.
+/// The **touch-required** flag disables this override.
+///
+/// The **verify-required** option requires a FIDO key signature attest that the user was verified, e.g.
+/// via a PIN.
+///
+/// Neither the **touch-required** or **verify-required** options have any effect for other, non-FIDO, public key types.
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord)]
 pub enum PubkeyAuthOptions {
     #[doc = "none"]
@@ -61,3 +70,4 @@ impl<'a> From<Vec<PubkeyAuthOptions>> for crate::Directive<'a> {
         crate::directive::Directive::PubkeyAuthOptions(directive)
     }
 }
+

@@ -1,5 +1,4 @@
-//! Generated file, do not edit by hand
-
+//! This file has been automatically generated. Any changes made to it will be overwritten upon subsequent runs!
 #[allow(unused_imports)]
 use crate::Modifier;
 #[allow(unused_imports)]
@@ -15,8 +14,10 @@ use nom::{
 #[allow(unused_imports)]
 use std::borrow::Cow;
 
-#[doc = "Specifies the number of bits of source address that are grouped together for the purposes of applying PerSourceMaxStartups limits. Values for IPv4 and optionally IPv6 may be specified, separated by a colon. The default is **32:128**, which means each address is considered individually."]
-#[doc = "See also: [PerSourceNetBlockSize](https://man.openbsd.org/sshd_config#PerSourceNetBlockSize)"]
+/// Specifies the number of bits of source address that are grouped together for the purposes of applying PerSourceMaxStartups limits.
+///
+/// Values for IPv4 and optionally IPv6 may be specified, separated by a colon.
+/// The default is **32:128**, which means each address is considered individually.
 #[derive(Debug, Clone, PartialEq, Eq, PartialOrd, Ord)]
 pub struct PerSourceNetBlockSize<'a>(Cow<'a, str>);
 impl<'a> PerSourceNetBlockSize<'a> {
@@ -51,3 +52,4 @@ impl<'a> From<PerSourceNetBlockSize<'a>> for crate::Directive<'a> {
         crate::directive::Directive::PerSourceNetBlockSize(directive)
     }
 }
+
