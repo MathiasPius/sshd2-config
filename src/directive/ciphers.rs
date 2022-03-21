@@ -66,7 +66,7 @@ impl<'a> crate::Parse<'a> for Ciphers {
                 space1,
                 map(
                     tuple((
-                        opt(one_of("+-")),
+                        opt(one_of("+-^")),
                         separated_list1(
                             tag(","),
                             preceded(

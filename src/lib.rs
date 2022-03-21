@@ -11,17 +11,19 @@ pub trait Parse<'a>: Sized {
 
 #[derive(Debug, Clone, PartialEq, Eq, PartialOrd, Ord)]
 pub enum Modifier<T> {
-    Set(T),
-    Add(T),
+    Replace(T),
+    Append(T),
+    Prepend(T),
     Remove(T),
 }
 
 impl<T> From<(Option<char>, T)> for Modifier<T> {
     fn from((sign, inner): (Option<char>, T)) -> Self {
         match sign {
-            Some('+') => Modifier::Add(inner),
+            Some('+') => Modifier::Append(inner),
             Some('-') => Modifier::Remove(inner),
-            None => Modifier::Set(inner),
+            Some('^') => Modifier::Prepend(inner),
+            None => Modifier::Replace(inner),
             Some(c) => panic!("unexpected sign {c} ahead of modifier"),
         }
     }
@@ -37,7 +39,7 @@ mod tests {
             Directive::parse("Ciphers 3des-cbc,aes128-gcm@openssh.com")
                 .unwrap()
                 .1,
-            Directive::Ciphers(Modifier::Set(vec![
+            Directive::Ciphers(Modifier::Replace(vec![
                 Ciphers::X3DesCbc,
                 Ciphers::Aes128GcmOpensshCom
             ]))
@@ -57,7 +59,7 @@ mod tests {
             )
             .unwrap()
             .1,
-            Directive::KexAlgorithms(Modifier::Add(vec![
+            Directive::KexAlgorithms(Modifier::Append(vec![
                 KexAlgorithms::DiffieHellmanGroup14Sha1,
                 KexAlgorithms::DiffieHellmanGroup14Sha256
             ]))
@@ -81,7 +83,19 @@ mod tests {
             )
             .unwrap()
             .1,
-            Directive::KexAlgorithms(Modifier::Set(vec![
+            Directive::KexAlgorithms(Modifier::Replace(vec![
+                KexAlgorithms::DiffieHellmanGroup14Sha1,
+                KexAlgorithms::DiffieHellmanGroup14Sha256
+            ]))
+        );
+
+        assert_eq!(
+            Directive::parse(
+                "KexAlgorithms ^diffie-hellman-group14-sha1,diffie-hellman-group14-sha256"
+            )
+            .unwrap()
+            .1,
+            Directive::KexAlgorithms(Modifier::Prepend(vec![
                 KexAlgorithms::DiffieHellmanGroup14Sha1,
                 KexAlgorithms::DiffieHellmanGroup14Sha256
             ]))

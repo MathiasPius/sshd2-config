@@ -284,7 +284,7 @@ impl ValueFormat {
             ValueFormat::Modifier(inner) => {
                 let inner_pattern = inner.parse_impl_inner(name_ident);
                 quote! {
-                    map(tuple((opt(one_of("+-")), #inner_pattern)), Modifier::from)
+                    map(tuple((opt(one_of("+-^")), #inner_pattern)), Modifier::from)
                 }
             }
         }
