@@ -25,7 +25,7 @@ pub enum GSSAPICleanupCredentials {
     No,
 }
 
-impl<'a> crate::Parse<'a> for GSSAPICleanupCredentials {
+impl<'a> crate::ParseDirective<'a> for GSSAPICleanupCredentials {
     type Output = GSSAPICleanupCredentials;
     fn parse(input: &'a str) -> IResult<&'a str, Self::Output> {
         preceded(
@@ -49,4 +49,3 @@ impl<'a> From<GSSAPICleanupCredentials> for crate::Directive<'a> {
         crate::directive::Directive::GSSAPICleanupCredentials(directive)
     }
 }
-

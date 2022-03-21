@@ -32,7 +32,7 @@ impl<'a> From<&'a str> for Include<'a> {
     }
 }
 
-impl<'a> crate::Parse<'a> for Include<'a> {
+impl<'a> crate::ParseDirective<'a> for Include<'a> {
     type Output = Vec<Include<'a>>;
     fn parse(input: &'a str) -> IResult<&'a str, Self::Output> {
         preceded(

@@ -28,7 +28,7 @@ pub enum KbdInteractiveAuthentication {
     No,
 }
 
-impl<'a> crate::Parse<'a> for KbdInteractiveAuthentication {
+impl<'a> crate::ParseDirective<'a> for KbdInteractiveAuthentication {
     type Output = KbdInteractiveAuthentication;
     fn parse(input: &'a str) -> IResult<&'a str, Self::Output> {
         preceded(
@@ -52,4 +52,3 @@ impl<'a> From<KbdInteractiveAuthentication> for crate::Directive<'a> {
         crate::directive::Directive::KbdInteractiveAuthentication(directive)
     }
 }
-

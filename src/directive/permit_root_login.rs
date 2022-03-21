@@ -36,7 +36,7 @@ pub enum PermitRootLogin {
     ForcedCommandsOnly,
 }
 
-impl<'a> crate::Parse<'a> for PermitRootLogin {
+impl<'a> crate::ParseDirective<'a> for PermitRootLogin {
     type Output = PermitRootLogin;
     fn parse(input: &'a str) -> IResult<&'a str, Self::Output> {
         preceded(
@@ -68,4 +68,3 @@ impl<'a> From<PermitRootLogin> for crate::Directive<'a> {
         crate::directive::Directive::PermitRootLogin(directive)
     }
 }
-

@@ -25,7 +25,7 @@ pub enum KerberosOrLocalPasswd {
     No,
 }
 
-impl<'a> crate::Parse<'a> for KerberosOrLocalPasswd {
+impl<'a> crate::ParseDirective<'a> for KerberosOrLocalPasswd {
     type Output = KerberosOrLocalPasswd;
     fn parse(input: &'a str) -> IResult<&'a str, Self::Output> {
         preceded(
@@ -49,4 +49,3 @@ impl<'a> From<KerberosOrLocalPasswd> for crate::Directive<'a> {
         crate::directive::Directive::KerberosOrLocalPasswd(directive)
     }
 }
-

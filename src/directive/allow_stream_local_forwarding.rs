@@ -32,7 +32,7 @@ pub enum AllowStreamLocalForwarding {
     Remote,
 }
 
-impl<'a> crate::Parse<'a> for AllowStreamLocalForwarding {
+impl<'a> crate::ParseDirective<'a> for AllowStreamLocalForwarding {
     type Output = AllowStreamLocalForwarding;
     fn parse(input: &'a str) -> IResult<&'a str, Self::Output> {
         preceded(
@@ -59,4 +59,3 @@ impl<'a> From<AllowStreamLocalForwarding> for crate::Directive<'a> {
         crate::directive::Directive::AllowStreamLocalForwarding(directive)
     }
 }
-

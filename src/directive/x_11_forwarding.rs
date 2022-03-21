@@ -32,7 +32,7 @@ pub enum X11Forwarding {
     No,
 }
 
-impl<'a> crate::Parse<'a> for X11Forwarding {
+impl<'a> crate::ParseDirective<'a> for X11Forwarding {
     type Output = X11Forwarding;
     fn parse(input: &'a str) -> IResult<&'a str, Self::Output> {
         preceded(
@@ -56,4 +56,3 @@ impl<'a> From<X11Forwarding> for crate::Directive<'a> {
         crate::directive::Directive::X11Forwarding(directive)
     }
 }
-

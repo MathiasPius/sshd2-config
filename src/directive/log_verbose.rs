@@ -36,7 +36,7 @@ impl<'a> From<&'a str> for LogVerbose<'a> {
     }
 }
 
-impl<'a> crate::Parse<'a> for LogVerbose<'a> {
+impl<'a> crate::ParseDirective<'a> for LogVerbose<'a> {
     type Output = LogVerbose<'a>;
     fn parse(input: &'a str) -> IResult<&'a str, Self::Output> {
         preceded(
@@ -57,4 +57,3 @@ impl<'a> From<LogVerbose<'a>> for crate::Directive<'a> {
         crate::directive::Directive::LogVerbose(directive)
     }
 }
-

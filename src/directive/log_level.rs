@@ -43,7 +43,7 @@ pub enum LogLevel {
     Debug3,
 }
 
-impl<'a> crate::Parse<'a> for LogLevel {
+impl<'a> crate::ParseDirective<'a> for LogLevel {
     type Output = LogLevel;
     fn parse(input: &'a str) -> IResult<&'a str, Self::Output> {
         preceded(
@@ -74,4 +74,3 @@ impl<'a> From<LogLevel> for crate::Directive<'a> {
         crate::directive::Directive::LogLevel(directive)
     }
 }
-

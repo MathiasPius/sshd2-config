@@ -33,7 +33,7 @@ impl<'a> From<&'a str> for TrustedUserCAKeys<'a> {
     }
 }
 
-impl<'a> crate::Parse<'a> for TrustedUserCAKeys<'a> {
+impl<'a> crate::ParseDirective<'a> for TrustedUserCAKeys<'a> {
     type Output = TrustedUserCAKeys<'a>;
     fn parse(input: &'a str) -> IResult<&'a str, Self::Output> {
         preceded(
@@ -54,4 +54,3 @@ impl<'a> From<TrustedUserCAKeys<'a>> for crate::Directive<'a> {
         crate::directive::Directive::TrustedUserCAKeys(directive)
     }
 }
-

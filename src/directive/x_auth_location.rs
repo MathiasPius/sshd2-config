@@ -30,7 +30,7 @@ impl<'a> From<&'a str> for XAuthLocation<'a> {
     }
 }
 
-impl<'a> crate::Parse<'a> for XAuthLocation<'a> {
+impl<'a> crate::ParseDirective<'a> for XAuthLocation<'a> {
     type Output = XAuthLocation<'a>;
     fn parse(input: &'a str) -> IResult<&'a str, Self::Output> {
         preceded(

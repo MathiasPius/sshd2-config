@@ -25,7 +25,7 @@ pub enum PermitTTY {
     No,
 }
 
-impl<'a> crate::Parse<'a> for PermitTTY {
+impl<'a> crate::ParseDirective<'a> for PermitTTY {
     type Output = PermitTTY;
     fn parse(input: &'a str) -> IResult<&'a str, Self::Output> {
         preceded(

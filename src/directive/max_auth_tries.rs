@@ -31,7 +31,7 @@ impl From<u64> for MaxAuthTries {
     }
 }
 
-impl<'a> crate::Parse<'a> for MaxAuthTries {
+impl<'a> crate::ParseDirective<'a> for MaxAuthTries {
     type Output = MaxAuthTries;
     fn parse(input: &'a str) -> IResult<&'a str, Self::Output> {
         preceded(
@@ -52,4 +52,3 @@ impl<'a> From<MaxAuthTries> for crate::Directive<'a> {
         crate::directive::Directive::MaxAuthTries(directive)
     }
 }
-

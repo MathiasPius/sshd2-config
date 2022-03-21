@@ -25,7 +25,7 @@ pub enum UseDNS {
     No,
 }
 
-impl<'a> crate::Parse<'a> for UseDNS {
+impl<'a> crate::ParseDirective<'a> for UseDNS {
     type Output = UseDNS;
     fn parse(input: &'a str) -> IResult<&'a str, Self::Output> {
         preceded(
@@ -49,4 +49,3 @@ impl<'a> From<UseDNS> for crate::Directive<'a> {
         crate::directive::Directive::UseDNS(directive)
     }
 }
-

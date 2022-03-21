@@ -30,7 +30,7 @@ impl<'a> From<&'a str> for PidFile<'a> {
     }
 }
 
-impl<'a> crate::Parse<'a> for PidFile<'a> {
+impl<'a> crate::ParseDirective<'a> for PidFile<'a> {
     type Output = PidFile<'a>;
     fn parse(input: &'a str) -> IResult<&'a str, Self::Output> {
         preceded(
@@ -51,4 +51,3 @@ impl<'a> From<PidFile<'a>> for crate::Directive<'a> {
         crate::directive::Directive::PidFile(directive)
     }
 }
-

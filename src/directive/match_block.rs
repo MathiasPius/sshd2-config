@@ -42,7 +42,7 @@ impl<'a> From<&'a str> for MatchBlock<'a> {
     }
 }
 
-impl<'a> crate::Parse<'a> for MatchBlock<'a> {
+impl<'a> crate::ParseDirective<'a> for MatchBlock<'a> {
     type Output = MatchBlock<'a>;
     fn parse(input: &'a str) -> IResult<&'a str, Self::Output> {
         preceded(
@@ -63,4 +63,3 @@ impl<'a> From<MatchBlock<'a>> for crate::Directive<'a> {
         crate::directive::Directive::MatchBlock(directive)
     }
 }
-

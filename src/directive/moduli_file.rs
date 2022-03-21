@@ -30,7 +30,7 @@ impl<'a> From<&'a str> for ModuliFile<'a> {
     }
 }
 
-impl<'a> crate::Parse<'a> for ModuliFile<'a> {
+impl<'a> crate::ParseDirective<'a> for ModuliFile<'a> {
     type Output = ModuliFile<'a>;
     fn parse(input: &'a str) -> IResult<&'a str, Self::Output> {
         preceded(
@@ -51,4 +51,3 @@ impl<'a> From<ModuliFile<'a>> for crate::Directive<'a> {
         crate::directive::Directive::ModuliFile(directive)
     }
 }
-

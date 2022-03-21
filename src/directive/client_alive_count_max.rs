@@ -37,7 +37,7 @@ impl From<u64> for ClientAliveCountMax {
     }
 }
 
-impl<'a> crate::Parse<'a> for ClientAliveCountMax {
+impl<'a> crate::ParseDirective<'a> for ClientAliveCountMax {
     type Output = ClientAliveCountMax;
     fn parse(input: &'a str) -> IResult<&'a str, Self::Output> {
         preceded(
@@ -58,4 +58,3 @@ impl<'a> From<ClientAliveCountMax> for crate::Directive<'a> {
         crate::directive::Directive::ClientAliveCountMax(directive)
     }
 }
-

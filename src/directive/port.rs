@@ -32,7 +32,7 @@ impl From<u64> for Port {
     }
 }
 
-impl<'a> crate::Parse<'a> for Port {
+impl<'a> crate::ParseDirective<'a> for Port {
     type Output = Port;
     fn parse(input: &'a str) -> IResult<&'a str, Self::Output> {
         preceded(
@@ -50,4 +50,3 @@ impl<'a> From<Port> for crate::Directive<'a> {
         crate::directive::Directive::Port(directive)
     }
 }
-

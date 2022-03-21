@@ -33,7 +33,7 @@ impl<'a> From<&'a str> for RevokedKeys<'a> {
     }
 }
 
-impl<'a> crate::Parse<'a> for RevokedKeys<'a> {
+impl<'a> crate::ParseDirective<'a> for RevokedKeys<'a> {
     type Output = RevokedKeys<'a>;
     fn parse(input: &'a str) -> IResult<&'a str, Self::Output> {
         preceded(
@@ -54,4 +54,3 @@ impl<'a> From<RevokedKeys<'a>> for crate::Directive<'a> {
         crate::directive::Directive::RevokedKeys(directive)
     }
 }
-

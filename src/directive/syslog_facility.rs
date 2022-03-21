@@ -44,7 +44,7 @@ pub enum SyslogFacility {
     Local7,
 }
 
-impl<'a> crate::Parse<'a> for SyslogFacility {
+impl<'a> crate::ParseDirective<'a> for SyslogFacility {
     type Output = SyslogFacility;
     fn parse(input: &'a str) -> IResult<&'a str, Self::Output> {
         preceded(
@@ -77,4 +77,3 @@ impl<'a> From<SyslogFacility> for crate::Directive<'a> {
         crate::directive::Directive::SyslogFacility(directive)
     }
 }
-

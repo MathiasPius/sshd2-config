@@ -31,7 +31,7 @@ pub enum GatewayPorts {
     Clientspecified,
 }
 
-impl<'a> crate::Parse<'a> for GatewayPorts {
+impl<'a> crate::ParseDirective<'a> for GatewayPorts {
     type Output = GatewayPorts;
     fn parse(input: &'a str) -> IResult<&'a str, Self::Output> {
         preceded(
@@ -59,4 +59,3 @@ impl<'a> From<GatewayPorts> for crate::Directive<'a> {
         crate::directive::Directive::GatewayPorts(directive)
     }
 }
-

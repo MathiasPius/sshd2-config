@@ -26,7 +26,7 @@ pub enum FingerprintHash {
     Sha256,
 }
 
-impl<'a> crate::Parse<'a> for FingerprintHash {
+impl<'a> crate::ParseDirective<'a> for FingerprintHash {
     type Output = FingerprintHash;
     fn parse(input: &'a str) -> IResult<&'a str, Self::Output> {
         preceded(
@@ -50,4 +50,3 @@ impl<'a> From<FingerprintHash> for crate::Directive<'a> {
         crate::directive::Directive::FingerprintHash(directive)
     }
 }
-

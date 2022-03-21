@@ -31,7 +31,7 @@ pub enum TCPKeepAlive {
     No,
 }
 
-impl<'a> crate::Parse<'a> for TCPKeepAlive {
+impl<'a> crate::ParseDirective<'a> for TCPKeepAlive {
     type Output = TCPKeepAlive;
     fn parse(input: &'a str) -> IResult<&'a str, Self::Output> {
         preceded(
@@ -55,4 +55,3 @@ impl<'a> From<TCPKeepAlive> for crate::Directive<'a> {
         crate::directive::Directive::TCPKeepAlive(directive)
     }
 }
-

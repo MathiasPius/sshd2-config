@@ -32,7 +32,7 @@ impl<'a> From<&'a str> for PermitUserEnvironment<'a> {
     }
 }
 
-impl<'a> crate::Parse<'a> for PermitUserEnvironment<'a> {
+impl<'a> crate::ParseDirective<'a> for PermitUserEnvironment<'a> {
     type Output = PermitUserEnvironment<'a>;
     fn parse(input: &'a str) -> IResult<&'a str, Self::Output> {
         preceded(
@@ -53,4 +53,3 @@ impl<'a> From<PermitUserEnvironment<'a>> for crate::Directive<'a> {
         crate::directive::Directive::PermitUserEnvironment(directive)
     }
 }
-

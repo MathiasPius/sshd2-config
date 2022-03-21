@@ -67,7 +67,7 @@ pub enum Ciphers {
     Chacha20Poly1305OpensshCom,
 }
 
-impl<'a> crate::Parse<'a> for Ciphers {
+impl<'a> crate::ParseDirective<'a> for Ciphers {
     type Output = Modifier<Vec<Ciphers>>;
     fn parse(input: &'a str) -> IResult<&'a str, Self::Output> {
         preceded(
@@ -117,4 +117,3 @@ impl<'a> From<Modifier<Vec<Ciphers>>> for crate::Directive<'a> {
         crate::directive::Directive::Ciphers(directive)
     }
 }
-

@@ -32,7 +32,7 @@ impl<'a> From<&'a str> for StreamLocalBindMask<'a> {
     }
 }
 
-impl<'a> crate::Parse<'a> for StreamLocalBindMask<'a> {
+impl<'a> crate::ParseDirective<'a> for StreamLocalBindMask<'a> {
     type Output = StreamLocalBindMask<'a>;
     fn parse(input: &'a str) -> IResult<&'a str, Self::Output> {
         preceded(
@@ -53,4 +53,3 @@ impl<'a> From<StreamLocalBindMask<'a>> for crate::Directive<'a> {
         crate::directive::Directive::StreamLocalBindMask(directive)
     }
 }
-

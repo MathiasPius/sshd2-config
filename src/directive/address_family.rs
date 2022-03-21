@@ -27,7 +27,7 @@ pub enum AddressFamily {
     Inet6,
 }
 
-impl<'a> crate::Parse<'a> for AddressFamily {
+impl<'a> crate::ParseDirective<'a> for AddressFamily {
     type Output = AddressFamily;
     fn parse(input: &'a str) -> IResult<&'a str, Self::Output> {
         preceded(

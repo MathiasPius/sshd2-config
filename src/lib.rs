@@ -9,7 +9,7 @@ use nom::IResult;
 mod directive;
 pub use directive::*;
 
-pub trait Parse<'a>: Sized {
+pub trait ParseDirective<'a>: Sized {
     type Output;
     fn parse(input: &'a str) -> IResult<&'a str, Self::Output>;
 }

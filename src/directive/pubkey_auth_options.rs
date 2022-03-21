@@ -36,7 +36,7 @@ pub enum PubkeyAuthOptions {
     VerifyRequired,
 }
 
-impl<'a> crate::Parse<'a> for PubkeyAuthOptions {
+impl<'a> crate::ParseDirective<'a> for PubkeyAuthOptions {
     type Output = Vec<PubkeyAuthOptions>;
     fn parse(input: &'a str) -> IResult<&'a str, Self::Output> {
         preceded(
@@ -70,4 +70,3 @@ impl<'a> From<Vec<PubkeyAuthOptions>> for crate::Directive<'a> {
         crate::directive::Directive::PubkeyAuthOptions(directive)
     }
 }
-

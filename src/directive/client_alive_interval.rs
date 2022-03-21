@@ -30,7 +30,7 @@ impl From<u64> for ClientAliveInterval {
     }
 }
 
-impl<'a> crate::Parse<'a> for ClientAliveInterval {
+impl<'a> crate::ParseDirective<'a> for ClientAliveInterval {
     type Output = ClientAliveInterval;
     fn parse(input: &'a str) -> IResult<&'a str, Self::Output> {
         preceded(

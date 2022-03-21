@@ -34,7 +34,7 @@ impl<'a> From<&'a str> for DenyGroups<'a> {
     }
 }
 
-impl<'a> crate::Parse<'a> for DenyGroups<'a> {
+impl<'a> crate::ParseDirective<'a> for DenyGroups<'a> {
     type Output = Vec<DenyGroups<'a>>;
     fn parse(input: &'a str) -> IResult<&'a str, Self::Output> {
         preceded(
@@ -58,4 +58,3 @@ impl<'a> From<Vec<DenyGroups<'a>>> for crate::Directive<'a> {
         crate::directive::Directive::DenyGroups(directive)
     }
 }
-

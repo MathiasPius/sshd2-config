@@ -31,7 +31,7 @@ impl From<u64> for X11DisplayOffset {
     }
 }
 
-impl<'a> crate::Parse<'a> for X11DisplayOffset {
+impl<'a> crate::ParseDirective<'a> for X11DisplayOffset {
     type Output = X11DisplayOffset;
     fn parse(input: &'a str) -> IResult<&'a str, Self::Output> {
         preceded(
@@ -52,4 +52,3 @@ impl<'a> From<X11DisplayOffset> for crate::Directive<'a> {
         crate::directive::Directive::X11DisplayOffset(directive)
     }
 }
-

@@ -35,7 +35,7 @@ impl<'a> From<&'a str> for AuthorizedKeysFile<'a> {
     }
 }
 
-impl<'a> crate::Parse<'a> for AuthorizedKeysFile<'a> {
+impl<'a> crate::ParseDirective<'a> for AuthorizedKeysFile<'a> {
     type Output = AuthorizedKeysFile<'a>;
     fn parse(input: &'a str) -> IResult<&'a str, Self::Output> {
         preceded(

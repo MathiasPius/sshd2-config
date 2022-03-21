@@ -33,7 +33,7 @@ impl<'a> From<&'a str> for RekeyLimit<'a> {
     }
 }
 
-impl<'a> crate::Parse<'a> for RekeyLimit<'a> {
+impl<'a> crate::ParseDirective<'a> for RekeyLimit<'a> {
     type Output = RekeyLimit<'a>;
     fn parse(input: &'a str) -> IResult<&'a str, Self::Output> {
         preceded(
@@ -54,4 +54,3 @@ impl<'a> From<RekeyLimit<'a>> for crate::Directive<'a> {
         crate::directive::Directive::RekeyLimit(directive)
     }
 }
-

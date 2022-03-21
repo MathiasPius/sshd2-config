@@ -27,7 +27,7 @@ pub enum StrictModes {
     No,
 }
 
-impl<'a> crate::Parse<'a> for StrictModes {
+impl<'a> crate::ParseDirective<'a> for StrictModes {
     type Output = StrictModes;
     fn parse(input: &'a str) -> IResult<&'a str, Self::Output> {
         preceded(
@@ -51,4 +51,3 @@ impl<'a> From<StrictModes> for crate::Directive<'a> {
         crate::directive::Directive::StrictModes(directive)
     }
 }
-

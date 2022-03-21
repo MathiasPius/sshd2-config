@@ -75,7 +75,7 @@ pub enum KexAlgorithms {
     Sntrup761X25519Sha512OpensshCom,
 }
 
-impl<'a> crate::Parse<'a> for KexAlgorithms {
+impl<'a> crate::ParseDirective<'a> for KexAlgorithms {
     type Output = Modifier<Vec<KexAlgorithms>>;
     fn parse(input: &'a str) -> IResult<&'a str, Self::Output> {
         preceded(
@@ -158,4 +158,3 @@ impl<'a> From<Modifier<Vec<KexAlgorithms>>> for crate::Directive<'a> {
         crate::directive::Directive::KexAlgorithms(directive)
     }
 }
-

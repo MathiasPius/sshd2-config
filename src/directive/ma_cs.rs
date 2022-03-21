@@ -88,7 +88,7 @@ pub enum MACs {
     Umac128EtmOpensshCom,
 }
 
-impl<'a> crate::Parse<'a> for MACs {
+impl<'a> crate::ParseDirective<'a> for MACs {
     type Output = Modifier<Vec<MACs>>;
     fn parse(input: &'a str) -> IResult<&'a str, Self::Output> {
         preceded(
@@ -165,4 +165,3 @@ impl<'a> From<Modifier<Vec<MACs>>> for crate::Directive<'a> {
         crate::directive::Directive::MACs(directive)
     }
 }
-

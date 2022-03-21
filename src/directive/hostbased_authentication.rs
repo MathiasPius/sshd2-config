@@ -25,7 +25,7 @@ pub enum HostbasedAuthentication {
     No,
 }
 
-impl<'a> crate::Parse<'a> for HostbasedAuthentication {
+impl<'a> crate::ParseDirective<'a> for HostbasedAuthentication {
     type Output = HostbasedAuthentication;
     fn parse(input: &'a str) -> IResult<&'a str, Self::Output> {
         preceded(
@@ -49,4 +49,3 @@ impl<'a> From<HostbasedAuthentication> for crate::Directive<'a> {
         crate::directive::Directive::HostbasedAuthentication(directive)
     }
 }
-

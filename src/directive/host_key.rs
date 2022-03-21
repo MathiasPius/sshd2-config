@@ -35,7 +35,7 @@ impl<'a> From<&'a str> for HostKey<'a> {
     }
 }
 
-impl<'a> crate::Parse<'a> for HostKey<'a> {
+impl<'a> crate::ParseDirective<'a> for HostKey<'a> {
     type Output = HostKey<'a>;
     fn parse(input: &'a str) -> IResult<&'a str, Self::Output> {
         preceded(
@@ -56,4 +56,3 @@ impl<'a> From<HostKey<'a>> for crate::Directive<'a> {
         crate::directive::Directive::HostKey(directive)
     }
 }
-

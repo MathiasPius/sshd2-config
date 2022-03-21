@@ -25,7 +25,7 @@ pub enum PrintMotd {
     No,
 }
 
-impl<'a> crate::Parse<'a> for PrintMotd {
+impl<'a> crate::ParseDirective<'a> for PrintMotd {
     type Output = PrintMotd;
     fn parse(input: &'a str) -> IResult<&'a str, Self::Output> {
         preceded(
@@ -49,4 +49,3 @@ impl<'a> From<PrintMotd> for crate::Directive<'a> {
         crate::directive::Directive::PrintMotd(directive)
     }
 }
-

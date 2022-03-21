@@ -26,7 +26,7 @@ pub enum HostbasedUsesNameFromPacketOnly {
     No,
 }
 
-impl<'a> crate::Parse<'a> for HostbasedUsesNameFromPacketOnly {
+impl<'a> crate::ParseDirective<'a> for HostbasedUsesNameFromPacketOnly {
     type Output = HostbasedUsesNameFromPacketOnly;
     fn parse(input: &'a str) -> IResult<&'a str, Self::Output> {
         preceded(
@@ -50,4 +50,3 @@ impl<'a> From<HostbasedUsesNameFromPacketOnly> for crate::Directive<'a> {
         crate::directive::Directive::HostbasedUsesNameFromPacketOnly(directive)
     }
 }
-

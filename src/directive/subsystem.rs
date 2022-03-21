@@ -37,7 +37,7 @@ impl<'a> From<&'a str> for Subsystem<'a> {
     }
 }
 
-impl<'a> crate::Parse<'a> for Subsystem<'a> {
+impl<'a> crate::ParseDirective<'a> for Subsystem<'a> {
     type Output = Subsystem<'a>;
     fn parse(input: &'a str) -> IResult<&'a str, Self::Output> {
         preceded(

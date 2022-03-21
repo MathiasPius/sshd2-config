@@ -32,7 +32,7 @@ pub enum AllowTcpForwarding {
     Remote,
 }
 
-impl<'a> crate::Parse<'a> for AllowTcpForwarding {
+impl<'a> crate::ParseDirective<'a> for AllowTcpForwarding {
     type Output = AllowTcpForwarding;
     fn parse(input: &'a str) -> IResult<&'a str, Self::Output> {
         preceded(
@@ -59,4 +59,3 @@ impl<'a> From<AllowTcpForwarding> for crate::Directive<'a> {
         crate::directive::Directive::AllowTcpForwarding(directive)
     }
 }
-

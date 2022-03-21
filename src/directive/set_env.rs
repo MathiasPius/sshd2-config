@@ -32,7 +32,7 @@ impl<'a> From<&'a str> for SetEnv<'a> {
     }
 }
 
-impl<'a> crate::Parse<'a> for SetEnv<'a> {
+impl<'a> crate::ParseDirective<'a> for SetEnv<'a> {
     type Output = SetEnv<'a>;
     fn parse(input: &'a str) -> IResult<&'a str, Self::Output> {
         preceded(
@@ -53,4 +53,3 @@ impl<'a> From<SetEnv<'a>> for crate::Directive<'a> {
         crate::directive::Directive::SetEnv(directive)
     }
 }
-

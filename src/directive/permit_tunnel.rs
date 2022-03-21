@@ -32,7 +32,7 @@ pub enum PermitTunnel {
     Ethernet,
 }
 
-impl<'a> crate::Parse<'a> for PermitTunnel {
+impl<'a> crate::ParseDirective<'a> for PermitTunnel {
     type Output = PermitTunnel;
     fn parse(input: &'a str) -> IResult<&'a str, Self::Output> {
         preceded(
@@ -58,4 +58,3 @@ impl<'a> From<PermitTunnel> for crate::Directive<'a> {
         crate::directive::Directive::PermitTunnel(directive)
     }
 }
-

@@ -25,7 +25,7 @@ pub enum PubkeyAuthentication {
     No,
 }
 
-impl<'a> crate::Parse<'a> for PubkeyAuthentication {
+impl<'a> crate::ParseDirective<'a> for PubkeyAuthentication {
     type Output = PubkeyAuthentication;
     fn parse(input: &'a str) -> IResult<&'a str, Self::Output> {
         preceded(
@@ -49,4 +49,3 @@ impl<'a> From<PubkeyAuthentication> for crate::Directive<'a> {
         crate::directive::Directive::PubkeyAuthentication(directive)
     }
 }
-

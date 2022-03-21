@@ -25,7 +25,7 @@ pub enum PermitUserRC {
     No,
 }
 
-impl<'a> crate::Parse<'a> for PermitUserRC {
+impl<'a> crate::ParseDirective<'a> for PermitUserRC {
     type Output = PermitUserRC;
     fn parse(input: &'a str) -> IResult<&'a str, Self::Output> {
         preceded(
@@ -49,4 +49,3 @@ impl<'a> From<PermitUserRC> for crate::Directive<'a> {
         crate::directive::Directive::PermitUserRC(directive)
     }
 }
-

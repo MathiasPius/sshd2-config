@@ -36,7 +36,7 @@ impl<'a> From<&'a str> for AllowUsers<'a> {
     }
 }
 
-impl<'a> crate::Parse<'a> for AllowUsers<'a> {
+impl<'a> crate::ParseDirective<'a> for AllowUsers<'a> {
     type Output = Vec<AllowUsers<'a>>;
     fn parse(input: &'a str) -> IResult<&'a str, Self::Output> {
         preceded(
@@ -60,4 +60,3 @@ impl<'a> From<Vec<AllowUsers<'a>>> for crate::Directive<'a> {
         crate::directive::Directive::AllowUsers(directive)
     }
 }
-

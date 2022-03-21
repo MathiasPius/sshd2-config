@@ -31,7 +31,7 @@ impl<'a> From<&'a str> for Banner<'a> {
     }
 }
 
-impl<'a> crate::Parse<'a> for Banner<'a> {
+impl<'a> crate::ParseDirective<'a> for Banner<'a> {
     type Output = Banner<'a>;
     fn parse(input: &'a str) -> IResult<&'a str, Self::Output> {
         preceded(

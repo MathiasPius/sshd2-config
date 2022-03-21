@@ -25,7 +25,7 @@ pub enum KerberosGetAFSToken {
     No,
 }
 
-impl<'a> crate::Parse<'a> for KerberosGetAFSToken {
+impl<'a> crate::ParseDirective<'a> for KerberosGetAFSToken {
     type Output = KerberosGetAFSToken;
     fn parse(input: &'a str) -> IResult<&'a str, Self::Output> {
         preceded(

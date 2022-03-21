@@ -44,7 +44,7 @@ impl<'a> From<&'a str> for ListenAddress<'a> {
     }
 }
 
-impl<'a> crate::Parse<'a> for ListenAddress<'a> {
+impl<'a> crate::ParseDirective<'a> for ListenAddress<'a> {
     type Output = Vec<ListenAddress<'a>>;
     fn parse(input: &'a str) -> IResult<&'a str, Self::Output> {
         preceded(
@@ -68,4 +68,3 @@ impl<'a> From<Vec<ListenAddress<'a>>> for crate::Directive<'a> {
         crate::directive::Directive::ListenAddress(directive)
     }
 }
-

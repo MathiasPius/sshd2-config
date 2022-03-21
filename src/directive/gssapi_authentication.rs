@@ -25,7 +25,7 @@ pub enum GSSAPIAuthentication {
     No,
 }
 
-impl<'a> crate::Parse<'a> for GSSAPIAuthentication {
+impl<'a> crate::ParseDirective<'a> for GSSAPIAuthentication {
     type Output = GSSAPIAuthentication;
     fn parse(input: &'a str) -> IResult<&'a str, Self::Output> {
         preceded(

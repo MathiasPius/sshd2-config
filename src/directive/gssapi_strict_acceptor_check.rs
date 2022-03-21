@@ -28,7 +28,7 @@ pub enum GSSAPIStrictAcceptorCheck {
     No,
 }
 
-impl<'a> crate::Parse<'a> for GSSAPIStrictAcceptorCheck {
+impl<'a> crate::ParseDirective<'a> for GSSAPIStrictAcceptorCheck {
     type Output = GSSAPIStrictAcceptorCheck;
     fn parse(input: &'a str) -> IResult<&'a str, Self::Output> {
         preceded(
@@ -52,4 +52,3 @@ impl<'a> From<GSSAPIStrictAcceptorCheck> for crate::Directive<'a> {
         crate::directive::Directive::GSSAPIStrictAcceptorCheck(directive)
     }
 }
-

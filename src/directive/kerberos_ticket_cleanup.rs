@@ -25,7 +25,7 @@ pub enum KerberosTicketCleanup {
     No,
 }
 
-impl<'a> crate::Parse<'a> for KerberosTicketCleanup {
+impl<'a> crate::ParseDirective<'a> for KerberosTicketCleanup {
     type Output = KerberosTicketCleanup;
     fn parse(input: &'a str) -> IResult<&'a str, Self::Output> {
         preceded(
@@ -49,4 +49,3 @@ impl<'a> From<KerberosTicketCleanup> for crate::Directive<'a> {
         crate::directive::Directive::KerberosTicketCleanup(directive)
     }
 }
-

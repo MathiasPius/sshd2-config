@@ -26,7 +26,7 @@ pub enum KerberosAuthentication {
     No,
 }
 
-impl<'a> crate::Parse<'a> for KerberosAuthentication {
+impl<'a> crate::ParseDirective<'a> for KerberosAuthentication {
     type Output = KerberosAuthentication;
     fn parse(input: &'a str) -> IResult<&'a str, Self::Output> {
         preceded(
@@ -50,4 +50,3 @@ impl<'a> From<KerberosAuthentication> for crate::Directive<'a> {
         crate::directive::Directive::KerberosAuthentication(directive)
     }
 }
-

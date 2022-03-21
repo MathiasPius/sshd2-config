@@ -27,7 +27,7 @@ pub enum ExposeAuthInfo {
     No,
 }
 
-impl<'a> crate::Parse<'a> for ExposeAuthInfo {
+impl<'a> crate::ParseDirective<'a> for ExposeAuthInfo {
     type Output = ExposeAuthInfo;
     fn parse(input: &'a str) -> IResult<&'a str, Self::Output> {
         preceded(
@@ -51,4 +51,3 @@ impl<'a> From<ExposeAuthInfo> for crate::Directive<'a> {
         crate::directive::Directive::ExposeAuthInfo(directive)
     }
 }
-

@@ -56,7 +56,7 @@ pub enum AuthenticationMethods {
     None,
 }
 
-impl<'a> crate::Parse<'a> for AuthenticationMethods {
+impl<'a> crate::ParseDirective<'a> for AuthenticationMethods {
     type Output = Vec<Vec<AuthenticationMethods>>;
     fn parse(input: &'a str) -> IResult<&'a str, Self::Output> {
         preceded(

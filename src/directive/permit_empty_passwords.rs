@@ -25,7 +25,7 @@ pub enum PermitEmptyPasswords {
     No,
 }
 
-impl<'a> crate::Parse<'a> for PermitEmptyPasswords {
+impl<'a> crate::ParseDirective<'a> for PermitEmptyPasswords {
     type Output = PermitEmptyPasswords;
     fn parse(input: &'a str) -> IResult<&'a str, Self::Output> {
         preceded(
@@ -49,4 +49,3 @@ impl<'a> From<PermitEmptyPasswords> for crate::Directive<'a> {
         crate::directive::Directive::PermitEmptyPasswords(directive)
     }
 }
-

@@ -35,7 +35,7 @@ impl<'a> From<&'a str> for ForceCommand<'a> {
     }
 }
 
-impl<'a> crate::Parse<'a> for ForceCommand<'a> {
+impl<'a> crate::ParseDirective<'a> for ForceCommand<'a> {
     type Output = ForceCommand<'a>;
     fn parse(input: &'a str) -> IResult<&'a str, Self::Output> {
         preceded(
@@ -56,4 +56,3 @@ impl<'a> From<ForceCommand<'a>> for crate::Directive<'a> {
         crate::directive::Directive::ForceCommand(directive)
     }
 }
-

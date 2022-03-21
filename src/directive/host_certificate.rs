@@ -31,7 +31,7 @@ impl<'a> From<&'a str> for HostCertificate<'a> {
     }
 }
 
-impl<'a> crate::Parse<'a> for HostCertificate<'a> {
+impl<'a> crate::ParseDirective<'a> for HostCertificate<'a> {
     type Output = HostCertificate<'a>;
     fn parse(input: &'a str) -> IResult<&'a str, Self::Output> {
         preceded(

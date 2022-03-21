@@ -28,7 +28,7 @@ pub enum IgnoreRhosts {
     ShostsOnly,
 }
 
-impl<'a> crate::Parse<'a> for IgnoreRhosts {
+impl<'a> crate::ParseDirective<'a> for IgnoreRhosts {
     type Output = IgnoreRhosts;
     fn parse(input: &'a str) -> IResult<&'a str, Self::Output> {
         preceded(
@@ -53,4 +53,3 @@ impl<'a> From<IgnoreRhosts> for crate::Directive<'a> {
         crate::directive::Directive::IgnoreRhosts(directive)
     }
 }
-

@@ -28,7 +28,7 @@ pub enum Compression {
     No,
 }
 
-impl<'a> crate::Parse<'a> for Compression {
+impl<'a> crate::ParseDirective<'a> for Compression {
     type Output = Compression;
     fn parse(input: &'a str) -> IResult<&'a str, Self::Output> {
         preceded(
@@ -53,4 +53,3 @@ impl<'a> From<Compression> for crate::Directive<'a> {
         crate::directive::Directive::Compression(directive)
     }
 }
-

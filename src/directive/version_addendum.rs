@@ -30,7 +30,7 @@ impl<'a> From<&'a str> for VersionAddendum<'a> {
     }
 }
 
-impl<'a> crate::Parse<'a> for VersionAddendum<'a> {
+impl<'a> crate::ParseDirective<'a> for VersionAddendum<'a> {
     type Output = VersionAddendum<'a>;
     fn parse(input: &'a str) -> IResult<&'a str, Self::Output> {
         preceded(

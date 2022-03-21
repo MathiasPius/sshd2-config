@@ -31,7 +31,7 @@ impl From<u64> for LoginGraceTime {
     }
 }
 
-impl<'a> crate::Parse<'a> for LoginGraceTime {
+impl<'a> crate::ParseDirective<'a> for LoginGraceTime {
     type Output = LoginGraceTime;
     fn parse(input: &'a str) -> IResult<&'a str, Self::Output> {
         preceded(
@@ -52,4 +52,3 @@ impl<'a> From<LoginGraceTime> for crate::Directive<'a> {
         crate::directive::Directive::LoginGraceTime(directive)
     }
 }
-

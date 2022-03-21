@@ -31,7 +31,7 @@ impl<'a> From<&'a str> for PerSourceMaxStartups<'a> {
     }
 }
 
-impl<'a> crate::Parse<'a> for PerSourceMaxStartups<'a> {
+impl<'a> crate::ParseDirective<'a> for PerSourceMaxStartups<'a> {
     type Output = PerSourceMaxStartups<'a>;
     fn parse(input: &'a str) -> IResult<&'a str, Self::Output> {
         preceded(
@@ -52,4 +52,3 @@ impl<'a> From<PerSourceMaxStartups<'a>> for crate::Directive<'a> {
         crate::directive::Directive::PerSourceMaxStartups(directive)
     }
 }
-

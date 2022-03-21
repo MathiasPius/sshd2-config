@@ -25,7 +25,7 @@ pub enum DisableForwarding {
     No,
 }
 
-impl<'a> crate::Parse<'a> for DisableForwarding {
+impl<'a> crate::ParseDirective<'a> for DisableForwarding {
     type Output = DisableForwarding;
     fn parse(input: &'a str) -> IResult<&'a str, Self::Output> {
         preceded(
@@ -49,4 +49,3 @@ impl<'a> From<DisableForwarding> for crate::Directive<'a> {
         crate::directive::Directive::DisableForwarding(directive)
     }
 }
-

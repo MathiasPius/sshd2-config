@@ -45,7 +45,7 @@ impl<'a> From<&'a str> for PermitListen<'a> {
     }
 }
 
-impl<'a> crate::Parse<'a> for PermitListen<'a> {
+impl<'a> crate::ParseDirective<'a> for PermitListen<'a> {
     type Output = PermitListen<'a>;
     fn parse(input: &'a str) -> IResult<&'a str, Self::Output> {
         preceded(
@@ -66,4 +66,3 @@ impl<'a> From<PermitListen<'a>> for crate::Directive<'a> {
         crate::directive::Directive::PermitListen(directive)
     }
 }
-

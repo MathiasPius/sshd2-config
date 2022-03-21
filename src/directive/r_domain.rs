@@ -31,7 +31,7 @@ impl<'a> From<&'a str> for RDomain<'a> {
     }
 }
 
-impl<'a> crate::Parse<'a> for RDomain<'a> {
+impl<'a> crate::ParseDirective<'a> for RDomain<'a> {
     type Output = RDomain<'a>;
     fn parse(input: &'a str) -> IResult<&'a str, Self::Output> {
         preceded(
@@ -52,4 +52,3 @@ impl<'a> From<RDomain<'a>> for crate::Directive<'a> {
         crate::directive::Directive::RDomain(directive)
     }
 }
-

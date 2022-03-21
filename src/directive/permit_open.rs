@@ -44,7 +44,7 @@ impl<'a> From<&'a str> for PermitOpen<'a> {
     }
 }
 
-impl<'a> crate::Parse<'a> for PermitOpen<'a> {
+impl<'a> crate::ParseDirective<'a> for PermitOpen<'a> {
     type Output = PermitOpen<'a>;
     fn parse(input: &'a str) -> IResult<&'a str, Self::Output> {
         preceded(
@@ -65,4 +65,3 @@ impl<'a> From<PermitOpen<'a>> for crate::Directive<'a> {
         crate::directive::Directive::PermitOpen(directive)
     }
 }
-

@@ -31,7 +31,7 @@ impl<'a> From<&'a str> for PerSourceNetBlockSize<'a> {
     }
 }
 
-impl<'a> crate::Parse<'a> for PerSourceNetBlockSize<'a> {
+impl<'a> crate::ParseDirective<'a> for PerSourceNetBlockSize<'a> {
     type Output = PerSourceNetBlockSize<'a>;
     fn parse(input: &'a str) -> IResult<&'a str, Self::Output> {
         preceded(
@@ -52,4 +52,3 @@ impl<'a> From<PerSourceNetBlockSize<'a>> for crate::Directive<'a> {
         crate::directive::Directive::PerSourceNetBlockSize(directive)
     }
 }
-

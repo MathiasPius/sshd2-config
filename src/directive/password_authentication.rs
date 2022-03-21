@@ -25,7 +25,7 @@ pub enum PasswordAuthentication {
     No,
 }
 
-impl<'a> crate::Parse<'a> for PasswordAuthentication {
+impl<'a> crate::ParseDirective<'a> for PasswordAuthentication {
     type Output = PasswordAuthentication;
     fn parse(input: &'a str) -> IResult<&'a str, Self::Output> {
         preceded(

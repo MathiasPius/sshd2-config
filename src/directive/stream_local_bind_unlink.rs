@@ -28,7 +28,7 @@ pub enum StreamLocalBindUnlink {
     No,
 }
 
-impl<'a> crate::Parse<'a> for StreamLocalBindUnlink {
+impl<'a> crate::ParseDirective<'a> for StreamLocalBindUnlink {
     type Output = StreamLocalBindUnlink;
     fn parse(input: &'a str) -> IResult<&'a str, Self::Output> {
         preceded(
@@ -52,4 +52,3 @@ impl<'a> From<StreamLocalBindUnlink> for crate::Directive<'a> {
         crate::directive::Directive::StreamLocalBindUnlink(directive)
     }
 }
-

@@ -30,7 +30,7 @@ pub enum X11UseLocalhost {
     No,
 }
 
-impl<'a> crate::Parse<'a> for X11UseLocalhost {
+impl<'a> crate::ParseDirective<'a> for X11UseLocalhost {
     type Output = X11UseLocalhost;
     fn parse(input: &'a str) -> IResult<&'a str, Self::Output> {
         preceded(
@@ -54,4 +54,3 @@ impl<'a> From<X11UseLocalhost> for crate::Directive<'a> {
         crate::directive::Directive::X11UseLocalhost(directive)
     }
 }
-

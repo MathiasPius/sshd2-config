@@ -26,7 +26,7 @@ pub enum AllowAgentForwarding {
     No,
 }
 
-impl<'a> crate::Parse<'a> for AllowAgentForwarding {
+impl<'a> crate::ParseDirective<'a> for AllowAgentForwarding {
     type Output = AllowAgentForwarding;
     fn parse(input: &'a str) -> IResult<&'a str, Self::Output> {
         preceded(

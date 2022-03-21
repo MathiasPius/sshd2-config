@@ -36,7 +36,7 @@ impl<'a> From<&'a str> for AcceptEnv<'a> {
     }
 }
 
-impl<'a> crate::Parse<'a> for AcceptEnv<'a> {
+impl<'a> crate::ParseDirective<'a> for AcceptEnv<'a> {
     type Output = Vec<AcceptEnv<'a>>;
     fn parse(input: &'a str) -> IResult<&'a str, Self::Output> {
         preceded(
@@ -60,4 +60,3 @@ impl<'a> From<Vec<AcceptEnv<'a>>> for crate::Directive<'a> {
         crate::directive::Directive::AcceptEnv(directive)
     }
 }
-

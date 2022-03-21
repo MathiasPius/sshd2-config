@@ -280,7 +280,7 @@ impl ValueFormat {
         let name = original_name.to_string();
 
         quote! {
-            impl<'a> crate::Parse<'a> for #name_ident #lifetime {
+            impl<'a> crate::ParseDirective<'a> for #name_ident #lifetime {
                 type Output = #output_type;
                     fn parse(input: &'a str) -> IResult<&'a str, Self::Output> {
                         preceded(
@@ -432,7 +432,7 @@ fn main() {
 
     let uses = quote! {
         use nom::IResult;
-        use crate::{Modifier, Parse};
+        use crate::{Modifier, ParseDirective};
 
         use nom::{
             branch::alt,
@@ -466,14 +466,14 @@ fn main() {
     });
 
     let parse_impl = quote! {
-        fn directive<'a, T: Parse<'a>>(input: &'a str) -> IResult<&'a str, Directive>
+        fn directive<'a, T: ParseDirective<'a>>(input: &'a str) -> IResult<&'a str, Directive>
         where
-            <T as Parse<'a>>::Output: Into<Directive<'a>>,
+            <T as ParseDirective<'a>>::Output: Into<Directive<'a>>,
         {
-            terminated(into(<T as Parse<'a>>::parse), alt((line_ending, eof)))(input)
+            terminated(into(<T as ParseDirective<'a>>::parse), alt((line_ending, eof)))(input)
         }
 
-        impl<'a> Parse<'a> for Directive<'a> {
+        impl<'a> ParseDirective<'a> for Directive<'a> {
             type Output = Self;
 
             fn parse(input: &'a str) -> IResult<&'a str, Self::Output> {

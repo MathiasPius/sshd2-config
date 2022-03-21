@@ -29,7 +29,7 @@ impl From<u64> for Protocol {
     }
 }
 
-impl<'a> crate::Parse<'a> for Protocol {
+impl<'a> crate::ParseDirective<'a> for Protocol {
     type Output = Protocol;
     fn parse(input: &'a str) -> IResult<&'a str, Self::Output> {
         preceded(

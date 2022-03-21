@@ -29,7 +29,7 @@ impl<'a> From<&'a str> for SecurityKeyProvider<'a> {
     }
 }
 
-impl<'a> crate::Parse<'a> for SecurityKeyProvider<'a> {
+impl<'a> crate::ParseDirective<'a> for SecurityKeyProvider<'a> {
     type Output = SecurityKeyProvider<'a>;
     fn parse(input: &'a str) -> IResult<&'a str, Self::Output> {
         preceded(

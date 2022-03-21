@@ -31,7 +31,7 @@ impl<'a> From<&'a str> for AuthorizedKeysCommandUser<'a> {
     }
 }
 
-impl<'a> crate::Parse<'a> for AuthorizedKeysCommandUser<'a> {
+impl<'a> crate::ParseDirective<'a> for AuthorizedKeysCommandUser<'a> {
     type Output = AuthorizedKeysCommandUser<'a>;
     fn parse(input: &'a str) -> IResult<&'a str, Self::Output> {
         preceded(
@@ -52,4 +52,3 @@ impl<'a> From<AuthorizedKeysCommandUser<'a>> for crate::Directive<'a> {
         crate::directive::Directive::AuthorizedKeysCommandUser(directive)
     }
 }
-

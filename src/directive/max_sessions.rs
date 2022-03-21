@@ -33,7 +33,7 @@ impl From<u64> for MaxSessions {
     }
 }
 
-impl<'a> crate::Parse<'a> for MaxSessions {
+impl<'a> crate::ParseDirective<'a> for MaxSessions {
     type Output = MaxSessions;
     fn parse(input: &'a str) -> IResult<&'a str, Self::Output> {
         preceded(
@@ -54,4 +54,3 @@ impl<'a> From<MaxSessions> for crate::Directive<'a> {
         crate::directive::Directive::MaxSessions(directive)
     }
 }
-

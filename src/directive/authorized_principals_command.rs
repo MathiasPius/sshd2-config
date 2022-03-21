@@ -35,7 +35,7 @@ impl<'a> From<&'a str> for AuthorizedPrincipalsCommand<'a> {
     }
 }
 
-impl<'a> crate::Parse<'a> for AuthorizedPrincipalsCommand<'a> {
+impl<'a> crate::ParseDirective<'a> for AuthorizedPrincipalsCommand<'a> {
     type Output = AuthorizedPrincipalsCommand<'a>;
     fn parse(input: &'a str) -> IResult<&'a str, Self::Output> {
         preceded(
@@ -56,4 +56,3 @@ impl<'a> From<AuthorizedPrincipalsCommand<'a>> for crate::Directive<'a> {
         crate::directive::Directive::AuthorizedPrincipalsCommand(directive)
     }
 }
-

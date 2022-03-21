@@ -40,7 +40,7 @@ impl<'a> From<&'a str> for ChrootDirectory<'a> {
     }
 }
 
-impl<'a> crate::Parse<'a> for ChrootDirectory<'a> {
+impl<'a> crate::ParseDirective<'a> for ChrootDirectory<'a> {
     type Output = ChrootDirectory<'a>;
     fn parse(input: &'a str) -> IResult<&'a str, Self::Output> {
         preceded(

@@ -95,7 +95,7 @@ mod x_11_forwarding;
 mod x_11_use_localhost;
 mod x_auth_location;
 
-use crate::{Modifier, Parse};
+use crate::{Modifier, ParseDirective};
 pub use accept_env::*;
 pub use address_family::*;
 pub use allow_agent_forwarding::*;
@@ -298,13 +298,16 @@ pub enum Directive<'a> {
     XAuthLocation(XAuthLocation<'a>),
 }
 
-fn directive<'a, T: Parse<'a>>(input: &'a str) -> IResult<&'a str, Directive>
+fn directive<'a, T: ParseDirective<'a>>(input: &'a str) -> IResult<&'a str, Directive>
 where
-    <T as Parse<'a>>::Output: Into<Directive<'a>>,
+    <T as ParseDirective<'a>>::Output: Into<Directive<'a>>,
 {
-    terminated(into(<T as Parse<'a>>::parse), alt((line_ending, eof)))(input)
+    terminated(
+        into(<T as ParseDirective<'a>>::parse),
+        alt((line_ending, eof)),
+    )(input)
 }
-impl<'a> Parse<'a> for Directive<'a> {
+impl<'a> ParseDirective<'a> for Directive<'a> {
     type Output = Self;
     fn parse(input: &'a str) -> IResult<&'a str, Self::Output> {
         alt((

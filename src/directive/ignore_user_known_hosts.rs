@@ -25,7 +25,7 @@ pub enum IgnoreUserKnownHosts {
     No,
 }
 
-impl<'a> crate::Parse<'a> for IgnoreUserKnownHosts {
+impl<'a> crate::ParseDirective<'a> for IgnoreUserKnownHosts {
     type Output = IgnoreUserKnownHosts;
     fn parse(input: &'a str) -> IResult<&'a str, Self::Output> {
         preceded(
@@ -49,4 +49,3 @@ impl<'a> From<IgnoreUserKnownHosts> for crate::Directive<'a> {
         crate::directive::Directive::IgnoreUserKnownHosts(directive)
     }
 }
-

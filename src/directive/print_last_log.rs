@@ -25,7 +25,7 @@ pub enum PrintLastLog {
     No,
 }
 
-impl<'a> crate::Parse<'a> for PrintLastLog {
+impl<'a> crate::ParseDirective<'a> for PrintLastLog {
     type Output = PrintLastLog;
     fn parse(input: &'a str) -> IResult<&'a str, Self::Output> {
         preceded(

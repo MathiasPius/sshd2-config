@@ -77,7 +77,7 @@ pub enum IPQoS {
     None,
 }
 
-impl<'a> crate::Parse<'a> for IPQoS {
+impl<'a> crate::ParseDirective<'a> for IPQoS {
     type Output = Vec<IPQoS>;
     fn parse(input: &'a str) -> IResult<&'a str, Self::Output> {
         preceded(
@@ -132,4 +132,3 @@ impl<'a> From<Vec<IPQoS>> for crate::Directive<'a> {
         crate::directive::Directive::IPQoS(directive)
     }
 }
-
