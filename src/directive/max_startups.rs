@@ -56,4 +56,3 @@ impl<'a> From<MaxStartups<'a>> for crate::Directive<'a> {
         crate::directive::Directive::MaxStartups(directive)
     }
 }
-

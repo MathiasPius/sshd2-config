@@ -79,4 +79,3 @@ impl<'a> From<Modifier<Vec<HostKeyAlgorithms>>> for crate::Directive<'a> {
         crate::directive::Directive::HostKeyAlgorithms(directive)
     }
 }
-

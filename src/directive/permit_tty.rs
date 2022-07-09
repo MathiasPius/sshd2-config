@@ -49,4 +49,3 @@ impl<'a> From<PermitTTY> for crate::Directive<'a> {
         crate::directive::Directive::PermitTTY(directive)
     }
 }
-

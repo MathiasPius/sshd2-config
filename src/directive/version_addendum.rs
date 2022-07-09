@@ -51,4 +51,3 @@ impl<'a> From<VersionAddendum<'a>> for crate::Directive<'a> {
         crate::directive::Directive::VersionAddendum(directive)
     }
 }
-

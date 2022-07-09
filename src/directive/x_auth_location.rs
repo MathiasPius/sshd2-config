@@ -51,4 +51,3 @@ impl<'a> From<XAuthLocation<'a>> for crate::Directive<'a> {
         crate::directive::Directive::XAuthLocation(directive)
     }
 }
-

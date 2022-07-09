@@ -50,4 +50,3 @@ impl<'a> From<SecurityKeyProvider<'a>> for crate::Directive<'a> {
         crate::directive::Directive::SecurityKeyProvider(directive)
     }
 }
-

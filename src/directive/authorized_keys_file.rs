@@ -56,4 +56,3 @@ impl<'a> From<AuthorizedKeysFile<'a>> for crate::Directive<'a> {
         crate::directive::Directive::AuthorizedKeysFile(directive)
     }
 }
-

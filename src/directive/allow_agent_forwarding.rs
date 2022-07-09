@@ -50,4 +50,3 @@ impl<'a> From<AllowAgentForwarding> for crate::Directive<'a> {
         crate::directive::Directive::AllowAgentForwarding(directive)
     }
 }
-

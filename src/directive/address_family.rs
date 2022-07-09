@@ -52,4 +52,3 @@ impl<'a> From<AddressFamily> for crate::Directive<'a> {
         crate::directive::Directive::AddressFamily(directive)
     }
 }
-

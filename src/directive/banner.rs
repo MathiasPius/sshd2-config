@@ -52,4 +52,3 @@ impl<'a> From<Banner<'a>> for crate::Directive<'a> {
         crate::directive::Directive::Banner(directive)
     }
 }
-

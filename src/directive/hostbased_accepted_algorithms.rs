@@ -83,4 +83,3 @@ impl<'a> From<Modifier<Vec<HostbasedAcceptedAlgorithms>>> for crate::Directive<'
         crate::directive::Directive::HostbasedAcceptedAlgorithms(directive)
     }
 }
-

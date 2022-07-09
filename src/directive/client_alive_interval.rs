@@ -51,4 +51,3 @@ impl<'a> From<ClientAliveInterval> for crate::Directive<'a> {
         crate::directive::Directive::ClientAliveInterval(directive)
     }
 }
-

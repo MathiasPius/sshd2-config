@@ -49,4 +49,3 @@ impl<'a> From<PasswordAuthentication> for crate::Directive<'a> {
         crate::directive::Directive::PasswordAuthentication(directive)
     }
 }
-

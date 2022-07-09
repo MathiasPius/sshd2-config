@@ -52,4 +52,3 @@ impl<'a> From<HostCertificate<'a>> for crate::Directive<'a> {
         crate::directive::Directive::HostCertificate(directive)
     }
 }
-

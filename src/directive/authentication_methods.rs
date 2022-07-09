@@ -113,4 +113,3 @@ impl<'a> From<Vec<Vec<AuthenticationMethods>>> for crate::Directive<'a> {
         crate::directive::Directive::AuthenticationMethods(directive)
     }
 }
-

@@ -50,4 +50,3 @@ impl<'a> From<Protocol> for crate::Directive<'a> {
         crate::directive::Directive::Protocol(directive)
     }
 }
-

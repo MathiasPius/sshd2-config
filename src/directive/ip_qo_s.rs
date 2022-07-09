@@ -23,6 +23,11 @@ use std::borrow::Cow;
 /// The default is **af21** (Low-Latency Data) for interactive sessions and **cs1** (Lower Effort) for non-interactive sessions.
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord)]
 pub enum IPQoS {
+    Predefined(IPQoSPredefined),
+    Integer(u64),
+}
+#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord)]
+pub enum IPQoSPredefined {
     #[doc = "af11"]
     Af11,
     #[doc = "af12"]
@@ -76,6 +81,16 @@ pub enum IPQoS {
     #[doc = "none"]
     None,
 }
+impl From<IPQoSPredefined> for IPQoS {
+    fn from(inner: IPQoSPredefined) -> IPQoS {
+        IPQoS::Predefined(inner)
+    }
+}
+impl From<u64> for IPQoS {
+    fn from(inner: u64) -> IPQoS {
+        IPQoS::Integer(inner)
+    }
+}
 
 impl<'a> crate::ParseDirective<'a> for IPQoS {
     type Output = Vec<IPQoS>;
@@ -86,41 +101,53 @@ impl<'a> crate::ParseDirective<'a> for IPQoS {
                 space1,
                 separated_list1(
                     tag(" "),
-                    preceded(
-                        space0,
-                        alt((
-                            alt((
-                                value(IPQoS::Af11, tag_no_case("af11")),
-                                value(IPQoS::Af12, tag_no_case("af12")),
-                                value(IPQoS::Af13, tag_no_case("af13")),
-                                value(IPQoS::Af21, tag_no_case("af21")),
-                                value(IPQoS::Af22, tag_no_case("af22")),
-                                value(IPQoS::Af23, tag_no_case("af23")),
-                                value(IPQoS::Af31, tag_no_case("af31")),
-                                value(IPQoS::Af32, tag_no_case("af32")),
-                                value(IPQoS::Af33, tag_no_case("af33")),
-                                value(IPQoS::Af41, tag_no_case("af41")),
-                                value(IPQoS::Af42, tag_no_case("af42")),
-                                value(IPQoS::Af43, tag_no_case("af43")),
-                                value(IPQoS::Cs0, tag_no_case("cs0")),
-                                value(IPQoS::Cs1, tag_no_case("cs1")),
-                                value(IPQoS::Cs2, tag_no_case("cs2")),
-                                value(IPQoS::Cs3, tag_no_case("cs3")),
-                                value(IPQoS::Cs4, tag_no_case("cs4")),
-                                value(IPQoS::Cs5, tag_no_case("cs5")),
-                                value(IPQoS::Cs6, tag_no_case("cs6")),
-                                value(IPQoS::Cs7, tag_no_case("cs7")),
-                            )),
-                            alt((
-                                value(IPQoS::Ef, tag_no_case("ef")),
-                                value(IPQoS::Le, tag_no_case("le")),
-                                value(IPQoS::Lowdelay, tag_no_case("lowdelay")),
-                                value(IPQoS::Throughput, tag_no_case("throughput")),
-                                value(IPQoS::Reliability, tag_no_case("reliability")),
-                                value(IPQoS::None, tag_no_case("none")),
-                            )),
-                        )),
-                    ),
+                    alt((
+                        map(
+                            preceded(
+                                space0,
+                                alt((
+                                    alt((
+                                        value(IPQoSPredefined::Af11, tag_no_case("af11")),
+                                        value(IPQoSPredefined::Af12, tag_no_case("af12")),
+                                        value(IPQoSPredefined::Af13, tag_no_case("af13")),
+                                        value(IPQoSPredefined::Af21, tag_no_case("af21")),
+                                        value(IPQoSPredefined::Af22, tag_no_case("af22")),
+                                        value(IPQoSPredefined::Af23, tag_no_case("af23")),
+                                        value(IPQoSPredefined::Af31, tag_no_case("af31")),
+                                        value(IPQoSPredefined::Af32, tag_no_case("af32")),
+                                        value(IPQoSPredefined::Af33, tag_no_case("af33")),
+                                        value(IPQoSPredefined::Af41, tag_no_case("af41")),
+                                        value(IPQoSPredefined::Af42, tag_no_case("af42")),
+                                        value(IPQoSPredefined::Af43, tag_no_case("af43")),
+                                        value(IPQoSPredefined::Cs0, tag_no_case("cs0")),
+                                        value(IPQoSPredefined::Cs1, tag_no_case("cs1")),
+                                        value(IPQoSPredefined::Cs2, tag_no_case("cs2")),
+                                        value(IPQoSPredefined::Cs3, tag_no_case("cs3")),
+                                        value(IPQoSPredefined::Cs4, tag_no_case("cs4")),
+                                        value(IPQoSPredefined::Cs5, tag_no_case("cs5")),
+                                        value(IPQoSPredefined::Cs6, tag_no_case("cs6")),
+                                        value(IPQoSPredefined::Cs7, tag_no_case("cs7")),
+                                    )),
+                                    alt((
+                                        value(IPQoSPredefined::Ef, tag_no_case("ef")),
+                                        value(IPQoSPredefined::Le, tag_no_case("le")),
+                                        value(IPQoSPredefined::Lowdelay, tag_no_case("lowdelay")),
+                                        value(
+                                            IPQoSPredefined::Throughput,
+                                            tag_no_case("throughput"),
+                                        ),
+                                        value(
+                                            IPQoSPredefined::Reliability,
+                                            tag_no_case("reliability"),
+                                        ),
+                                        value(IPQoSPredefined::None, tag_no_case("none")),
+                                    )),
+                                )),
+                            ),
+                            IPQoS::from,
+                        ),
+                        map(preceded(space0, nom::character::complete::u64), IPQoS::from),
+                    )),
                 ),
             ),
         )(input)

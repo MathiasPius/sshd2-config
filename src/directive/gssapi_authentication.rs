@@ -49,4 +49,3 @@ impl<'a> From<GSSAPIAuthentication> for crate::Directive<'a> {
         crate::directive::Directive::GSSAPIAuthentication(directive)
     }
 }
-

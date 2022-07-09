@@ -49,4 +49,3 @@ impl<'a> From<KerberosGetAFSToken> for crate::Directive<'a> {
         crate::directive::Directive::KerberosGetAFSToken(directive)
     }
 }
-

@@ -61,4 +61,3 @@ impl<'a> From<ChrootDirectory<'a>> for crate::Directive<'a> {
         crate::directive::Directive::ChrootDirectory(directive)
     }
 }
-

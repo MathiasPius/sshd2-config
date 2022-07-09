@@ -49,4 +49,3 @@ impl<'a> From<PrintLastLog> for crate::Directive<'a> {
         crate::directive::Directive::PrintLastLog(directive)
     }
 }
-

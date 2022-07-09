@@ -58,4 +58,3 @@ impl<'a> From<Subsystem<'a>> for crate::Directive<'a> {
         crate::directive::Directive::Subsystem(directive)
     }
 }
-
