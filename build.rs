@@ -94,6 +94,7 @@ pub enum ValueFormat {
     CommaSeparated(Box<ValueFormat>),
     SpaceSeparated(Box<ValueFormat>),
     Modifier(Box<ValueFormat>),
+    OneOf(HashMap<String, ValueFormat>),
 }
 
 impl Default for ValueFormat {
@@ -124,6 +125,11 @@ impl ValueFormat {
                 let inner_type = inner.output_type(name_ident);
                 quote! { Vec<#inner_type> }
             }
+            ValueFormat::OneOf(_) => {
+                quote! {
+                    #name_ident
+                }
+            }
         }
     }
 
@@ -132,6 +138,45 @@ impl ValueFormat {
             quote! { <'a> }
         } else {
             quote! {}
+        }
+    }
+
+    fn derive_oneof_enum_member(&self, name_ident: &Ident, variant: &str) -> TokenStream {
+        match self {
+            ValueFormat::Wildcard => {
+                let lifetime = self.lifetime();
+
+                quote! {
+                    #lifetime str
+                }
+            }
+            ValueFormat::Integer => {
+                quote! {
+                    u64
+                }
+            }
+            ValueFormat::Typed(_) => {
+                let inner_name = format!("{}{}", name_ident, variant);
+                let variant_type = Ident::new(&inner_name, name_ident.span());
+                quote! {
+                    #variant_type
+                }
+            }
+            ValueFormat::CommaSeparated(inner) | ValueFormat::SpaceSeparated(inner) => {
+                let inner_type = inner.derive_oneof_enum_member(name_ident, variant);
+                quote! {
+                    Vec<#inner_type>
+                }
+            }
+            ValueFormat::Modifier(inner) => {
+                let inner_type = inner.derive_oneof_enum_member(name_ident, variant);
+                quote! {
+                    Modifier<#inner_type>
+                }
+            }
+            ValueFormat::OneOf(_) => {
+                panic!("nested OneOf is illegal");
+            }
         }
     }
 
@@ -180,6 +225,23 @@ impl ValueFormat {
                     #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord)]
                     pub enum #name_ident {
                         #(#value_idents),*
+                    }
+                }
+            }
+            ValueFormat::OneOf(formats) => {
+                let variants: Vec<TokenStream> = formats
+                    .iter()
+                    .map(|(key, value)| {
+                        let inner_type = value.derive_oneof_enum_member(name_ident, key);
+                        quote! {
+                            #key(#inner_type)
+                        }
+                    })
+                    .collect();
+
+                quote! {
+                    pub enum #name_ident {
+                        #(#variants),*
                     }
                 }
             }
@@ -252,6 +314,16 @@ impl ValueFormat {
                     preceded(space0, alt((#(#mapping),*)))
                 }
             }
+            ValueFormat::OneOf(inner) => {
+                let patterns: Vec<TokenStream> = inner
+                    .values()
+                    .map(|format| format.parse_impl_inner(name_ident))
+                    .collect();
+
+                quote! {
+                    alt((#(#patterns),*,))
+                }
+            }
             ValueFormat::CommaSeparated(inner) => {
                 let inner_pattern = inner.parse_impl_inner(name_ident);
                 quote! {
@@ -298,7 +370,7 @@ impl ValueFormat {
     pub fn is_borrowed(&self) -> bool {
         match self {
             ValueFormat::Wildcard => true,
-            ValueFormat::Integer | ValueFormat::Typed(_) => false,
+            ValueFormat::Integer | ValueFormat::Typed(_) | ValueFormat::OneOf(_) => false,
             ValueFormat::Modifier(inner)
             | ValueFormat::CommaSeparated(inner)
             | ValueFormat::SpaceSeparated(inner) => inner.is_borrowed(),
