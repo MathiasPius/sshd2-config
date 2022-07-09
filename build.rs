@@ -229,21 +229,61 @@ impl ValueFormat {
                 }
             }
             ValueFormat::OneOf(formats) => {
-                let variants: Vec<TokenStream> = formats
+                let members: Vec<_> = formats
                     .iter()
                     .map(|(key, value)| {
                         let variant = Ident::new(key, Span::call_site());
                         let inner_type = value.derive_oneof_enum_member(name_ident, key);
+
+                        (variant, value, inner_type)
+                    })
+                    .collect();
+
+                let variants: Vec<TokenStream> = members
+                    .iter()
+                    .map(|(variant, _, inner_type)| {
                         quote! {
                             #variant(#inner_type)
                         }
                     })
                     .collect();
 
+                let froms: Vec<TokenStream> = members
+                    .iter()
+                    .map(|(variant, _, inner_type)| {
+                        quote! {
+                            impl From<#inner_type> for #name_ident {
+                                fn from(inner: #inner_type) -> #name_ident {
+                                    #name_ident::#variant(inner)
+                                }
+                            }
+                        }
+                    })
+                    .collect();
+
+                let inner_impl: Vec<TokenStream> = members
+                    .iter()
+                    .filter_map(|(variant, format, _)| {
+                        let inner_typename =
+                            Ident::new(&format!("{}{}", name_ident, variant), name_ident.span());
+
+                        if let ValueFormat::Typed(_) = format {
+                            Some(format.impl_struct(original_name, &inner_typename))
+                        } else {
+                            None
+                        }
+                    })
+                    .collect();
+
                 quote! {
+                    #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord)]
                     pub enum #name_ident {
                         #(#variants),*
                     }
+
+                    #(#inner_impl)*
+
+                    #(#froms)*
                 }
             }
             ValueFormat::Modifier(inner)
@@ -320,7 +360,8 @@ impl ValueFormat {
                     .iter()
                     .map(|(key, format)| {
                         if let ValueFormat::Typed(_) = format {
-                            let inner_ident = Ident::new(&format!("{}{}", name_ident, key), name_ident.span());
+                            let inner_ident =
+                                Ident::new(&format!("{}{}", name_ident, key), name_ident.span());
                             let inner_parse = format.parse_impl_inner(&inner_ident);
 
                             quote! {
@@ -328,7 +369,7 @@ impl ValueFormat {
                             }
                         } else {
                             format.parse_impl_inner(name_ident)
-                        }                    
+                        }
                     })
                     .collect();
 
