@@ -232,9 +232,10 @@ impl ValueFormat {
                 let variants: Vec<TokenStream> = formats
                     .iter()
                     .map(|(key, value)| {
+                        let variant = Ident::new(key, Span::call_site());
                         let inner_type = value.derive_oneof_enum_member(name_ident, key);
                         quote! {
-                            #key(#inner_type)
+                            #variant(#inner_type)
                         }
                     })
                     .collect();
@@ -316,8 +317,19 @@ impl ValueFormat {
             }
             ValueFormat::OneOf(inner) => {
                 let patterns: Vec<TokenStream> = inner
-                    .values()
-                    .map(|format| format.parse_impl_inner(name_ident))
+                    .iter()
+                    .map(|(key, format)| {
+                        if let ValueFormat::Typed(_) = format {
+                            let inner_ident = Ident::new(&format!("{}{}", name_ident, key), name_ident.span());
+                            let inner_parse = format.parse_impl_inner(&inner_ident);
+
+                            quote! {
+                                map(#inner_parse, #name_ident::from)
+                            }
+                        } else {
+                            format.parse_impl_inner(name_ident)
+                        }                    
+                    })
                     .collect();
 
                 quote! {
