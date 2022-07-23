@@ -513,7 +513,7 @@ fn main() {
                 );
 
                 let source_code = format!(
-                    "//! {comment}\n{code}\n",
+                    "//! {comment}\n{code}",
                     comment = "This file has been automatically generated. Any changes made to it will be overwritten upon subsequent runs!",
                     code = reformat(tokens).unwrap()
                 );
