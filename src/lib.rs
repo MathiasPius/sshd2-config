@@ -6,6 +6,7 @@
 
 use nom::IResult;
 
+mod config;
 mod directive;
 pub use directive::*;
 
