@@ -562,8 +562,9 @@ fn main() {
         use nom::{
             branch::alt,
             combinator::{eof, into},
-            character::complete::line_ending,
-            sequence::terminated
+            character::complete::{space0, line_ending},
+            bytes::complete::tag,
+            sequence::{tuple, terminated}
         };
 
         #(pub use #filenames::*;)*
@@ -595,7 +596,7 @@ fn main() {
         where
             <T as ParseDirective<'a>>::Output: Into<Directive<'a>>,
         {
-            terminated(into(<T as ParseDirective<'a>>::parse), alt((line_ending, eof)))(input)
+            terminated(into(<T as ParseDirective<'a>>::parse), tuple((space0, alt((line_ending, eof, tag("#"))))))(input)
         }
 
         impl<'a> ParseDirective<'a> for Directive<'a> {

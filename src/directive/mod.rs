@@ -157,9 +157,10 @@ pub use moduli_file::*;
 use nom::IResult;
 use nom::{
     branch::alt,
-    character::complete::line_ending,
+    bytes::complete::tag,
+    character::complete::{line_ending, space0},
     combinator::{eof, into},
-    sequence::terminated,
+    sequence::{terminated, tuple},
 };
 pub use password_authentication::*;
 pub use per_source_max_startups::*;
@@ -306,7 +307,7 @@ where
 {
     terminated(
         into(<T as ParseDirective<'a>>::parse),
-        alt((line_ending, eof)),
+        tuple((space0, alt((line_ending, eof, tag("#"))))),
     )(input)
 }
 impl<'a> ParseDirective<'a> for Directive<'a> {
