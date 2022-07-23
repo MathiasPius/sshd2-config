@@ -1248,6 +1248,21 @@
         ]
       }
     },
+    "UsePAM": {
+      "comment": [
+        "Enables the Pluggable Authentication Module interface. If set to **yes** this will enable PAM authentication using **ChallengeResponseAuthentication** and **PasswordAuthentication** in addition to PAM account and session module processing for all authentication types.",
+        "",
+        "Because PAM challenge-response authentication usually serves an equivalent role to password authentication, you should disable either **PasswordAuthentication** or **ChallengeResponseAuthentication**.",
+        "",
+        "If UsePAM is enabled, you will not be able to run [sshd(8)](https://man.openbsd.org/sshd.8) as a non-root user. The default is **no**."
+      ],
+      "values": {
+        "typed": [
+          "yes",
+          "no"
+        ]
+      }
+    },
     "VersionAddendum": {
       "comment": [
         "Optionally specifies additional text to append to the SSH protocol banner sent by the server upon connection. The default is **none**."

@@ -88,6 +88,7 @@ mod syslog_facility;
 mod tcp_keep_alive;
 mod trusted_user_ca_keys;
 mod use_dns;
+mod use_pam;
 mod version_addendum;
 mod x_11_display_offset;
 mod x_11_forwarding;
@@ -192,6 +193,7 @@ pub use syslog_facility::*;
 pub use tcp_keep_alive::*;
 pub use trusted_user_ca_keys::*;
 pub use use_dns::*;
+pub use use_pam::*;
 pub use version_addendum::*;
 pub use x_11_display_offset::*;
 pub use x_11_forwarding::*;
@@ -290,6 +292,7 @@ pub enum Directive<'a> {
     TCPKeepAlive(TCPKeepAlive),
     TrustedUserCAKeys(TrustedUserCAKeys<'a>),
     UseDNS(UseDNS),
+    UsePAM(UsePAM),
     VersionAddendum(VersionAddendum<'a>),
     X11DisplayOffset(X11DisplayOffset),
     X11Forwarding(X11Forwarding),
@@ -409,6 +412,7 @@ impl<'a> ParseDirective<'a> for Directive<'a> {
                 directive::<TCPKeepAlive>,
                 directive::<TrustedUserCAKeys>,
                 directive::<UseDNS>,
+                directive::<UsePAM>,
                 directive::<VersionAddendum>,
                 directive::<X11DisplayOffset>,
                 directive::<X11Forwarding>,
