@@ -39,6 +39,30 @@ mod tests {
     use crate::*;
 
     #[test]
+    fn test_enum_subtypes() {
+        assert_eq!(
+            Directive::parse("IPQoS lowdelay 10").unwrap().1,
+            Directive::IPQoS(vec![
+                IPQoS::Predefined(IPQoSPredefined::Lowdelay),
+                IPQoS::Integer(10)
+            ])
+        );
+
+        assert_eq!(
+            Directive::parse("IPQoS af12 none").unwrap().1,
+            Directive::IPQoS(vec![
+                IPQoS::Predefined(IPQoSPredefined::Af12),
+                IPQoS::Predefined(IPQoSPredefined::None)
+            ])
+        );
+
+        assert_eq!(
+            Directive::parse("IPQoS 5").unwrap().1,
+            Directive::IPQoS(vec![IPQoS::Integer(5)])
+        );
+    }
+
+    #[test]
     fn test_comma_separated() {
         assert_eq!(
             Directive::parse("Ciphers 3des-cbc,aes128-gcm@openssh.com")
