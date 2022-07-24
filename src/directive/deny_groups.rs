@@ -44,7 +44,10 @@ impl<'a> crate::ParseDirective<'a> for DenyGroups<'a> {
                 separated_list1(
                     tag(" "),
                     map(
-                        preceded(space0, take_while1(|c: char| !c.is_whitespace())),
+                        preceded(
+                            space0,
+                            take_while1(|c: char| !c.is_whitespace() && c != '#'),
+                        ),
                         DenyGroups::from,
                     ),
                 ),

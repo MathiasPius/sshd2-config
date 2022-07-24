@@ -38,7 +38,10 @@ impl<'a> crate::ParseDirective<'a> for VersionAddendum<'a> {
             preceded(
                 space1,
                 map(
-                    preceded(space0, take_while1(|c: char| !c.is_whitespace())),
+                    preceded(
+                        space0,
+                        take_while1(|c: char| !c.is_whitespace() && c != '#'),
+                    ),
                     VersionAddendum::from,
                 ),
             ),

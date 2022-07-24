@@ -38,23 +38,29 @@ impl<'a> From<&'a str> for Subsystem<'a> {
 }
 
 impl<'a> crate::ParseDirective<'a> for Subsystem<'a> {
-    type Output = Subsystem<'a>;
+    type Output = Vec<Subsystem<'a>>;
     fn parse(input: &'a str) -> IResult<&'a str, Self::Output> {
         preceded(
             tag("Subsystem"),
             preceded(
                 space1,
-                map(
-                    preceded(space0, take_while1(|c: char| !c.is_whitespace())),
-                    Subsystem::from,
+                separated_list1(
+                    tag(" "),
+                    map(
+                        preceded(
+                            space0,
+                            take_while1(|c: char| !c.is_whitespace() && c != '#'),
+                        ),
+                        Subsystem::from,
+                    ),
                 ),
             ),
         )(input)
     }
 }
 
-impl<'a> From<Subsystem<'a>> for crate::Directive<'a> {
-    fn from(directive: Subsystem<'a>) -> Self {
+impl<'a> From<Vec<Subsystem<'a>>> for crate::Directive<'a> {
+    fn from(directive: Vec<Subsystem<'a>>) -> Self {
         crate::directive::Directive::Subsystem(directive)
     }
 }

@@ -307,7 +307,7 @@ impl ValueFormat {
     fn parse_impl_inner(&self, name_ident: &Ident) -> TokenStream {
         match self {
             ValueFormat::Wildcard => quote! {
-                map(preceded(space0, take_while1(|c: char| !c.is_whitespace())), #name_ident::from)
+                map(preceded(space0, take_while1(|c: char| !c.is_whitespace() && c != '#')), #name_ident::from)
             },
             ValueFormat::Integer => quote! {
                 map(preceded(space0, nom::character::complete::u64), #name_ident::from)
@@ -561,7 +561,7 @@ fn main() {
 
         use nom::{
             branch::alt,
-            combinator::{eof, into},
+            combinator::{eof, into, peek},
             character::complete::{space0, line_ending},
             bytes::complete::tag,
             sequence::{tuple, terminated}
@@ -596,7 +596,7 @@ fn main() {
         where
             <T as ParseDirective<'a>>::Output: Into<Directive<'a>>,
         {
-            terminated(into(<T as ParseDirective<'a>>::parse), tuple((space0, alt((line_ending, eof, tag("#"))))))(input)
+            terminated(into(<T as ParseDirective<'a>>::parse), peek(tuple((space0, alt((line_ending, eof, tag("#")))))))(input)
         }
 
         impl<'a> ParseDirective<'a> for Directive<'a> {

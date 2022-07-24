@@ -1192,7 +1192,9 @@
         "By default no subsystems are defined.",
         ""
       ],
-      "values": "wildcard"
+      "values": {
+        "space_separated": "wildcard"
+      }
     },
     "SyslogFacility": {
       "comment": [

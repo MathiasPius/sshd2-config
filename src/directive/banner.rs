@@ -39,7 +39,10 @@ impl<'a> crate::ParseDirective<'a> for Banner<'a> {
             preceded(
                 space1,
                 map(
-                    preceded(space0, take_while1(|c: char| !c.is_whitespace())),
+                    preceded(
+                        space0,
+                        take_while1(|c: char| !c.is_whitespace() && c != '#'),
+                    ),
                     Banner::from,
                 ),
             ),

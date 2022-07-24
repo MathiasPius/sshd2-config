@@ -159,7 +159,7 @@ use nom::{
     branch::alt,
     bytes::complete::tag,
     character::complete::{line_ending, space0},
-    combinator::{eof, into},
+    combinator::{eof, into, peek},
     sequence::{terminated, tuple},
 };
 pub use password_authentication::*;
@@ -288,7 +288,7 @@ pub enum Directive<'a> {
     StreamLocalBindMask(StreamLocalBindMask<'a>),
     StreamLocalBindUnlink(StreamLocalBindUnlink),
     StrictModes(StrictModes),
-    Subsystem(Subsystem<'a>),
+    Subsystem(Vec<Subsystem<'a>>),
     SyslogFacility(SyslogFacility),
     TCPKeepAlive(TCPKeepAlive),
     TrustedUserCAKeys(TrustedUserCAKeys<'a>),
@@ -307,7 +307,7 @@ where
 {
     terminated(
         into(<T as ParseDirective<'a>>::parse),
-        tuple((space0, alt((line_ending, eof, tag("#"))))),
+        peek(tuple((space0, alt((line_ending, eof, tag("#")))))),
     )(input)
 }
 impl<'a> ParseDirective<'a> for Directive<'a> {
