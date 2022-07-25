@@ -155,6 +155,6 @@ mod tests {
     fn test_parse_config_1() {
         let config = Config::try_parse(include_str!("../test-data/1-sshd-config"));
 
-        println!("{:#?}", config);
+        println!("{:#?}", config.unwrap());
     }
 }
