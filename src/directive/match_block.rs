@@ -43,26 +43,29 @@ impl<'a> From<&'a str> for MatchBlock<'a> {
 }
 
 impl<'a> crate::ParseDirective<'a> for MatchBlock<'a> {
-    type Output = MatchBlock<'a>;
+    type Output = Vec<MatchBlock<'a>>;
     fn parse(input: &'a str) -> IResult<&'a str, Self::Output> {
         preceded(
             tag("Match"),
             preceded(
                 space1,
-                map(
-                    preceded(
-                        space0,
-                        take_while1(|c: char| !c.is_whitespace() && c != '#'),
+                separated_list1(
+                    tag(" "),
+                    map(
+                        preceded(
+                            space0,
+                            take_while1(|c: char| !c.is_whitespace() && c != '#'),
+                        ),
+                        MatchBlock::from,
                     ),
-                    MatchBlock::from,
                 ),
             ),
         )(input)
     }
 }
 
-impl<'a> From<MatchBlock<'a>> for crate::Directive<'a> {
-    fn from(directive: MatchBlock<'a>) -> Self {
+impl<'a> From<Vec<MatchBlock<'a>>> for crate::Directive<'a> {
+    fn from(directive: Vec<MatchBlock<'a>>) -> Self {
         crate::directive::Directive::MatchBlock(directive)
     }
 }

@@ -861,7 +861,9 @@
         "Only a subset of keywords may be used on the lines following a **Match** keyword. Available keywords are **AcceptEnv**, **AllowAgentForwarding**, **AllowGroups**, **AllowStreamLocalForwarding**, **AllowTcpForwarding**, **AllowUsers**, **AuthenticationMethods**, **AuthorizedKeysCommand**, **AuthorizedKeysCommandUser**, **AuthorizedKeysFile**, **AuthorizedPrincipalsCommand**, **AuthorizedPrincipalsCommandUser**, **AuthorizedPrincipalsFile**, **Banner**, **CASignatureAlgorithms**, **ChrootDirectory**, **ClientAliveCountMax**, **ClientAliveInterval**, **DenyGroups**, **DenyUsers**, **DisableForwarding**, **ExposeAuthInfo**, **ForceCommand**, **GatewayPorts**, **GSSAPIAuthentication**, **HostbasedAcceptedAlgorithms**, **HostbasedAuthentication**, **HostbasedUsesNameFromPacketOnly**, **IgnoreRhosts**, **Include**, **IPQoS**, **KbdInteractiveAuthentication**, **KerberosAuthentication**, **LogLevel**, **MaxAuthTries**, **MaxSessions**, **PasswordAuthentication**, **PermitEmptyPasswords**, **PermitListen**, **PermitOpen**, **PermitRootLogin**, **PermitTTY**, **PermitTunnel**, **PermitUserRC**, **PubkeyAcceptedAlgorithms**, **PubkeyAuthentication**, **PubkeyAuthOptions**, **RekeyLimit**, **RevokedKeys**, **RDomain**, **SetEnv**, **StreamLocalBindMask**, **StreamLocalBindUnlink**, **TrustedUserCAKeys**, **X11DisplayOffset**, **X11Forwarding** and **X11UseLocalhost**.",
         ""
       ],
-      "values": "wildcard"
+      "values": {
+        "space_separated": "wildcard"
+      }
     },
     "MaxAuthTries": {
       "comment": [
