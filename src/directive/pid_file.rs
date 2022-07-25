@@ -29,6 +29,11 @@ impl<'a> From<&'a str> for PidFile<'a> {
         PidFile(value.into())
     }
 }
+impl<'a> AsRef<str> for PidFile<'a> {
+    fn as_ref(&self) -> &str {
+        &self.0
+    }
+}
 
 impl<'a> crate::ParseDirective<'a> for PidFile<'a> {
     type Output = PidFile<'a>;

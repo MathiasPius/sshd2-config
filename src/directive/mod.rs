@@ -256,7 +256,7 @@ pub enum Directive<'a> {
     LogVerbose(LogVerbose<'a>),
     LoginGraceTime(LoginGraceTime),
     MACs(Modifier<Vec<MACs>>),
-    MatchBlock(MatchBlock<'a>),
+    MatchBlock(Vec<MatchBlock<'a>>),
     MaxAuthTries(MaxAuthTries),
     MaxSessions(MaxSessions),
     MaxStartups(MaxStartups<'a>),

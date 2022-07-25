@@ -34,6 +34,11 @@ impl<'a> From<&'a str> for AuthorizedPrincipalsCommand<'a> {
         AuthorizedPrincipalsCommand(value.into())
     }
 }
+impl<'a> AsRef<str> for AuthorizedPrincipalsCommand<'a> {
+    fn as_ref(&self) -> &str {
+        &self.0
+    }
+}
 
 impl<'a> crate::ParseDirective<'a> for AuthorizedPrincipalsCommand<'a> {
     type Output = AuthorizedPrincipalsCommand<'a>;

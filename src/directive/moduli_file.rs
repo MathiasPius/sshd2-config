@@ -29,6 +29,11 @@ impl<'a> From<&'a str> for ModuliFile<'a> {
         ModuliFile(value.into())
     }
 }
+impl<'a> AsRef<str> for ModuliFile<'a> {
+    fn as_ref(&self) -> &str {
+        &self.0
+    }
+}
 
 impl<'a> crate::ParseDirective<'a> for ModuliFile<'a> {
     type Output = ModuliFile<'a>;

@@ -28,6 +28,11 @@ impl<'a> From<&'a str> for SecurityKeyProvider<'a> {
         SecurityKeyProvider(value.into())
     }
 }
+impl<'a> AsRef<str> for SecurityKeyProvider<'a> {
+    fn as_ref(&self) -> &str {
+        &self.0
+    }
+}
 
 impl<'a> crate::ParseDirective<'a> for SecurityKeyProvider<'a> {
     type Output = SecurityKeyProvider<'a>;

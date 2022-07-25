@@ -198,6 +198,12 @@ impl ValueFormat {
                             #name_ident(value.into())
                         }
                     }
+
+                    impl<'a> AsRef<str> for #name_ident<'a> {
+                        fn as_ref(&self) -> &str {
+                            &self.0
+                        }
+                    }
                 }
             }
             ValueFormat::Integer => {

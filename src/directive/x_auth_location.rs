@@ -29,6 +29,11 @@ impl<'a> From<&'a str> for XAuthLocation<'a> {
         XAuthLocation(value.into())
     }
 }
+impl<'a> AsRef<str> for XAuthLocation<'a> {
+    fn as_ref(&self) -> &str {
+        &self.0
+    }
+}
 
 impl<'a> crate::ParseDirective<'a> for XAuthLocation<'a> {
     type Output = XAuthLocation<'a>;

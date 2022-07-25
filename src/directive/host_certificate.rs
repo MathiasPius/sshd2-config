@@ -30,6 +30,11 @@ impl<'a> From<&'a str> for HostCertificate<'a> {
         HostCertificate(value.into())
     }
 }
+impl<'a> AsRef<str> for HostCertificate<'a> {
+    fn as_ref(&self) -> &str {
+        &self.0
+    }
+}
 
 impl<'a> crate::ParseDirective<'a> for HostCertificate<'a> {
     type Output = HostCertificate<'a>;

@@ -30,6 +30,11 @@ impl<'a> From<&'a str> for PerSourceNetBlockSize<'a> {
         PerSourceNetBlockSize(value.into())
     }
 }
+impl<'a> AsRef<str> for PerSourceNetBlockSize<'a> {
+    fn as_ref(&self) -> &str {
+        &self.0
+    }
+}
 
 impl<'a> crate::ParseDirective<'a> for PerSourceNetBlockSize<'a> {
     type Output = PerSourceNetBlockSize<'a>;

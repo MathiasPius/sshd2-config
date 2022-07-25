@@ -43,6 +43,11 @@ impl<'a> From<&'a str> for PermitOpen<'a> {
         PermitOpen(value.into())
     }
 }
+impl<'a> AsRef<str> for PermitOpen<'a> {
+    fn as_ref(&self) -> &str {
+        &self.0
+    }
+}
 
 impl<'a> crate::ParseDirective<'a> for PermitOpen<'a> {
     type Output = PermitOpen<'a>;

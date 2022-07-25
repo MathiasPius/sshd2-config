@@ -34,6 +34,11 @@ impl<'a> From<&'a str> for MaxStartups<'a> {
         MaxStartups(value.into())
     }
 }
+impl<'a> AsRef<str> for MaxStartups<'a> {
+    fn as_ref(&self) -> &str {
+        &self.0
+    }
+}
 
 impl<'a> crate::ParseDirective<'a> for MaxStartups<'a> {
     type Output = MaxStartups<'a>;

@@ -41,6 +41,11 @@ impl<'a> From<&'a str> for MatchBlock<'a> {
         MatchBlock(value.into())
     }
 }
+impl<'a> AsRef<str> for MatchBlock<'a> {
+    fn as_ref(&self) -> &str {
+        &self.0
+    }
+}
 
 impl<'a> crate::ParseDirective<'a> for MatchBlock<'a> {
     type Output = Vec<MatchBlock<'a>>;

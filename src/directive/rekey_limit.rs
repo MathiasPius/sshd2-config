@@ -32,6 +32,11 @@ impl<'a> From<&'a str> for RekeyLimit<'a> {
         RekeyLimit(value.into())
     }
 }
+impl<'a> AsRef<str> for RekeyLimit<'a> {
+    fn as_ref(&self) -> &str {
+        &self.0
+    }
+}
 
 impl<'a> crate::ParseDirective<'a> for RekeyLimit<'a> {
     type Output = RekeyLimit<'a>;

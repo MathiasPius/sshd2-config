@@ -44,6 +44,11 @@ impl<'a> From<&'a str> for PermitListen<'a> {
         PermitListen(value.into())
     }
 }
+impl<'a> AsRef<str> for PermitListen<'a> {
+    fn as_ref(&self) -> &str {
+        &self.0
+    }
+}
 
 impl<'a> crate::ParseDirective<'a> for PermitListen<'a> {
     type Output = PermitListen<'a>;

@@ -43,6 +43,11 @@ impl<'a> From<&'a str> for ListenAddress<'a> {
         ListenAddress(value.into())
     }
 }
+impl<'a> AsRef<str> for ListenAddress<'a> {
+    fn as_ref(&self) -> &str {
+        &self.0
+    }
+}
 
 impl<'a> crate::ParseDirective<'a> for ListenAddress<'a> {
     type Output = Vec<ListenAddress<'a>>;

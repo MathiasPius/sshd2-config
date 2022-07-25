@@ -34,6 +34,11 @@ impl<'a> From<&'a str> for ForceCommand<'a> {
         ForceCommand(value.into())
     }
 }
+impl<'a> AsRef<str> for ForceCommand<'a> {
+    fn as_ref(&self) -> &str {
+        &self.0
+    }
+}
 
 impl<'a> crate::ParseDirective<'a> for ForceCommand<'a> {
     type Output = ForceCommand<'a>;

@@ -30,6 +30,11 @@ impl<'a> From<&'a str> for Banner<'a> {
         Banner(value.into())
     }
 }
+impl<'a> AsRef<str> for Banner<'a> {
+    fn as_ref(&self) -> &str {
+        &self.0
+    }
+}
 
 impl<'a> crate::ParseDirective<'a> for Banner<'a> {
     type Output = Banner<'a>;

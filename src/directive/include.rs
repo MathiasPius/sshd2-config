@@ -31,6 +31,11 @@ impl<'a> From<&'a str> for Include<'a> {
         Include(value.into())
     }
 }
+impl<'a> AsRef<str> for Include<'a> {
+    fn as_ref(&self) -> &str {
+        &self.0
+    }
+}
 
 impl<'a> crate::ParseDirective<'a> for Include<'a> {
     type Output = Vec<Include<'a>>;

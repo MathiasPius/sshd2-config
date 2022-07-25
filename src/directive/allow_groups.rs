@@ -33,6 +33,11 @@ impl<'a> From<&'a str> for AllowGroups<'a> {
         AllowGroups(value.into())
     }
 }
+impl<'a> AsRef<str> for AllowGroups<'a> {
+    fn as_ref(&self) -> &str {
+        &self.0
+    }
+}
 
 impl<'a> crate::ParseDirective<'a> for AllowGroups<'a> {
     type Output = Vec<AllowGroups<'a>>;

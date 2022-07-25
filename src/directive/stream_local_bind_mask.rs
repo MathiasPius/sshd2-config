@@ -31,6 +31,11 @@ impl<'a> From<&'a str> for StreamLocalBindMask<'a> {
         StreamLocalBindMask(value.into())
     }
 }
+impl<'a> AsRef<str> for StreamLocalBindMask<'a> {
+    fn as_ref(&self) -> &str {
+        &self.0
+    }
+}
 
 impl<'a> crate::ParseDirective<'a> for StreamLocalBindMask<'a> {
     type Output = StreamLocalBindMask<'a>;

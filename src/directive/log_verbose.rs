@@ -35,6 +35,11 @@ impl<'a> From<&'a str> for LogVerbose<'a> {
         LogVerbose(value.into())
     }
 }
+impl<'a> AsRef<str> for LogVerbose<'a> {
+    fn as_ref(&self) -> &str {
+        &self.0
+    }
+}
 
 impl<'a> crate::ParseDirective<'a> for LogVerbose<'a> {
     type Output = LogVerbose<'a>;

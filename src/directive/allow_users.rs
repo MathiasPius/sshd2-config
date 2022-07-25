@@ -35,6 +35,11 @@ impl<'a> From<&'a str> for AllowUsers<'a> {
         AllowUsers(value.into())
     }
 }
+impl<'a> AsRef<str> for AllowUsers<'a> {
+    fn as_ref(&self) -> &str {
+        &self.0
+    }
+}
 
 impl<'a> crate::ParseDirective<'a> for AllowUsers<'a> {
     type Output = Vec<AllowUsers<'a>>;

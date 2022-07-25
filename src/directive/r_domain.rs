@@ -30,6 +30,11 @@ impl<'a> From<&'a str> for RDomain<'a> {
         RDomain(value.into())
     }
 }
+impl<'a> AsRef<str> for RDomain<'a> {
+    fn as_ref(&self) -> &str {
+        &self.0
+    }
+}
 
 impl<'a> crate::ParseDirective<'a> for RDomain<'a> {
     type Output = RDomain<'a>;

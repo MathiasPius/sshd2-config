@@ -39,6 +39,11 @@ impl<'a> From<&'a str> for ChrootDirectory<'a> {
         ChrootDirectory(value.into())
     }
 }
+impl<'a> AsRef<str> for ChrootDirectory<'a> {
+    fn as_ref(&self) -> &str {
+        &self.0
+    }
+}
 
 impl<'a> crate::ParseDirective<'a> for ChrootDirectory<'a> {
     type Output = ChrootDirectory<'a>;

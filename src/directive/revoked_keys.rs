@@ -32,6 +32,11 @@ impl<'a> From<&'a str> for RevokedKeys<'a> {
         RevokedKeys(value.into())
     }
 }
+impl<'a> AsRef<str> for RevokedKeys<'a> {
+    fn as_ref(&self) -> &str {
+        &self.0
+    }
+}
 
 impl<'a> crate::ParseDirective<'a> for RevokedKeys<'a> {
     type Output = RevokedKeys<'a>;

@@ -31,6 +31,11 @@ impl<'a> From<&'a str> for PermitUserEnvironment<'a> {
         PermitUserEnvironment(value.into())
     }
 }
+impl<'a> AsRef<str> for PermitUserEnvironment<'a> {
+    fn as_ref(&self) -> &str {
+        &self.0
+    }
+}
 
 impl<'a> crate::ParseDirective<'a> for PermitUserEnvironment<'a> {
     type Output = PermitUserEnvironment<'a>;

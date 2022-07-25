@@ -32,6 +32,11 @@ impl<'a> From<&'a str> for TrustedUserCAKeys<'a> {
         TrustedUserCAKeys(value.into())
     }
 }
+impl<'a> AsRef<str> for TrustedUserCAKeys<'a> {
+    fn as_ref(&self) -> &str {
+        &self.0
+    }
+}
 
 impl<'a> crate::ParseDirective<'a> for TrustedUserCAKeys<'a> {
     type Output = TrustedUserCAKeys<'a>;

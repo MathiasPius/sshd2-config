@@ -35,6 +35,11 @@ impl<'a> From<&'a str> for AcceptEnv<'a> {
         AcceptEnv(value.into())
     }
 }
+impl<'a> AsRef<str> for AcceptEnv<'a> {
+    fn as_ref(&self) -> &str {
+        &self.0
+    }
+}
 
 impl<'a> crate::ParseDirective<'a> for AcceptEnv<'a> {
     type Output = Vec<AcceptEnv<'a>>;

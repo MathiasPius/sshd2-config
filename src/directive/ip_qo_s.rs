@@ -23,8 +23,8 @@ use std::borrow::Cow;
 /// The default is **af21** (Low-Latency Data) for interactive sessions and **cs1** (Lower Effort) for non-interactive sessions.
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord)]
 pub enum IPQoS {
-    Integer(u64),
     Predefined(IPQoSPredefined),
+    Integer(u64),
 }
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord)]
 pub enum IPQoSPredefined {
@@ -81,14 +81,14 @@ pub enum IPQoSPredefined {
     #[doc = "none"]
     None,
 }
-impl From<u64> for IPQoS {
-    fn from(inner: u64) -> IPQoS {
-        IPQoS::Integer(inner)
-    }
-}
 impl From<IPQoSPredefined> for IPQoS {
     fn from(inner: IPQoSPredefined) -> IPQoS {
         IPQoS::Predefined(inner)
+    }
+}
+impl From<u64> for IPQoS {
+    fn from(inner: u64) -> IPQoS {
+        IPQoS::Integer(inner)
     }
 }
 
@@ -102,7 +102,6 @@ impl<'a> crate::ParseDirective<'a> for IPQoS {
                 separated_list1(
                     tag(" "),
                     alt((
-                        map(preceded(space0, nom::character::complete::u64), IPQoS::from),
                         map(
                             preceded(
                                 space0,
@@ -147,6 +146,7 @@ impl<'a> crate::ParseDirective<'a> for IPQoS {
                             ),
                             IPQoS::from,
                         ),
+                        map(preceded(space0, nom::character::complete::u64), IPQoS::from),
                     )),
                 ),
             ),

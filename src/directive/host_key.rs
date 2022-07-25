@@ -34,6 +34,11 @@ impl<'a> From<&'a str> for HostKey<'a> {
         HostKey(value.into())
     }
 }
+impl<'a> AsRef<str> for HostKey<'a> {
+    fn as_ref(&self) -> &str {
+        &self.0
+    }
+}
 
 impl<'a> crate::ParseDirective<'a> for HostKey<'a> {
     type Output = HostKey<'a>;

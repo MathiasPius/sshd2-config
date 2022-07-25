@@ -35,6 +35,11 @@ impl<'a> From<&'a str> for DenyUsers<'a> {
         DenyUsers(value.into())
     }
 }
+impl<'a> AsRef<str> for DenyUsers<'a> {
+    fn as_ref(&self) -> &str {
+        &self.0
+    }
+}
 
 impl<'a> crate::ParseDirective<'a> for DenyUsers<'a> {
     type Output = Vec<DenyUsers<'a>>;

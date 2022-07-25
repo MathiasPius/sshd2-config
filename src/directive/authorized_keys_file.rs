@@ -34,6 +34,11 @@ impl<'a> From<&'a str> for AuthorizedKeysFile<'a> {
         AuthorizedKeysFile(value.into())
     }
 }
+impl<'a> AsRef<str> for AuthorizedKeysFile<'a> {
+    fn as_ref(&self) -> &str {
+        &self.0
+    }
+}
 
 impl<'a> crate::ParseDirective<'a> for AuthorizedKeysFile<'a> {
     type Output = AuthorizedKeysFile<'a>;
