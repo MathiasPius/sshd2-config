@@ -8,8 +8,10 @@ use nom::IResult;
 
 mod config;
 mod directive;
+mod scope;
 pub use config::*;
 pub use directive::*;
+pub use scope::*;
 
 pub trait ParseDirective<'a>: Sized {
     type Output;
