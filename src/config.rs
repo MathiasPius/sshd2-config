@@ -6,7 +6,7 @@ use nom::{
     character::complete::{line_ending, not_line_ending, space0},
     combinator::{all_consuming, eof, opt, recognize},
     multi::many_till,
-    sequence::{terminated, tuple},
+    sequence::{preceded, terminated, tuple},
 };
 
 use crate::Directive;
@@ -42,12 +42,14 @@ impl<'a> ConfigLine<'a> {
     pub fn try_parse(line: &'a str) -> Result<ConfigLine<'a>, Error<'a>> {
         let (rest, (directive, comment)) = all_consuming(terminated(
             tuple((
-                opt(Directive::parse),
-                opt(recognize(tuple((
+                preceded(space0, opt(Directive::parse)),
+                preceded(
                     space0,
-                    tag("#"),
-                    many_till(not_line_ending, alt((line_ending, eof))),
-                )))),
+                    opt(recognize(tuple((
+                        tag("#"),
+                        many_till(not_line_ending, alt((line_ending, eof))),
+                    )))),
+                ),
             )),
             opt(line_ending),
         ))(line)?;
